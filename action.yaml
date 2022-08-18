@@ -1,0 +1,5 @@
+name: 'HCL AppScan Static Analyzer'
+description: 'Scan for security issues in code'
+runs:
+  using: 'node12'
+  main: 'src/main.js'
