@@ -1,7 +1,7 @@
 /* © Copyright HCL Technologies Ltd. 2022 */
 
 const core = require('@actions/core');
-const client = require('client');
+const client = require('./client');
 const saclientutil = require('./saclientutil');
 
 core.info('Downloading the SAClientUtil...');
