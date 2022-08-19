@@ -22,7 +22,7 @@ saclientutil.downloadClient()
 .then((scanId) => {
     core.info('Scan successfully submitted to the ASoC service. ');
     core.info(`Scan ID: ${scanId}`)
-    core.info(`Scan results will be available at: ${settings.getScanUrl(scanId)}`);
+    core.info(`${settings.getScanUrl(scanId)}`);
 })
 .catch((error) => {
     core.setFailed(error);
