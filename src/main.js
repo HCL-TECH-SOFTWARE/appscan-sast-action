@@ -21,6 +21,10 @@ saclientutil.downloadClient()
 .then((scanId) => {
     core.info('Scan successfully submitted to the ASoC service. ');
     core.info(`Scan ID: ${scanId}`)
+    core.info(`${settings.getScanUrl(scanId)}`);
+    if(process.env.WAIT_FOR_ANALYSIS) {
+
+    }
 })
 .catch((error) => {
     core.setFailed(error);
