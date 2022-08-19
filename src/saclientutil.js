@@ -19,13 +19,15 @@ shell.cd(process.env.GITHUB_WORKSPACE);
 function downloadClient() {
     return new Promise((resolve, reject) => {
         let zipFile = path.join('/', 'SAClientUtil.zip');
+        if(fs.existsSync(zipFile)) {
+            fs.unlinkSync(zipFile);
+        }
 
         let zip = fs.createWriteStream(zipFile);
         zip.on('finish', () => {
             zip.close();
         });
         zip.on('error', (e) => {
-            fs.unlinkSync(zipFile);
             reject(e);
         });
         zip.on('close', () => {
