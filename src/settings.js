@@ -37,7 +37,7 @@ function getServiceUrl() {
 }
 
 function getScanUrl(scanId) {
-    return `${getServiceUrl()}/main/myapps/${process.env.APPLICATION_ID}/scans/${scanId}/scanOverview`;
+    return `${getServiceUrl()}/main/myapps/${process.env.INPUT_APPLICATION_ID}/scans/${scanId}/scanOverview`;
 }
 
 module.exports = { getProxyUrl, getProxyPort, getProxyUser, getProxyPwd, getServiceUrl, getScanUrl }
