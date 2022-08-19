@@ -8,8 +8,6 @@ const utils = require('./utils');
 
 shell.cd(process.env.GITHUB_WORKSPACE);
 
-let script = saclientutil.getScript();
-
 function generateIrx() {
     let args = '-sco '; //Default to running source code only scans.
 
@@ -23,13 +21,13 @@ function generateIrx() {
         args.replace('-sco ', '');
     }
 
-    return executeCommand(`${script} prepare ${args}`);
+    return executeCommand(`prepare ${args}`);
 }
 
 function login() {
     let key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
     let secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
-    return executeCommand(`${script} api_login -u ${key} -P ${secret} `);
+    return executeCommand(`api_login -u ${key} -P ${secret} `);
 }
 
 function runAnalysis() {
@@ -48,7 +46,7 @@ function runAnalysis() {
             return;
         }
 
-        executeCommand(`${script} queue_analysis -a ${appId} ${scanNameOption}`)
+        executeCommand(`queue_analysis -a ${appId} ${scanNameOption}`)
         .then((stdout) => {
             //Get the scan id from stdout and return it.
             let lines = eol.split(stdout);
@@ -60,9 +58,10 @@ function runAnalysis() {
     });
 }
 
-function executeCommand(command) {
+function executeCommand(args) {
     return new Promise((resolve, reject) => {
-        let result = shell.exec(command);
+        let script = saclientutil.getScript();
+        let result = shell.exec(`${script} ${args}`);
         if(result.code === 0) {
             resolve(result.stdout);
          }
