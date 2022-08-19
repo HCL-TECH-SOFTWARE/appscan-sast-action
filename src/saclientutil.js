@@ -7,18 +7,19 @@ const url = require('url');
 const path = require('path');
 const extract = require('extract-zip');
 const https = require('https');
+const os = require('os');
 const settings = require('./settings');
 const utils = require('./utils');
 const constants = require('./constants');
 
+let parentDir = os.homedir();
 let script = utils.getOS() === 'win' ? 'appscan.bat' : 'appscan.sh';
-script = path.join(utils.getUserHome(), 'SAClientUtil', 'bin', script);
 
 shell.cd(process.env.GITHUB_WORKSPACE);
 
 function downloadClient() {
     return new Promise((resolve, reject) => {
-        let zipFile = path.join(utils.getUserHome(), 'SAClientUtil.zip');
+        let zipFile = path.join(parentDir, 'SAClientUtil.zip');
         if(fs.existsSync(zipFile)) {
             fs.unlinkSync(zipFile);
         }
@@ -33,6 +34,7 @@ function downloadClient() {
         zip.on('close', () => {
             extractClient(zipFile)
                 .then(() => {
+                    script = path.join(getClientDir(), 'bin', script);
                     if(fs.existsSync(script)) {
                         resolve(script);
                     }
@@ -58,7 +60,7 @@ function downloadClient() {
             });
     
             req.on('error', (e) =>  {
-                if(fs.e(zipFIle)) {
+                if(fs.e(zipFile)) {
                     fs.unlinkSync(zipFile);
                 }
                 reject(e);
@@ -124,6 +126,57 @@ function getRequestOptions() {
         resolve(options);
     });
 }
+
+function getClientDir() {
+    let files = fs.readdirSync(parentDir);
+    let clientDirs = new Array();
+
+    files.forEach((file) => {
+        try {
+            if(fs.lstatSync(parentDir + path.sep + file).isDirectory() && file.startsWith("SAClientUtil"))
+                clientDirs.push(parentDir + path.sep + file);
+        } catch(e) {
+            //ignore and continue
+        }
+    });
+
+    if(clientDirs.length > 1) {
+        let clientDir = clientDirs[0];
+        for(let iter = 1; iter < clientDirs.length; iter++) {
+            if(compareVersions(clientDir, clientDirs[iter])) {
+                clientDir = clientDirs[iter];
+            }	
+        }
+
+        return clientDir;
+    }
+    else {
+        return clientDirs.length === 0 ? undefined : clientDirs[0];
+    }
+}
+
+function compareVersions(oldVersion, newVersion) {
+    if(oldVersion === undefined || newVersion === undefined)
+        return true;
+    
+    //Trim down to just SAClientUtil.x.x.x
+    oldVersion = oldVersion.substring(oldVersion.indexOf("SAClientUtil"), oldVersion.length);
+    newVersion = newVersion.substring(newVersion.indexOf("SAClientUtil"), newVersion.length);
+    let old = oldVersion.split('.');
+    let next = newVersion.split('.');
+
+    //Format of version is SAClientUtil.A.B.C
+    for(let iter = 1; iter < old.length && iter < next.length; iter++) {
+        if(iter === 1 && old[iter] < next[iter] ||
+            iter === 2 && old[iter] < next[iter] ||
+            iter === 3 && old[iter] < next[iter]) {
+                return true;
+            }
+    }
+
+    return false;
+}
+
 
 function generateIrx() {
     let args = '-sco '; //Default to running source code only scans.
