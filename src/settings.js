@@ -1,6 +1,6 @@
 /* © Copyright HCL Technologies Ltd. 2022 */
 
-import { constants } from './constants.js';
+const constants = require('./constants.js');
 
 function getProxyUrl() {
     return process.env.INPUT_PROXY_URL;

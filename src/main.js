@@ -1,23 +1,23 @@
 /* © Copyright HCL Technologies Ltd. 2022 */
 
 const core = require('@actions/core');
-import { downloadClient } from './saclientutil';
+const saclientutil = require('./saclientutil');
 
 core.info('Downloading the SAClientUtil...');
-downloadClient()
+saclientutil.downloadClient()
 .then(() => {
     core.info('Generating irx file...');
-    return generateIrx();
+    return saclientutil.generateIrx();
 })
 .then((message) => {
     core.info(message);
     core.info('Authenticating with the ASoC service...');
-    return login();
+    return saclientutil.login();
 })
 .then((message) => {
     core.info(message);
     core.info('Submitting the irx for analysis...');
-    return runAnalysis();
+    return saclientutil.runAnalysis();
 })
 .then((message) => {
     core.info('Scan successfully submitted to the ASoC service.');

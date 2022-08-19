@@ -1,39 +1,40 @@
 /* © Copyright HCL Technologies Ltd. 2022 */
 
-import { shell } from 'shelljs';
-import { existsSync, createWriteStream, unlinkSync } from 'fs';
-import { HttpsProxyAgent } from 'https-proxy-agent';
-import { parse } from 'url';
-import { join } from 'path';
-import { getProxyUrl, getProxyPort, getProxyUser, getProxyPwd } from './settings';
-import { getOS, sanitizeString } from './utils';
-import { SACLIENT_PATH, ERROR_DOWNLOADING_CLIENT, ERROR_FILE_DOES_NOT_EXIST, ERROR_INVALID_APP_ID } from './constants';
+const shell = require('shelljs');
+const fs =  require('fs');
+const HttpsProxyAgent = require('https-proxy-agent');
+const url = require('url');
+const path = require('path');
+const extract = require('extract-zip');
+const settings = require('./settings');
+const utils = require('./utils');
+const constants = require('./constants');
 
-let script = getOS() === 'win' ? 'appscan.bat' : 'appscan.sh';
-script = join('/SAClientUtil', 'bin', script);
+let script = utils.getOS() === 'win' ? 'appscan.bat' : 'appscan.sh';
+script = path.join('/SAClientUtil', 'bin', script);
 
 shell.cd(process.env.GITHUB_WORKSPACE);
 
 function downloadClient() {
     return new Promise((resolve, reject) => {
-        let zipFile = join('/', 'SAClientUtil.zip');
+        let zipFile = path.join('/', 'SAClientUtil.zip');
 
-        let zip = createWriteStream(zipFile);
+        let zip = fs.createWriteStream(zipFile);
         zip.on('finish', () => {
             zip.close();
         });
         zip.on('error', (e) => {
-            unlinkSync(zipFile);
+            fs.unlinkSync(zipFile);
             reject(e);
         });
         zip.on('close', () => {
             extractClient(zipFile)
                 .then(() => {
-                    if(existsSync(script)) {
+                    if(fs.existsSync(script)) {
                         resolve(script);
                     }
                     else {
-                        reject(ERROR_FILE_DOES_NOT_EXIST + script);
+                        reject(constants.ERROR_FILE_DOES_NOT_EXIST + script);
                     }
                 })
                 .catch((error) => {
@@ -49,12 +50,12 @@ function downloadClient() {
                     response.pipe(zip);
                 } 
                 else {
-                    reject(ERROR_DOWNLOADING_CLIENT + response.statusCode);
+                    reject(constants.ERROR_DOWNLOADING_CLIENT + response.statusCode);
                 }
             });
     
             req.on('error', (e) =>  {
-                    unlinkSync(zipFile);
+                    fs.unlinkSync(zipFile);
                     reject(e);
             });
         })
@@ -63,8 +64,8 @@ function downloadClient() {
 
 function extractClient(zipFile) {
     return new Promise((resolve, reject) => {
-        if(!existsSync(zipFile)) {
-            reject(ERROR_FILE_DOES_NOT_EXIST + zipFile);
+        if(!fs.existsSync(zipFile)) {
+            reject(constants.ERROR_FILE_DOES_NOT_EXIST + zipFile);
             return;
         }
 
@@ -80,12 +81,12 @@ function extractClient(zipFile) {
 
 function getRequestOptions() {
     return new Promise((resolve) => {
-        let endpoint = settings.getServiceUrl() + SACLIENT_PATH + getOS();
+        let endpoint = settings.getServiceUrl() + constants.SACLIENT_PATH + utils.getOS();
         let options = null;
-        let proxyHost = getProxyUrl();
-        let proxyPort = getProxyPort();
-        let proxyUser = getProxyUser();
-        let proxyPwd  = getProxyPwd();
+        let proxyHost = settings.getProxyUrl();
+        let proxyPort = settings.getProxyPort();
+        let proxyUser = settings.getProxyUser();
+        let proxyPwd  = settings.getProxyPwd();
 
         if (proxyHost && proxyPort) {  //Connection through proxy
             let proxy = null;
@@ -109,10 +110,10 @@ function getRequestOptions() {
                     port: proxyPort
                 }
             }			
-            options = parse(endpoint);
+            options = url.parse(endpoint);
             options.agent = new HttpsProxyAgent(proxy);
         } else { // Normal connection without proxy
-            options = parse(endpoint);
+            options = url.parse(endpoint);
         }
 
         resolve(options);
@@ -136,13 +137,13 @@ function generateIrx() {
 }
 
 function login() {
-    let key = sanitizeString(process.env.INPUT_ASOC_KEY);
-    let secret = sanitizeString(process.env.INPUT_ASOC_SECRET);
+    let key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
+    let secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
     return executeCommand(`${script} api_login -u ${key} -P ${secret} `);
 }
 
 function runAnalysis() {
-    let scanNameOption = sanitizeString(process.env.INPUT_SCAN_NAME);
+    let scanNameOption = utils.sanitizeString(process.env.INPUT_SCAN_NAME);
     if(scanNameOption) {
         scanNameOption = '-n ' + scanNameOption;
     }
@@ -150,9 +151,9 @@ function runAnalysis() {
         scanNameOption = '';
     }
 
-    let appId = sanitizeString(process.env.INPUT_APPLICATION_ID);
+    let appId = utils.sanitizeString(process.env.INPUT_APPLICATION_ID);
     if(!appId) {
-        reject(ERROR_INVALID_APP_ID);
+        reject(constants.ERROR_INVALID_APP_ID);
         return;
     }
 
