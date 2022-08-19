@@ -12,13 +12,13 @@ const utils = require('./utils');
 const constants = require('./constants');
 
 let script = utils.getOS() === 'win' ? 'appscan.bat' : 'appscan.sh';
-script = path.join('/SAClientUtil', 'bin', script);
+script = path.join(utils.getUserHome(), 'SAClientUtil', 'bin', script);
 
 shell.cd(process.env.GITHUB_WORKSPACE);
 
 function downloadClient() {
     return new Promise((resolve, reject) => {
-        let zipFile = path.join('/', 'SAClientUtil.zip');
+        let zipFile = path.join(utils.getUserHome(), 'SAClientUtil.zip');
         if(fs.existsSync(zipFile)) {
             fs.unlinkSync(zipFile);
         }
@@ -58,8 +58,10 @@ function downloadClient() {
             });
     
             req.on('error', (e) =>  {
+                if(fs.e(zipFIle)) {
                     fs.unlinkSync(zipFile);
-                    reject(e);
+                }
+                reject(e);
             });
         })
     });

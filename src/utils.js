@@ -24,4 +24,17 @@ function sanitizeString(input) {
     return input;
 }
 
-module.exports = { getOS, sanitizeString }
+function getUserHome() {
+    let userhome = '';
+
+    if(getOS() === 'win') {
+        userhome = process.env.USERPROFILE;
+    }
+    else {
+        userhome = '~';
+    }
+
+    return userhome;
+}
+
+module.exports = { getOS, getUserHome, sanitizeString }
