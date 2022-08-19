@@ -3,6 +3,7 @@
 const core = require('@actions/core');
 const client = require('./client');
 const saclientutil = require('./saclientutil');
+const settings = require('./settings');
 
 core.info('Downloading the SAClientUtil...');
 saclientutil.downloadClient()

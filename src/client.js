@@ -50,7 +50,7 @@ function runAnalysis() {
         .then((stdout) => {
             //Get the scan id from stdout and return it.
             let lines = eol.split(stdout);
-            resolve(lines[lines.length - 1]);
+            resolve(lines[lines.length - 2]);
         })
         .catch((error) => {
             reject(error);
