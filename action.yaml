@@ -24,20 +24,26 @@ inputs:
   static_analysis_only:
     description: 'Only run static analysis. Do not run SCA (Software Composition Analysis).'
     required: false
+    type: boolean
+    default: false
   open_source_only:
     description: 'Only run SCA (Software Composition Analysis). Do not run static analysis.'
     required: false
+    type: boolean
+    default: false
   run_build:
     description: 'By default source only source code files will be analyzed. Enabling this option will allow Maven, Gradle, and MS Visual Studio projects to be built and their outputs analyzed if the build environment is available on the runner. Note that this may cause the action to run longer.'
     required: false
+    type: boolean
+    default: false
   wait_for_analysis:
     description: 'By default this action will initiate the scan in ASoC, but it won't wait for analysis to complete. Enabling this option will cause the action to wait for analysis to complete. Note that this will cause the action to run longer.'
     required: false
+    type: boolean
+    default: false
   timout_minutes:
     description: ''
     required: false
-    type: int
-    default: 30
 runs:
   using: 'node16'
   main: 'src/main.js'
