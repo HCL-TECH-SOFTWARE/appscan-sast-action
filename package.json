@@ -1,0 +1,16 @@
+{
+  "name": "appscan-static-analyzer-action",
+  "version": "1.0.0",
+  "description": "Runs HCL AppScan Static Analyzer.",
+  "main": "main.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "fs": "0.0.1-security",
+    "shelljs": "^0.8.5",
+    "https-proxy-agent": "5.0.0"
+  }
+}
