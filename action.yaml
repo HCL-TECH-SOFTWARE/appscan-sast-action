@@ -37,13 +37,14 @@ inputs:
     type: boolean
     default: false
   wait_for_analysis:
-    description: 'By default this action will initiate the scan in ASoC, but it won't wait for analysis to complete. Enabling this option will cause the action to wait for analysis to complete. Note that this will cause the action to run longer.'
+    description: 'By default this action will initiate the scan in ASoC, but it will not wait for analysis to complete. Enabling this option will cause the action to wait for analysis to complete. Note that this will cause the action to run longer.'
     required: false
     type: boolean
     default: false
   timout_minutes:
     description: ''
     required: false
+    default: 30
 runs:
   using: 'node16'
   main: 'src/main.js'
