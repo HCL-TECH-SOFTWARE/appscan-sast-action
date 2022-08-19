@@ -9,19 +9,16 @@ saclientutil.downloadClient()
     core.info('Generating irx file...');
     return saclientutil.generateIrx();
 })
-.then((message) => {
-    core.info(message);
+.then(() => {
     core.info('Authenticating with the ASoC service...');
     return saclientutil.login();
 })
-.then((message) => {
-    core.info(message);
+.then(() => {
     core.info('Submitting the irx for analysis...');
     return saclientutil.runAnalysis();
 })
-.then((message) => {
+.then(() => {
     core.info('Scan successfully submitted to the ASoC service.');
-    core.info(message);
 })
 .catch((error) => {
     core.setFailed(error);
