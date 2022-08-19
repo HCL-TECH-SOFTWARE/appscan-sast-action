@@ -6,6 +6,7 @@ const HttpsProxyAgent = require('https-proxy-agent');
 const url = require('url');
 const path = require('path');
 const extract = require('extract-zip');
+const https = require('https');
 const settings = require('./settings');
 const utils = require('./utils');
 const constants = require('./constants');
