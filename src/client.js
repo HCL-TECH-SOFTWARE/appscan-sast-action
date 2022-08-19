@@ -17,7 +17,7 @@ function generateIrx() {
     if(isArgumentEnabled(process.env.INPUT_OPEN_SOURCE_ONLY)) {
         args += '-oso ';
     }
-    if(isArgumentEnabled(process.env.INPUT_RUN_BUILD)) {
+    if(isArgumentEnabled(process.env.INPUT_SCAN_BUILD_OUTPUTS)) {
         args.replace('-sco ', '');
     }
 
