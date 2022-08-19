@@ -22,4 +22,4 @@ function getServiceUrl() {
     return process.env.INPUT_SERVICE_URL ? process.env.INPUT_SERVICE_URL : constants.SERVICE_URL;
 }
 
-export default { getProxyUrl, getProxyPort, getProxyUser, getProxyPwd, getServiceUrl }
+module.exports = { getProxyUrl, getProxyPort, getProxyUser, getProxyPwd, getServiceUrl }

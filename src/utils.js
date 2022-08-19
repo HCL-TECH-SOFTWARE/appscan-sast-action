@@ -24,4 +24,4 @@ function sanitizeString(input) {
     return input;
 }
 
-export default { getOS, sanitizeString }
+module.exports = { getOS, sanitizeString }

@@ -176,4 +176,4 @@ function isArgumentEnabled(arg) {
     return arg && arg === 'true';
 }
 
-export default { downloadClient, generateIrx, login, runAnalysis }
+module.exports = { downloadClient, generateIrx, login, runAnalysis }
