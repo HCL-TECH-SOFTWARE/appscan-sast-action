@@ -1,5 +1,50 @@
 name: 'HCL AppScan Static Analyzer'
 description: 'Scan for security issues in code'
+branding:
+  color: 'blue'
+  icon: 'lock'  
+inputs:
+  asoc_key:
+    description: 'API key for connecting to ASoC.'
+    required: true
+  asoc_secret:
+    description: 'Secret for connecting to ASoC.'
+    required: true
+  application_id:
+    description: 'The ASoC application id where issues will be published. Required when publish_on_merge is true.'
+    required: true
+  scan_name:
+    description: 'The name of the scan created in ASoC.'
+    required: false
+  personal_scan:
+    description: 'When issues are published on merge, the scan representing those issues can be made a personal scan.'
+    required: false
+    type: boolean
+    default: false
+  static_analysis_only:
+    description: 'Only run static analysis. Do not run SCA (Software Composition Analysis).'
+    required: false
+    type: boolean
+    default: false
+  open_source_only:
+    description: 'Only run SCA (Software Composition Analysis). Do not run static analysis.'
+    required: false
+    type: boolean
+    default: false
+  run_build:
+    description: 'By default source only source code files will be analyzed. Enabling this option will allow Maven, Gradle, and MS Visual Studio projects to be built and their outputs analyzed if the build environment is available on the runner. Note that this may cause the action to run longer.'
+    required: false
+    type: boolean
+    default: false
+  wait_for_analysis:
+    description: 'By default this action will initiate the scan in ASoC, but it will not wait for analysis to complete. Enabling this option will cause the action to wait for analysis to complete. Note that this will cause the action to run longer.'
+    required: false
+    type: boolean
+    default: false
+  timout_minutes:
+    description: ''
+    required: false
+    default: 30
 runs:
-  using: 'node12'
+  using: 'node16'
   main: 'src/main.js'
