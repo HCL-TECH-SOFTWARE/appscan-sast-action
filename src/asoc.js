@@ -3,6 +3,7 @@
 const got = require('got');
 const constants = require('./constants');
 const settings = require('./settings');
+const utils = require('./utils');
 
 let token = null
 
