@@ -6,7 +6,7 @@ const constants = require('./constants');
 const saclientutil = require('./saclientutil');
 const utils = require('./utils');
 
-const start = null;
+let start = null;
 const timeout_minutes = process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES ? process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES : 30;
 
 shell.cd(process.env.GITHUB_WORKSPACE);
