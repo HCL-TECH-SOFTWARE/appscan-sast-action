@@ -61,25 +61,31 @@ function runAnalysis() {
     });
 }
 
+function checkStatus(scanId) {
+    return executeCommand(`status -i ${scanId}`);
+}
+
 function waitForAnalysis(scanId) {
     return new Promise((resolve, reject) => {
         if(!start) {
             start = Date.now();
         }
 
-        executeCommand(`status -i ${scanId}`)
+        checkStatus(scanId)
         .then((stdout) => {
-            if(stdout === 'Ready') {
+            if(stdout.trim() === 'Ready') {
                 return resolve(false);
             }
-            else if(stdout === 'Failed') {
+            else if(stdout.trim() === 'Failed') {
                 return reject(constants.ERROR_ANALYSIS_FAILED);
             }
             else if(analysisTimedOut()) {
                 return resolve(true);
             }
             else {
-                return waitForAnalysis(scanId);
+                setTimeout(() => {
+                    return resolve(waitForAnalysis(scanId));
+                }, 30000)
             }
         })
         .catch((error) => {
