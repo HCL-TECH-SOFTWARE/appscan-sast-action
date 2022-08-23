@@ -83,3 +83,5 @@ function processResults(json) {
         }
     });
 }
+
+module.exports = { getScanResults }
