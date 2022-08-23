@@ -47,7 +47,7 @@ function getScanResults(scanId) {
 }
 
 function getNonCompliantIssues(scanId) {
-    return new Promise((resole, reject) => {
+    return new Promise((resolve, reject) => {
         let url = settings.getServiceUrl() + constants.API_SCAN_COUNT_BY_SEVERITY + scanId + '?applyPolicies=All';
         got.post(url, { json: { headers: getRequestHeaders() }, retry: { limit: 3, methods: ['GET', 'POST'] } })
         .then((response) => {
