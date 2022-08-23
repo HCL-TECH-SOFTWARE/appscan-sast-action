@@ -6,6 +6,9 @@ const constants = require('./constants');
 const saclientutil = require('./saclientutil');
 const utils = require('./utils');
 
+const start = null;
+const timeout_minutes = process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES ? process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES : 30;
+
 shell.cd(process.env.GITHUB_WORKSPACE);
 
 function generateIrx() {
@@ -58,6 +61,33 @@ function runAnalysis() {
     });
 }
 
+function waitForAnalysis(scanId) {
+    return new Promise((resolve, reject) => {
+        if(!start) {
+            start = Date.now();
+        }
+
+        executeCommand(`status -i ${scanId}`)
+        .then((stdout) => {
+            if(stdout === 'Ready') {
+                return resolve(false);
+            }
+            else if(stdout === 'Failed') {
+                return reject(constants.ERROR_ANALYSIS_FAILED);
+            }
+            else if(analysisTimedOut()) {
+                return resolve(true);
+            }
+            else {
+                return waitForAnalysis(scanId);
+            }
+        })
+        .catch((error) => {
+            reject(error);
+        })
+    });
+}
+
 function executeCommand(args) {
     return new Promise((resolve, reject) => {
         let script = saclientutil.getScript();
@@ -75,4 +105,10 @@ function isArgumentEnabled(arg) {
     return arg && arg === 'true';
 }
 
-module.exports = { generateIrx, login, runAnalysis }
+function analysisTimedOut() {
+    let seconds = (Date.now() - start) / 1000;
+    let minutes = seconds / 60;
+    return minutes > timeout_minutes;
+}
+
+module.exports = { generateIrx, login, runAnalysis, waitForAnalysis }

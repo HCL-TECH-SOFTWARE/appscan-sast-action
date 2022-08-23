@@ -3,6 +3,7 @@
 const core = require('@actions/core');
 const client = require('./client');
 const saclientutil = require('./saclientutil');
+const asoc = require('./asoc');
 const settings = require('./settings');
 
 core.info('Downloading the SAClientUtil...');
@@ -20,9 +21,26 @@ saclientutil.downloadClient()
     return client.runAnalysis();
 })
 .then((scanId) => {
-    core.info('Scan successfully submitted to the ASoC service. ');
-    core.info(`Scan ID: ${scanId}`)
-    core.info(`${settings.getScanUrl(scanId)}`);
+    return new Promise((resolve, reject) => {
+        core.info('Scan successfully submitted to the ASoC service. ');
+        core.info(`Scan ID: ${scanId}`)
+        core.info(`${settings.getScanUrl(scanId)}`);
+
+        if(!process.env.INPUT_WAIT_FOR_ANALYSIS) {
+            return resolve();
+        }
+
+        asoc.waitForAnalysis(scanId)
+        .then((timedOut) => {
+            if(timedOut) {
+                return resolve(constants.ANALYSIS_TIMEOUT);
+            }
+            return asoc.getScanResults(scanId);
+        })
+        .catch((error) => {
+            return reject(error);
+        })
+    });
 })
 .catch((error) => {
     core.setFailed(error);
