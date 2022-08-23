@@ -30,7 +30,7 @@ saclientutil.downloadClient()
             return resolve();
         }
 
-        asoc.waitForAnalysis(scanId)
+        client.waitForAnalysis(scanId)
         .then((timedOut) => {
             if(timedOut) {
                 return resolve(constants.ANALYSIS_TIMEOUT);
