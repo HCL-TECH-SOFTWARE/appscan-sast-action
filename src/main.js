@@ -31,6 +31,7 @@ saclientutil.downloadClient()
             return resolve();
         }
 
+        core.info(constants.WAIT_FOR_ANALYSIS);
         client.waitForAnalysis(scanId)
         .then((timedOut) => {
             if(timedOut) {
