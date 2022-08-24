@@ -1,7 +1,6 @@
 name: "HCL AppScan Static Analyzer"
 on:
-  pull_request:
-    types: [opened,synchronize]
+  workflow_dispatch
 jobs:
   scan:
     runs-on: ubuntu-latest
