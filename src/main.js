@@ -40,8 +40,8 @@ saclientutil.downloadClient()
             core.info(constants.GETTING_RESULTS);
             asoc.getScanResults(scanId)
             .then((results) => {
-                core.info(constants.ANALYSIS_SUCCESS);
                 core.info(results);
+                core.info(constants.ANALYSIS_SUCCESS);
                 resolve();
             });
         })

@@ -26,7 +26,7 @@ function processResults(json) {
             if(++count === json.length) {
                 output = constants.TOTAL_ISSUES + totalFindings + '\n' + output;
                 if(shouldFail) {
-                    return reject(constants.ERROR_NONCOMPLIANT_ISSUES + '\n' + output);
+                    return reject(output + 'n' + constants.ERROR_NONCOMPLIANT_ISSUES);
                 }
 
                 return resolve(output);
