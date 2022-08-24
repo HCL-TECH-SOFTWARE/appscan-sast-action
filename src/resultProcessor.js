@@ -42,13 +42,14 @@ function setShouldFail(severity, numIssues) {
 }
 
 function getSeverityValue(severity) {
-    let severityValue = 4;
+    let severityValue = 1;
 
     switch(severity) {
         case 'Informational':
             severityValue = 0;
             break;
         case 'Low':
+        default:
             severityValue = 1;
             break;
         case 'Medium':
@@ -58,7 +59,6 @@ function getSeverityValue(severity) {
             severityValue = 3;
             break;
         case 'Critical':
-        default:
             severityValue = 4;
             break;
     }

@@ -35,12 +35,15 @@ function login() {
 
 function runAnalysis() {
     return new Promise((resolve, reject) => {
+        let args = '';
+
         let scanNameOption = utils.sanitizeString(process.env.INPUT_SCAN_NAME);
         if(scanNameOption) {
-            scanNameOption = '-n ' + scanNameOption;
+            args += '-n ' + scanNameOption;
         }
-        else {
-            scanNameOption = '';
+
+        if(isArgumentEnabled(process.env.INPUT_PERSONAL_SCAN)) {
+            args += ' -ps';
         }
 
         let appId = utils.sanitizeString(process.env.INPUT_APPLICATION_ID);
@@ -49,7 +52,7 @@ function runAnalysis() {
             return;
         }
 
-        executeCommand(`queue_analysis -a ${appId} ${scanNameOption}`)
+        executeCommand(`queue_analysis -a ${appId} ${args}`)
         .then((stdout) => {
             //Get the scan id from stdout and return it.
             let lines = eol.split(stdout);

@@ -51,9 +51,10 @@ inputs:
     type: boolean
     default: false
   failure_threshold:
-    description: 'If fail_for_noncompliance is enabled, the severity that indicates a failure. Lesser severities will not be considered a failure. For example, if failure_threshold is set to Medium, Information and/or Low severity issues will not cause a failure. Medium, High, and/or Critical will cause a failure.'
+    description: 'If fail_for_noncompliance is enabled, the severity that indicates a failure. Lesser severities will not be considered a failure. For example, if failure_threshold is set to Medium, Informational and/or Low severity issues will not cause a failure. Medium, High, and/or Critical issues will cause a failure.'
     required: false
     type: choice
+    default: 'Low'
     options:
     - Informational
     - Low
