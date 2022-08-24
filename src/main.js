@@ -37,6 +37,7 @@ saclientutil.downloadClient()
             if(timedOut) {
                 return resolve(constants.ANALYSIS_TIMEOUT);
             }
+            core.info(constants.GETTING_RESULTS);
             asoc.getScanResults(scanId)
             .then((results) => {
                 core.info(constants.ANALYSIS_SUCCESS);

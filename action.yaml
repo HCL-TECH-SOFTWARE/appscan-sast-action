@@ -45,6 +45,21 @@ inputs:
     description: 'If wait_for_analysis is true, the number of minutes to wait for analysis to complete. The default is 30 minutes.'
     required: false
     default: 30
+  fail_for_noncompliance:
+    description: 'If wait_for_analysis is true, fail the job if any non-compliant issues are found in the scan.'
+    required: false
+    type: boolean
+    default: false
+  failure_threshold:
+    description: 'If fail_for_noncompliance is enabled, the severity that indicates a failure. Lesser severities will not be considered a failure. For example, if failure_threshold is set to Medium, Information and/or Low severity issues will not cause a failure. Medium, High, and/or Critical will cause a failure.'
+    required: false
+    type: choice
+    options:
+    - Informational
+    - Low
+    - Medium
+    - High
+    - Critical
 runs:
   using: 'node16'
   main: 'src/main.js'

@@ -25,10 +25,14 @@ const IRX_SUBMIT_SUCCESS = 'Successfully submitted the irx to the ASoC service.'
 exports.IRX_SUBMIT_SUCCESS = IRX_SUBMIT_SUCCESS;
 const WAIT_FOR_ANALYSIS = 'Waiting for analysis to complete...';
 exports.WAIT_FOR_ANALYSIS = WAIT_FOR_ANALYSIS;
+const GETTING_RESULTS = 'Getting results...';
+exports.GETTING_RESULTS = GETTING_RESULTS;
 const ANALYSIS_SUCCESS = 'Analysis complete.';
 exports.ANALYSIS_SUCCESS = ANALYSIS_SUCCESS;
 const ANALYSIS_TIMEOUT = 'Timed out waiting for analysis to complete. Review the scan in ASoC to see the results.'
 exports.ANALYSIS_TIMEOUT = ANALYSIS_TIMEOUT;
+const TOTAL_ISSUES = 'Total issues = ';
+exports.TOTAL_ISSUES = TOTAL_ISSUES;
 
 //Error messages:
 const ERROR_DOWNLOADING_CLIENT = 'An error occurred downloading the SAClientUtil. Status code ';
@@ -39,3 +43,5 @@ const ERROR_INVALID_APP_ID = 'Invalid application ID.'
 exports.ERROR_INVALID_APP_ID = ERROR_INVALID_APP_ID;
 const ERROR_ANALYSIS_FAILED = 'Analysis failed. Review the scan in ASoC for additional details.'
 exports.ERROR_ANALYSIS_FAILED = ERROR_ANALYSIS_FAILED;
+const ERROR_NONCOMPLIANT_ISSUES = 'Failed. Non-compliant issues were found in the scan.';
+exports.ERROR_NONCOMPLIANT_ISSUES = ERROR_NONCOMPLIANT_ISSUES;

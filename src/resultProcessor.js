@@ -1,6 +1,19 @@
+/* © Copyright HCL Technologies Ltd. 2022 */
+
+const constants = require('./constants');
+
+const Informational = 0;
+const Low = 1;
+const Medium = 2;
+const High = 3;
+const Critical = 4;
+
+const failForNonCompliance = process.env.INPUT_FAIL_FOR_NONCOMPLIANCE;
+const failureThreshold = getSeverityValue(process.env.INPUT_FAILURE_THRESHOLD);
+let shouldFail = false;
 
 function processResults(json) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         let totalFindings = 0;
         let count = 0;
         let output = '';
@@ -9,10 +22,48 @@ function processResults(json) {
             let element = json[i];
             totalFindings += element.Count;
             output += element.Severity + ' = ' + element.Count + '\n';
+            setShouldFail(element.Severity, element.Count);
             if(++count === json.length) {
-                output = 'Total issues = ' + totalFindings + '\n' + output;
+                output = constants.TOTAL_ISSUES + totalFindings + '\n' + output;
+                if(shouldFail) {
+                    return reject(constants.ERROR_NONCOMPLIANT_ISSUES + '\n' + output);
+                }
+
                 return resolve(output);
             }
         }
     });
 }
+
+function setShouldFail(severity, numIssues) {
+    if(failForNonCompliance && numIssues > 0) {
+        shouldFail = getSeverityValue(severity) >= failureThreshold;
+    }
+}
+
+function getSeverityValue(severity) {
+    let severityValue = 4;
+
+    switch(severity) {
+        case 'Informational':
+            severityValue = 0;
+            break;
+        case 'Low':
+            severityValue = 1;
+            break;
+        case 'Medium':
+            severityValue = 2;
+            break;
+        case 'High':
+            severityValue = 3;
+            break;
+        case 'Critical':
+        default:
+            severityValue = 4;
+            break;
+    }
+
+    return severityValue;
+}
+
+module.exports = { processResults }
