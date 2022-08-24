@@ -2,6 +2,7 @@
 
 const got = require('got');
 const constants = require('./constants');
+const resultProcessor = require('./resultProcessor');
 const settings = require('./settings');
 const utils = require('./utils');
 
@@ -52,7 +53,7 @@ function getNonCompliantIssues(scanId) {
         got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] } })
         .then((response) => {
             let responseJson = JSON.parse(response.body);
-            return resolve(processResults(responseJson));
+            return resolve(resultProcessor.processResults(responseJson));
         })
         .catch((error) => {
             reject(error);
@@ -65,24 +66,6 @@ function getRequestHeaders() {
         Authorization: "Bearer " + token,
         Accept: "application/json"
     }
-}
-
-function processResults(json) {
-    return new Promise((resolve) => {
-        let totalFindings = 0;
-        let count = 0;
-        let output = "";
-
-        for(var i = 0; i < json.length; i++) {
-            let element = json[i];
-            totalFindings += element.Count;
-            output += '\t' + element.Severity + ' = ' + element.Count + '\n';
-            if(++count === json.length) {
-                output = 'Total issues = ' + totalFindings + '\n' + output;
-                return resolve(output);
-            }
-        }
-    });
 }
 
 module.exports = { getScanResults }
