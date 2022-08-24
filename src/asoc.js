@@ -38,7 +38,7 @@ function getScanResults(scanId) {
         let secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
         login(key, secret)
         .then(() => {
-            return getNonCompliantIssues(scanId);
+            return resolve(getNonCompliantIssues(scanId));
         })
         .catch((error) => {
             reject(error);
@@ -49,7 +49,7 @@ function getScanResults(scanId) {
 function getNonCompliantIssues(scanId) {
     return new Promise((resolve, reject) => {
         let url = settings.getServiceUrl() + constants.API_SCAN_COUNT_BY_SEVERITY + scanId + '?applyPolicies=All';
-        got.post(url, { json: { headers: getRequestHeaders() }, retry: { limit: 3, methods: ['GET', 'POST'] } })
+        got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] } })
         .then((response) => {
             let responseJson = JSON.parse(response.body);
             return resolve(processResults(responseJson));
@@ -79,7 +79,7 @@ function processResults(json) {
             output += '\t' + element.Severity + ' = ' + element.Count + '\n';
             if(++count === json.length) {
                 output = 'Total issues = ' + totalFindings + '\n' + output;
-                resolve(output);
+                return resolve(output);
             }
         }
     });
