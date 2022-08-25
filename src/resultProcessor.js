@@ -21,7 +21,7 @@ function processResults(json) {
         for(var i = 0; i < json.length; i++) {
             let element = json[i];
             totalFindings += element.Count;
-            output = element.Severity + ' = ' + element.Count + '\n' + output;
+            output = element.Severity + constants.ISSUES_COLON + element.Count + '\n' + output;
             setShouldFail(element.Severity, element.Count);
             if(++count === json.length) {
                 output = constants.TOTAL_ISSUES + totalFindings + '\n' + output;

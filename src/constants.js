@@ -31,8 +31,10 @@ const ANALYSIS_SUCCESS = 'Analysis complete.';
 exports.ANALYSIS_SUCCESS = ANALYSIS_SUCCESS;
 const ANALYSIS_TIMEOUT = 'Timed out waiting for analysis to complete. Review the scan in ASoC to see the results.'
 exports.ANALYSIS_TIMEOUT = ANALYSIS_TIMEOUT;
-const TOTAL_ISSUES = 'Total issues = ';
+const TOTAL_ISSUES = 'Total issues: ';
 exports.TOTAL_ISSUES = TOTAL_ISSUES;
+const ISSUES_COLON = ' issues: ';
+exports.ISSUES_COLON = ISSUES_COLON;
 
 //Error messages:
 const ERROR_DOWNLOADING_CLIENT = 'An error occurred downloading the SAClientUtil. Status code ';
