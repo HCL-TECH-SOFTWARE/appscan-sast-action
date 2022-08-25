@@ -21,12 +21,12 @@ function processResults(json) {
         for(var i = 0; i < json.length; i++) {
             let element = json[i];
             totalFindings += element.Count;
-            output += element.Severity + ' = ' + element.Count + '\n';
+            output = element.Severity + ' = ' + element.Count + '\n' + output;
             setShouldFail(element.Severity, element.Count);
             if(++count === json.length) {
                 output = constants.TOTAL_ISSUES + totalFindings + '\n' + output;
                 if(shouldFail) {
-                    return reject(output + 'n' + constants.ERROR_NONCOMPLIANT_ISSUES);
+                    return reject(output + '\n' + constants.ERROR_NONCOMPLIANT_ISSUES);
                 }
 
                 return resolve(output);

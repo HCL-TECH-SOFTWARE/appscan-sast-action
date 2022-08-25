@@ -53,7 +53,10 @@ function getNonCompliantIssues(scanId) {
         got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] } })
         .then((response) => {
             let responseJson = JSON.parse(response.body);
-            return resolve(resultProcessor.processResults(responseJson));
+            return resultProcessor.processResults(responseJson);
+        })
+        .then((result) => {
+            resolve(result);
         })
         .catch((error) => {
             reject(error);
