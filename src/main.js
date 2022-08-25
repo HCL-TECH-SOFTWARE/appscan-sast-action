@@ -38,12 +38,12 @@ saclientutil.downloadClient()
                 return resolve(constants.ANALYSIS_TIMEOUT);
             }
             core.info(constants.GETTING_RESULTS);
-            asoc.getScanResults(scanId)
-            .then((results) => {
-                core.info(results);
-                core.info(constants.ANALYSIS_SUCCESS);
-                resolve();
-            });
+            return asoc.getScanResults(scanId);
+        })
+        .then((results) => {
+            core.info(results);
+            core.info(constants.ANALYSIS_SUCCESS);
+            resolve();
         })
         .catch((error) => {
             return reject(error);
