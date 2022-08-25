@@ -8,7 +8,7 @@ const Medium = 2;
 const High = 3;
 const Critical = 4;
 
-const failForNonCompliance = process.env.INPUT_FAIL_FOR_NONCOMPLIANCE;
+const failForNonCompliance = process.env.INPUT_FAIL_FOR_NONCOMPLIANCE === true;
 const failureThreshold = getSeverityValue(process.env.INPUT_FAILURE_THRESHOLD);
 let shouldFail = false;
 
@@ -26,7 +26,7 @@ function processResults(json) {
             if(++count === json.length) {
                 output = constants.TOTAL_ISSUES + totalFindings + '\n' + output;
                 if(shouldFail) {
-                    return reject(output + '\n' + constants.ERROR_NONCOMPLIANT_ISSUES);
+                    return reject('\n' + output + '\n' + constants.ERROR_NONCOMPLIANT_ISSUES);
                 }
 
                 return resolve(output);
