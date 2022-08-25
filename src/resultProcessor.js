@@ -8,7 +8,7 @@ const Medium = 2;
 const High = 3;
 const Critical = 4;
 
-const failForNonCompliance = process.env.INPUT_FAIL_FOR_NONCOMPLIANCE === true;
+const failForNonCompliance = process.env.INPUT_FAIL_FOR_NONCOMPLIANCE === 'true';
 const failureThreshold = getSeverityValue(process.env.INPUT_FAILURE_THRESHOLD);
 let shouldFail = false;
 
