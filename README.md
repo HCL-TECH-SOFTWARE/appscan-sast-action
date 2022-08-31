@@ -1,1 +1,1 @@
-# StaticAnalyzer-Action
+# Static-Analyzer-Action
