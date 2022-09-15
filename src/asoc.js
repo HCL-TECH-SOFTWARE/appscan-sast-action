@@ -12,7 +12,7 @@ function login(key, secret) {
     return new Promise((resolve, reject) => {
         if(key && secret) {
             let url = settings.getServiceUrl() + constants.API_LOGIN;
-            got.post(url, { json: { 'keyId': key, 'keySecret': secret, 'clientType': constants.CLIENT_TYPE }, retry: { limit: 3, methods: ['GET', 'POST'] } })
+            got.post(url, { json: { 'keyId': key, 'keySecret': secret, 'clientType': utils.getClientType() }, retry: { limit: 3, methods: ['GET', 'POST'] } })
             .then((response) => {
                 if(response.statusCode === 200 || response.statusCode === 201) {
                     let responseJson = JSON.parse(response.body);
