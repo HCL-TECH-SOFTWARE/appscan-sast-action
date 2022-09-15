@@ -1,5 +1,7 @@
 /* © Copyright HCL Technologies Ltd. 2022 */
 
+const constants = require('./constants');
+
 let os = null;
 
 function getOS() {
@@ -24,4 +26,12 @@ function sanitizeString(input) {
     return input;
 }
 
-module.exports = { getOS, sanitizeString }
+function getClientType() {
+    return constants.CLIENT_TYPE + '-' + getOS() + '-' + getVersion();
+}
+
+function getVersion() {
+    return constants.CURRENT_VERSION;
+}
+
+module.exports = { getOS, sanitizeString, getClientType, getVersion }

@@ -1,5 +1,8 @@
 /* © Copyright HCL Technologies Ltd. 2022 */
 
+const CURRENT_VERSION = 1.0;
+exports.CURRENT_VERSION = CURRENT_VERSION;
+
 //Service url and endpoints:
 const SERVICE_URL = 'https://cloud.appscan.com';
 exports.SERVICE_URL = SERVICE_URL;
@@ -9,7 +12,7 @@ const API_LOGIN = '/api/V2/Account/ApiKeyLogin';
 exports.API_LOGIN = API_LOGIN;
 const API_SCAN_COUNT_BY_SEVERITY = '/api/v2/Issues/CountBySeverity/scan/';
 exports.API_SCAN_COUNT_BY_SEVERITY = API_SCAN_COUNT_BY_SEVERITY;
-const CLIENT_TYPE = 'github-static-analyzer-action';
+const CLIENT_TYPE = 'github-sast';
 exports.CLIENT_TYPE = CLIENT_TYPE;
 
 //User messages:
