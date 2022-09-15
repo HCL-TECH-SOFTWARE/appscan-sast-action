@@ -11,6 +11,7 @@ const timeout_minutes = process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES ? process.env
 
 shell.cd(process.env.GITHUB_WORKSPACE);
 process.env.APPSCAN_IRGEN_CLIENT = constants.CLIENT_TYPE;
+process.env.IRGEN_CLIENT_PLUGIN_VERSION = utils.getVersion();
 
 function generateIrx() {
     let args = '-sco '; //Default to running source code only scans.
