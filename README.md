@@ -8,49 +8,50 @@ The HCL AppScan Static Analyzer Github Action enables you to run static analysis
 If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://www.hcltechsw.com/appscan/codesweep-for-github) to generate your API key/secret.
 
 ## Setup
-1. After logging into ASoC, go to [the API page](https://cloud.appscan.com/main/settings) to generate your API key/secret pair. These must be used in the asoc_key and asoc_secret parameters for the action. It's recommended to store them as secrets in your repository.
+After logging into ASoC, go to [the API page](https://cloud.appscan.com/main/settings) to generate your API key/secret pair. These must be used in the asoc_key and asoc_secret parameters for the action. It's recommended to store them as secrets in your repository.
    ![adingkeys_animation](img/keyAndSecret.gif)
-2. To scan code changes when a pull request is opened, add the following file to your repository under .github/workflows/codesweep.yml or update an existing workflow file:
+
+# Required Inputs
+| Name |   Description    |
+|    :---:    |    :---:    |
+| asoc_key | Your API key from [the API page](https://cloud.appscan.com/main/settings) |
+| asoc_secret | Your API secret from [the API page](https://cloud.appscan.com/main/settings) |
+| application_id | The ID of the application in ASoC where your scan will appear |
+
+# Optional Inputs
+| Name | Description | Default Value |
+|    :---:    |    :---:    |    :---:    |
+| scan_name | The name of the scan created in ASoC. | The GitHub repository name |
+| personal_scan | Make this a [personal scan](https://help.hcltechsw.com/appscan/ASoC/appseccloud_scans_personal.html). | false |
+| static_analysis_only | Only run static analysis. Do not run SCA (Software Composition Analysis). | false |
+| open_source_only | Only run SCA (Software Composition Analysis). Do not run static analysis. | false
+| scan_build_outputs | By default source only source code files will be analyzed. Enabling this option will result in build output files for Java and .NET to be analyzed (.jar/.war/.ear/.dll/.exe). Additionally, Maven, Gradle, and Visual Studio solutions will be built if the build environment is available. | false |
+| wait_for_analysis | By default this action will initiate the scan in ASoC, but it will not wait for analysis to complete. Enabling this option will cause the action to wait for analysis to complete. Note that this will cause the action to run longer. | false |
+| analysis_timout_minutes | If wait_for_analysis is true, the number of minutes to wait for analysis to complete. | 30 minutes |
+| fail_for_noncompliance | If wait_for_analysis is true, fail the job if any non-compliant issues are found in the scan. | false |
+| failure_threshold | If fail_for_noncompliance is enabled, the severity that indicates a failure. Lesser severities will not be considered a failure. For example, if failure_threshold is set to Medium, Informational and/or Low severity issues will not cause a failure. Medium, High, and/or Critical issues will cause a failure. | Low |
+
+# Examples
 ```yaml
 name: "HCL AppScan Static Analyzer"
 on:
-  pull_request:
-    types: [opened,synchronize]
+  workflow_dispatch
 jobs:
   scan:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v1
-      - name: Run AppScan CodeSweep
-        uses: HCL-TECH-SOFTWARE/appscan-codesweep-action@v2
+      - name: Run AppScan Static Analyzer
+        uses: HCL-TECH-SOFTWARE/appscan-static-analyzer-action@v1
         with:
           asoc_key: ${{secrets.ASOC_KEY}}
           asoc_secret: ${{secrets.ASOC_SECRET}}
-    env: 
-      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          application_id: e35ea96d-cae0-499a-a3ed-7a4efd77b269
 ```
 **Note** If you use **checkout@v2** or later you must set fetch-depth to 0. For example:
 ```yaml
 uses: actions/checkout@v2
 with:
   fetch-depth: 0
-```
-# Optional Parameters For Scanning
-- status - The status of the checks if any security issues are found. Must be one of 'action_required', 'failure', or 'neutral'. The default is neutral. For example:
-```yaml
-with:
-  status: failure
-```
-# Optional Parameters For Publishing Issues to AppScan on Cloud
-- issue_status - The status of issues that are published to ASoC. Must be one of 'open', 'inprogress', 'noise', 'fixed', or 'passed'. The default is 'open'.
-- scan_base_name - The base name of the scan for issues published to ASoC. A timestamp is appended to the given base name. The default is 'GitHub_CodeSweep'.
-- personal_scan - When issues are published to ASoC, the scan representing those issues can be made a [personal scan](https://help.hcltechsw.com/appscan/ASoC/appseccloud_scans_personal.html). The default is false.
-```yaml
-with:
-  publish_on_merge: true
-  application_id: 6c058381-17ca-e711-8de5-002590ac753d
-  issue_status: "inprogress"
-  scan_base_name: "CodeSweep"
-  personal_scan: true
 ```
