@@ -41,17 +41,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
       - name: Run AppScan Static Analyzer
         uses: HCL-TECH-SOFTWARE/appscan-static-analyzer-action@v1
         with:
           asoc_key: ${{secrets.ASOC_KEY}}
           asoc_secret: ${{secrets.ASOC_SECRET}}
           application_id: e35ea96d-cae0-499a-a3ed-7a4efd77b269
-```
-**Note** If you use **checkout@v2** or later you must set fetch-depth to 0. For example:
-```yaml
-uses: actions/checkout@v2
-with:
-  fetch-depth: 0
 ```
