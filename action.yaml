@@ -11,13 +11,13 @@ inputs:
     description: 'Secret for connecting to ASoC.'
     required: true
   application_id:
-    description: 'The ASoC application id where issues will be published. Required when publish_on_merge is true.'
+    description: 'The ASoC application id where your scan will appear.'
     required: true
   scan_name:
     description: 'The name of the scan created in ASoC.'
     required: false
   personal_scan:
-    description: 'When issues are published on merge, the scan representing those issues can be made a personal scan.'
+    description: 'Make the scan a personal scan.'
     required: false
     type: boolean
     default: false
