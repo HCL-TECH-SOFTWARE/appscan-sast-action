@@ -71,8 +71,10 @@ function runAnalysis() {
         executeCommand(`queue_analysis -a ${appId} ${args}`)
         .then((stdout) => {
             //Get the scan id from stdout and return it.
-            let lines = eol.split(stdout);
-            resolve(lines[lines.length - 2]);
+            return getScanId(stdout);
+        })
+        .then((scanId) => {
+            resolve(scanId);
         })
         .catch((error) => {
             reject(error);
@@ -134,6 +136,20 @@ function analysisTimedOut() {
     let seconds = (Date.now() - start) / 1000;
     let minutes = seconds / 60;
     return minutes > timeout_minutes;
+}
+
+function getScanId(output) {
+    return new Promise((resolve) => {
+        let lines = eol.split(output);
+        let scanId = lines[lines.length - 2];
+        //Make sure we're only returning the scan id
+        let regex = /[0-9a-fA-f]{8}-[0-9a-fA-f]{4}-[0-9a-fA-f]{4}-[0-9a-fA-f]{4}-[0-9a-fA-f]{12}/;
+        let matches = scanId.match(regex);
+        if(matches) {
+            scanId = matches[0];
+        }
+        resolve(scanId);
+    })
 }
 
 module.exports = { generateIrx, login, runAnalysis, waitForAnalysis }
