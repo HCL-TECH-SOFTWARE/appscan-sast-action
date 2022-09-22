@@ -139,16 +139,23 @@ function analysisTimedOut() {
 }
 
 function getScanId(output) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         let lines = eol.split(output);
         let scanId = lines[lines.length - 2];
-        //Make sure we're only returning the scan id
+        //Make sure we have a valid scan id.
         let regex = /[0-9a-fA-f]{8}-[0-9a-fA-f]{4}-[0-9a-fA-f]{4}-[0-9a-fA-f]{4}-[0-9a-fA-f]{12}/;
         let matches = scanId.match(regex);
-        if(matches) {
-            scanId = matches[0];
+        
+        if(!matches) {
+            //If we didn't get a match, check the next line
+            scanId = lines[lines.length - 1];
+            matches = scanId.match(regex);
+            if(!matches) {
+                return reject(constants.ERROR_BAD_SCAN_ID);
+            }
         }
-        resolve(scanId);
+
+        resolve(matches[0]);
     })
 }
 
