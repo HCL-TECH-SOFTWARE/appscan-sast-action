@@ -64,3 +64,5 @@ const ERROR_ANALYSIS_FAILED = 'Analysis failed. Review the scan in ASoC for addi
 exports.ERROR_ANALYSIS_FAILED = ERROR_ANALYSIS_FAILED;
 const ERROR_NONCOMPLIANT_ISSUES = 'Failed. Non-compliant issues were found in the scan.';
 exports.ERROR_NONCOMPLIANT_ISSUES = ERROR_NONCOMPLIANT_ISSUES;
+const ERROR_BAD_SCAN_ID = 'An error occurred submitting the irx for analysis.';
+exports.ERROR_BAD_SCAN_ID = ERROR_BAD_SCAN_ID;
