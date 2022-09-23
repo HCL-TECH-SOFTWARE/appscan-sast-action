@@ -41,7 +41,7 @@ saclientutil.downloadClient()
         core.info(`Scan ID: ${scanId}`)
         core.info(`${settings.getScanUrl(scanId)}`);
 
-        if(!process.env.INPUT_WAIT_FOR_ANALYSIS === 'true') {
+        if(process.env.INPUT_WAIT_FOR_ANALYSIS !== 'true') {
             return resolve();
         }
 
