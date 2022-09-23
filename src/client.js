@@ -37,7 +37,7 @@ function generateIrx() {
         args += '-oso ';
     }
     if(isArgumentEnabled(process.env.INPUT_SCAN_BUILD_OUTPUTS)) {
-        args.replace('-sco ', '');
+        args = args.replace('-sco ', '');
     }
 
     return executeCommand(`prepare ${args}`);
