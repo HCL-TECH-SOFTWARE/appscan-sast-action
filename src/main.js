@@ -49,7 +49,7 @@ saclientutil.downloadClient()
         client.waitForAnalysis(scanId)
         .then((timedOut) => {
             if(timedOut) {
-                core.info(constants.ANALYSIS_TIMEOUT);
+                core.warning(constants.ANALYSIS_TIMEOUT);
                 return resolve();
             }
             core.info(constants.GETTING_RESULTS);
