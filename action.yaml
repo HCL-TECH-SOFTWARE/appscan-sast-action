@@ -41,7 +41,7 @@ inputs:
     required: false
     type: boolean
     default: false
-  analysis_timout_minutes:
+  analysis_timeout_minutes:
     description: 'If wait_for_analysis is true, the number of minutes to wait for analysis to complete. The default is 30 minutes.'
     required: false
     default: 30
