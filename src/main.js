@@ -1,12 +1,9 @@
 /*
 Copyright 2022 HCL America, Inc.
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -41,27 +38,25 @@ saclientutil.downloadClient()
         core.info(`Scan ID: ${scanId}`)
         core.info(`${settings.getScanUrl(scanId)}`);
 
-        if(!process.env.INPUT_WAIT_FOR_ANALYSIS === 'true') {
-            return resolve();
+        if(process.env.INPUT_WAIT_FOR_ANALYSIS === 'true') {
+            core.info(constants.WAIT_FOR_ANALYSIS);
+            client.waitForAnalysis(scanId)
+            .then((timedOut) => {
+                if(timedOut) {
+                    return resolve(constants.ANALYSIS_TIMEOUT);
+                }
+                core.info(constants.GETTING_RESULTS);
+                return asoc.getScanResults(scanId);
+            })
+            .then((results) => {
+                core.info(results);
+                core.info(constants.ANALYSIS_SUCCESS);
+                return resolve();
+            })
+            .catch((error) => {
+                return reject(error);
+            })
         }
-
-        core.info(constants.WAIT_FOR_ANALYSIS);
-        client.waitForAnalysis(scanId)
-        .then((timedOut) => {
-            if(timedOut) {
-                return resolve(constants.ANALYSIS_TIMEOUT);
-            }
-            core.info(constants.GETTING_RESULTS);
-            return asoc.getScanResults(scanId);
-        })
-        .then((results) => {
-            core.info(results);
-            core.info(constants.ANALYSIS_SUCCESS);
-            resolve();
-        })
-        .catch((error) => {
-            return reject(error);
-        })
     });
 })
 .catch((error) => {
