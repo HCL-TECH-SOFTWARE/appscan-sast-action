@@ -1,7 +1,7 @@
 # HCL AppScan Static Analyzer Github Action
-Your code is better and more secure with HCL AppScan Static Analyzer.
+Your code is better and more secure with HCL AppScan.
 
-The HCL AppScan Static Analyzer Github Action enables you to run static analysis security testing (SAST) against the files in your repository. Run as a GitHub Action, the SAST scan identifies security vulnerabilities in your code.
+The HCL AppScan SAST Github Action enables you to run static analysis security testing (SAST) against the files in your repository. Run as a GitHub Action, the SAST scan identifies security vulnerabilities in your code.
 
 # Usage
 ## Register
@@ -33,7 +33,7 @@ After logging into ASoC, go to [the API page](https://cloud.appscan.com/main/set
 
 # Examples
 ```yaml
-name: "HCL AppScan Static Analyzer"
+name: "HCL AppScan SAST"
 on:
   workflow_dispatch
 jobs:
@@ -42,8 +42,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Run AppScan Static Analyzer
-        uses: HCL-TECH-SOFTWARE/appscan-static-analyzer-action@v1
+      - name: Run AppScan SAST scan
+        uses: HCL-TECH-SOFTWARE/appscan-sast-action@v1
         with:
           asoc_key: ${{secrets.ASOC_KEY}}
           asoc_secret: ${{secrets.ASOC_SECRET}}
