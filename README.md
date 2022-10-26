@@ -1,4 +1,4 @@
-# HCL AppScan Static Analyzer Github Action
+# HCL AppScan SAST Github Action
 Your code is better and more secure with HCL AppScan.
 
 The HCL AppScan SAST Github Action enables you to run static analysis security testing (SAST) against the files in your repository. Run as a GitHub Action, the SAST scan identifies security vulnerabilities in your code.
