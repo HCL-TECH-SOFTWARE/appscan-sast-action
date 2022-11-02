@@ -55,7 +55,7 @@ function runAnalysis() {
 
         let scanNameOption = utils.sanitizeString(process.env.INPUT_SCAN_NAME);
         if(scanNameOption) {
-            args += '-n ' + scanNameOption;
+            args += '-n \"' + scanNameOption + '\"';
         }
 
         if(isArgumentEnabled(process.env.INPUT_PERSONAL_SCAN)) {
