@@ -26,7 +26,7 @@ const API_LOGIN = '/api/V2/Account/ApiKeyLogin';
 exports.API_LOGIN = API_LOGIN;
 const API_SCAN_COUNT_BY_SEVERITY = '/api/v2/Issues/CountBySeverity/scan/';
 exports.API_SCAN_COUNT_BY_SEVERITY = API_SCAN_COUNT_BY_SEVERITY;
-const CLIENT_TYPE = 'githubsast';
+const CLIENT_TYPE = 'GitHub-SAST';
 exports.CLIENT_TYPE = CLIENT_TYPE;
 
 //User messages:
