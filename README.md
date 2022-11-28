@@ -1,22 +1,25 @@
 # HCL AppScan SAST Github Action
 Your code is better and more secure with HCL AppScan.
 
-The HCL AppScan SAST Github Action enables you to run static analysis security testing (SAST) against the files in your repository. Run as a GitHub Action, the SAST scan identifies security vulnerabilities in your code.
+The HCL AppScan SAST Github Action enables you to run static analysis security testing (SAST) against the files in your repository. The SAST scan identifies security vulnerabilities in your code and stores the results in AppScan on Cloud.
 
 # Usage
 ## Register
-If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://www.hcltechsw.com/appscan/codesweep-for-github) to generate your API key/secret.
+If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://www.hcltechsw.com/appscan/codesweep-for-github) to generate your API key and API secret.
 
 ## Setup
-After logging into ASoC, go to [the API page](https://cloud.appscan.com/main/settings) to generate your API key/secret pair. These must be used in the asoc_key and asoc_secret parameters for the action. It's recommended to store them as secrets in your repository.
-   ![adingkeys_animation](img/keyAndSecret.gif)
+1. Generate your API key and API secret on [the API page](https://cloud.appscan.com/main/settings).
+- The API key and API secret map to the `asoc_key` and `asoc_secret` parameters for this action. Store the API key and API secret as [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) in your repository.
+![adingkeys_animation](img/keyAndSecret.gif)
+2. Create the application in ASoC. 
+- The application ID in ASoC maps to application_id for this action.
 
 # Required Inputs
 | Name |   Description    |
 |    :---:    |    :---:    |
 | asoc_key | Your API key from [the API page](https://cloud.appscan.com/main/settings) |
 | asoc_secret | Your API secret from [the API page](https://cloud.appscan.com/main/settings) |
-| application_id | The ID of the application in ASoC where your scan will appear. |
+| application_id | The ID of the application in ASoC. |
 
 # Optional Inputs
 | Name | Description | Default Value |
