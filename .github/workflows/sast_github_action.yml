@@ -1,4 +1,4 @@
-name: "HCL AppScan Static Analyzer"
+name: "HCL AppScan SAST"
 on:
   workflow_dispatch
 jobs:
@@ -7,11 +7,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Run AppScan Static Analyzer
-        uses: ./
+      - name: Run AppScan SAST scan
+        uses: HCL-TECH-SOFTWARE/appscan-sast-action@v1.0.1
         with:
           asoc_key: ${{secrets.ASOC_KEY}}
           asoc_secret: ${{secrets.ASOC_SECRET}}
-          application_id: e35ea96d-cae0-499a-a3ed-7a4efd77b269
-          wait_for_analysis: true
-          personal_scan: true
+          application_id: a9320435-541c-4a16-bebf-427d1e123999
