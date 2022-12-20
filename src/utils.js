@@ -35,7 +35,7 @@ function getOS() {
 
 function sanitizeString(input) {
     if(input) {
-        input = input.replace('[^a-zA-Z0-9\\-\\._]', '');
+        input = input.replace('[^a-zA-Z0-9\\-\\._:\\/]', '');
     }
     return input;
 }

@@ -36,6 +36,7 @@ function generateIrx() {
     if(isArgumentEnabled(process.env.INPUT_OPEN_SOURCE_ONLY)) {
         args += '-oso ';
     }
+	
     if(isArgumentEnabled(process.env.INPUT_SCAN_BUILD_OUTPUTS)) {
         args = args.replace('-sco ', '');
     }
@@ -61,13 +62,18 @@ function runAnalysis() {
         if(isArgumentEnabled(process.env.INPUT_PERSONAL_SCAN)) {
             args += ' -ps';
         }
+		
+        let commentOption = utils.sanitizeString(process.env.INPUT_COMMENT);
+        if (commentOption) {
+            args += ' -c \"' + commentOption + '\"';
+        }
 
         let appId = utils.sanitizeString(process.env.INPUT_APPLICATION_ID);
         if(!appId) {
             reject(constants.ERROR_INVALID_APP_ID);
             return;
         }
-
+		
         executeCommand(`queue_analysis -a ${appId} ${args}`)
         .then((stdout) => {
             //Get the scan id from stdout and return it.
