@@ -63,10 +63,10 @@ function runAnalysis() {
             args += ' -ps';
         }
 		
-		let commentOption = utils.sanitizeString(process.env.INPUT_COMMENT);
-		if (commentOption) {
-			args += ' -c \"' + commentOption + '\"';
-		}
+        let commentOption = utils.sanitizeString(process.env.INPUT_COMMENT);
+        if (commentOption) {
+            args += ' -c \"' + commentOption + '\"';
+        }
 
         let appId = utils.sanitizeString(process.env.INPUT_APPLICATION_ID);
         if(!appId) {
