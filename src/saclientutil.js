@@ -71,7 +71,7 @@ function downloadClient() {
             });
     
             req.on('error', (e) =>  {
-                if(fs.e(zipFile)) {
+                if(fs.existsSync(zipFile)) {
                     fs.unlinkSync(zipFile);
                 }
                 reject(e);
