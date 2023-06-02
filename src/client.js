@@ -51,7 +51,7 @@ function login() {
 	    let service_url = utils.sanitizeString(process.env.INPUT_SERVICE_URL);
 	    if (process.env.INPUT_ACCEPTSSL) {
 		    let acceptssl = utils.sanitizeString(process.env.INPUT_ACCEPTSSL);
-		    return executeCommand(`api_login -u ${key} -P ${secret} -service_url ${service_url} ${accetpssl}`);
+		    return executeCommand(`api_login -u ${key} -P ${secret} -service_url ${service_url} -acceptssl`);
 	    }
 	    return executeCommand(`api_login -u ${key} -P ${secret} -service_url ${service_url}`);
     }
