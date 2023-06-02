@@ -13,6 +13,9 @@ inputs:
   service_url:
     description: 'The url of the AppScan service.'
     required: false
+  acceptssl:
+    description: 'Allow connections with invalid/untrusted certificate.'
+    required: false
   application_id:
     description: 'The application id where your scan will appear.'
     required: true
