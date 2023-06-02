@@ -5,16 +5,19 @@ branding:
   icon: 'lock'  
 inputs:
   asoc_key:
-    description: 'API key for connecting to ASoC.'
+    description: 'API key for connecting to the service.'
     required: true
   asoc_secret:
-    description: 'Secret for connecting to ASoC.'
+    description: 'Secret for connecting to the service.'
     required: true
+  service_url:
+    description: 'The url of the service.'
+    required: false
   application_id:
-    description: 'The ASoC application id where your scan will appear.'
+    description: 'The application id where your scan will appear.'
     required: true
   scan_name:
-    description: 'The name of the scan created in ASoC.'
+    description: 'The name of the scan created in the service.'
     required: false
   personal_scan:
     description: 'Make the scan a personal scan.'
@@ -37,7 +40,7 @@ inputs:
     type: boolean
     default: false
   wait_for_analysis:
-    description: 'By default this action will initiate the scan in ASoC, but it will not wait for analysis to complete. Enabling this option will cause the action to wait for analysis to complete. Note that this will cause the action to run longer.'
+    description: 'By default this action will initiate the scan in the service, but it will not wait for analysis to complete. Enabling this option will cause the action to wait for analysis to complete. Note that this will cause the action to run longer.'
     required: false
     type: boolean
     default: false
