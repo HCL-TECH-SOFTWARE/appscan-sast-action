@@ -51,7 +51,8 @@ function getScanResults(scanId) {
     return new Promise((resolve, reject) => {
         let key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
         let secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
-        login(key, secret)
+        let service_url = utils.sanitizeString(process.env.INPUT_SERVICE_URL);
+        login(key, secret, service_url)
         .then(() => {
             return resolve(getNonCompliantIssues(scanId));
         })
