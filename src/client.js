@@ -47,15 +47,15 @@ function generateIrx() {
 function login() {
     let key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
     let secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
-    if (process.env.INPUT_SERVICE_URL != null) {
+    let options = "api_login -u " + key + "-P " + secret;
+    if (process.env.INPUT_SERVICE_URL) {
 	    let service_url = utils.sanitizeString(process.env.INPUT_SERVICE_URL);
+	    options += " -service_url " + service_url;
 	    if (process.env.INPUT_ACCEPTSSL) {
-		    return executeCommand(`api_login -u ${key} -P ${secret} -service_url ${service_url} -acceptssl`);
+		    options += " -acceptssl";
 	    }
-	    return executeCommand(`api_login -u ${key} -P ${secret} -service_url ${service_url}`);
     }
-    else {
-    	return executeCommand(`api_login -u ${key} -P ${secret} `);
+    return executeCommand(`${options}`);
     }
 }
 
