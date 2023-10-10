@@ -20,7 +20,6 @@ const constants = require('./constants');
 const saclientutil = require('./saclientutil');
 const utils = require('./utils');
 
-let service_option = "";
 let start = null;
 const timeout_minutes = process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES ? process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES : 30;
 
@@ -48,7 +47,12 @@ function generateIrx() {
 function login() {
     let key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
     let secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
-    let options = "api_login -u " + key + " -P " + secret + getServiceOption();    
+    let options = "api_login -u " + key + "-P " + secret;
+    if (process.env.INPUT_SERVICE_URL) {
+	    let service_url = utils.sanitizeString(process.env.INPUT_SERVICE_URL);
+	    options += " -service_url " + service_url;
+    }
+    
     return executeCommand(`${options}`);
 }
 
@@ -76,9 +80,7 @@ function runAnalysis() {
             return;
         }
 		
-        let serviceOption = getServiceOption();
-
-        executeCommand(`queue_analysis -a ${appId} ${args} ${serviceOption}`)
+        executeCommand(`queue_analysis -a ${appId} ${args}`)
         .then((stdout) => {
             //Get the scan id from stdout and return it.
             return getScanId(stdout);
@@ -93,8 +95,7 @@ function runAnalysis() {
 }
 
 function checkStatus(scanId) {
-    let serviceOption = getServiceOption();
-    return executeCommand(`status -i ${scanId} ${serviceOption}`);
+    return executeCommand(`status -i ${scanId}`);
 }
 
 function waitForAnalysis(scanId) {
@@ -172,15 +173,6 @@ function getScanId(output) {
 
         resolve(matches[0]);
     })
-}
-
-function getServiceOption() {
-    if (process.env.INPUT_SERVICE_URL && service_option.length === 0) {
-	    let service_url = utils.sanitizeString(process.env.INPUT_SERVICE_URL);
-	    service_option = " -service_url " + service_url;
-    }
-
-    return service_option;
 }
 
 module.exports = { generateIrx, login, runAnalysis, waitForAnalysis }
