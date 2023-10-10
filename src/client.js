@@ -56,7 +56,6 @@ function login() {
 	    }
     }
     return executeCommand(`${options}`);
-    }
 }
 
 function runAnalysis() {
