@@ -1,5 +1,5 @@
 /*
-Copyright 2022 HCL America, Inc.
+Copyright 2022, 2023 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -51,10 +51,8 @@ function login() {
     if (process.env.INPUT_SERVICE_URL) {
 	    let service_url = utils.sanitizeString(process.env.INPUT_SERVICE_URL);
 	    options += " -service_url " + service_url;
-	    if (process.env.INPUT_ACCEPTSSL) {
-		    options += " -acceptssl";
-	    }
     }
+    
     return executeCommand(`${options}`);
 }
 
@@ -131,6 +129,10 @@ function waitForAnalysis(scanId) {
 
 function executeCommand(args) {
     return new Promise((resolve, reject) => {
+        if (process.env.INPUT_ACCEPTSSL) {
+            args += " -acceptssl";
+        }
+
         let script = saclientutil.getScript();
         let result = shell.exec(`${script} ${args}`);
         if(result.code === 0) {
