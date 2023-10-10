@@ -134,6 +134,10 @@ function getRequestOptions() {
             options = url.parse(endpoint);
         }
 
+        if (process.env.INPUT_ACCEPTSSL) {
+            options.rejectUnauthorized = false;
+        }
+
         resolve(options);
     });
 }
