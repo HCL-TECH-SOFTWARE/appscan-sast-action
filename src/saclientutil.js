@@ -83,6 +83,9 @@ function downloadClient() {
                 reject(e);
             });
         })
+        .catch((error) => {
+            reject(error);
+        })
     });
 }
 
