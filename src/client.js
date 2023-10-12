@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as eol from 'eol';
+import eol from 'eol';
 import shell from 'shelljs';
-import * as constants  from './constants.js';
-import * as saclientutil from './saclientutil.js';
-import * as utils from './utils.js';
+import constants  from './constants.js';
+import saclientutil from './saclientutil.js';
+import utils from './utils.js';
 
 let start = null;
 const timeout_minutes = process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES ? process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES : 30;
