@@ -1,5 +1,5 @@
 /*
-Copyright 2022 HCL America, Inc.
+Copyright 2022, 2023 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,13 +14,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const fs =  require('fs');
-const HttpsProxyAgent = require('https-proxy-agent');
-const url = require('url');
-const path = require('path');
-const extract = require('extract-zip');
-const https = require('https');
-const os = require('os');
+import * as fs from 'fs';
+import * as HttpsProxyAgent from 'https-proxy-agent';
+import * as url from 'url';
+import * as path from 'path';
+import * as extract from 'extract-zip';
+import * as https from 'https';
+import * as os from 'os';
 const settings = require('./settings');
 const utils = require('./utils');
 const constants = require('./constants');

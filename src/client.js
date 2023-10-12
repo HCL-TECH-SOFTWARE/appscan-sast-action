@@ -14,8 +14,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const eol = require('eol');
-const shell = require('shelljs');
+import * as eol from 'eol';
+import * as shell from 'shelljs';
 const constants = require('./constants');
 const saclientutil = require('./saclientutil');
 const utils = require('./utils');
