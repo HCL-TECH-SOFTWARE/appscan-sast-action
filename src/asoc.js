@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import * as got from 'got';
-const constants = require('./constants');
-const resultProcessor = require('./resultProcessor');
-const settings = require('./settings');
-const utils = require('./utils');
+import * as constants from './constants';
+import * as resultProcessor from './resultProcessor';
+import * as settings from './settings';
+import * as utils from './utils';
 
 let token = null
 

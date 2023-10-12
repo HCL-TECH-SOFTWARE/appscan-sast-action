@@ -21,9 +21,9 @@ import * as path from 'path';
 import * as extract from 'extract-zip';
 import * as https from 'https';
 import * as os from 'os';
-const settings = require('./settings');
-const utils = require('./utils');
-const constants = require('./constants');
+import * as settings from './settings';
+import * as utils from './utils';
+import * as constants from './constants';
 
 let parentDir = os.homedir();
 let script = utils.getOS() === 'win' ? 'appscan.bat' : 'appscan.sh';

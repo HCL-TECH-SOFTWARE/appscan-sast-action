@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import * as core from '@actions/core';
-const constants = require('./constants');
-const client = require('./client');
-const saclientutil = require('./saclientutil');
-const asoc = require('./asoc');
-const settings = require('./settings');
+import * as constants from './constants';
+import * as client from './client';
+import * as saclientutil from './saclientutil';
+import * as asoc from './asoc';
+import * as settings from './settings';
 
 core.info(constants.DOWNLOADING_CLIENT);
 saclientutil.downloadClient()

@@ -16,9 +16,9 @@ limitations under the License.
 
 import * as eol from 'eol';
 import * as shell from 'shelljs';
-const constants = require('./constants');
-const saclientutil = require('./saclientutil');
-const utils = require('./utils');
+import * as constants  from './constants';
+import * as saclientutil from './saclientutil';
+import * as utils from './utils';
 
 let start = null;
 const timeout_minutes = process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES ? process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES : 30;
