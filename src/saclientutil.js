@@ -25,8 +25,14 @@ import * as constants from './constants.js';
 import settings from './settings.js';
 import utils from './utils.js';
 
-let parentDir = os.homedir();
-let script = utils.getOS() === 'win' ? 'appscan.bat' : 'appscan.sh';
+let parentDir = path.join(os.homedir(), '.appscan');
+if(!fs.existsSync(parentDir)) {
+    fs.mkdirSync(parentDir);
+}
+
+let scriptName = utils.getOS() === 'win' ? 'appscan.bat' : 'appscan.sh';
+let clientDir = getClientDir();
+let script = clientDir ? path.join(clientDir, 'bin', scriptName) : undefined;
 
 function downloadClient() {
     return new Promise((resolve, reject) => {
@@ -45,7 +51,7 @@ function downloadClient() {
         zip.on('close', () => {
             extractClient(zipFile)
                 .then(() => {
-                    script = path.join(getClientDir(), 'bin', script);
+                    script = path.join(getClientDir(), 'bin', scriptName);
                     if(fs.existsSync(script)) {
                         resolve(script);
                     }
@@ -193,15 +199,20 @@ function compareVersions(oldVersion, newVersion) {
 }
 
 function getScript() {
-    if(!fs.existsSync(script)) {
-        downloadClient()
-        .then(() => {
-            return script;
-        })
-    }
-    else {
-        return script;
-    }
+    return new Promise((resolve, reject) => {
+        if(!fs.existsSync(script)) {
+            downloadClient()
+            .then(() => {
+                resolve(script);
+            })
+            .catch((error) => {
+                reject(error);
+            })
+        }
+        else {
+            resolve(script);
+        }
+    })
 }
 
 export default { downloadClient, getScript }

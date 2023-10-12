@@ -133,14 +133,19 @@ function executeCommand(args) {
             args += " -acceptssl";
         }
 
-        let script = saclientutil.getScript();
-        let result = shell.exec(`${script} ${args}`);
-        if(result.code === 0) {
-            resolve(result.stdout);
-         }
-         else {
-            reject(result.stderr);
-         }
+        saclientutil.getScript()
+        .then((script) => {
+            let result = shell.exec(`${script} ${args}`);
+            if(result.code === 0) {
+                resolve(result.stdout);
+            }
+            else {
+                reject(result.stderr);
+            }
+        })
+        .catch((error) => {
+            reject(error);
+        })
     });
 }
 
