@@ -15,11 +15,11 @@ limitations under the License.
 */
 
 import * as core from '@actions/core';
-import * as constants from './constants';
-import * as client from './client';
-import * as saclientutil from './saclientutil';
-import * as asoc from './asoc';
-import * as settings from './settings';
+import * as constants from './constants.js';
+import * as client from './client.js';
+import * as saclientutil from './saclientutil.js';
+import * as asoc from './asoc.js';
+import * as settings from './settings.js';
 
 core.info(constants.DOWNLOADING_CLIENT);
 saclientutil.downloadClient()

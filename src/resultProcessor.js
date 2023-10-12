@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as constants from './constants';
+import * as constants from './constants.js';
 
 const Informational = 0;
 const Low = 1;

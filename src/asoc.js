@@ -15,10 +15,10 @@ limitations under the License.
 */
 
 import * as got from 'got';
-import * as constants from './constants';
-import * as resultProcessor from './resultProcessor';
-import * as settings from './settings';
-import * as utils from './utils';
+import * as constants from './constants.js';
+import * as resultProcessor from './resultProcessor.js';
+import * as settings from './settings.js';
+import * as utils from './utils.js';
 
 let token = null
 
