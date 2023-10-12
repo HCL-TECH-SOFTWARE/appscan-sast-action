@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as core from '@actions/core';
+import core from '@actions/core';
 import * as constants from './constants.js';
-import * as client from './client.js';
-import * as saclientutil from './saclientutil.js';
-import * as asoc from './asoc.js';
-import * as settings from './settings.js';
+import client from './client.js';
+import saclientutil from './saclientutil.js';
+import asoc from './asoc.js';
+import settings from './settings.js';
 
 core.info(constants.DOWNLOADING_CLIENT);
 saclientutil.downloadClient()
