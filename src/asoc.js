@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as got from 'got';
+import got from 'got';
 import * as constants from './constants.js';
-import * as resultProcessor from './resultProcessor.js';
-import * as settings from './settings.js';
-import * as utils from './utils.js';
+import resultProcessor from './resultProcessor.js';
+import settings from './settings.js';
+import utils from './utils.js';
 
 let token = null
 
