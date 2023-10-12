@@ -18,7 +18,7 @@ import * as fs from 'fs';
 import * as HttpsProxyAgent from 'https-proxy-agent';
 import * as url from 'url';
 import * as path from 'path';
-import * as extract from 'extract-zip';
+import extract from 'extract-zip';
 import * as https from 'https';
 import * as os from 'os';
 import * as constants from './constants.js';
