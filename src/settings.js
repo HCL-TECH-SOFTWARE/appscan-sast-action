@@ -41,7 +41,7 @@ function getServiceUrl() {
         }
         else {
             serviceUrl = constants.SERVICE_URL;
-            asoc_key = process.env.INPUT_ASOC_KEY;
+            let asoc_key = process.env.INPUT_ASOC_KEY;
             if(asoc_key && asoc_key.startsWith('eu-central')) {
                 serviceUrl += '/eu';
             }
