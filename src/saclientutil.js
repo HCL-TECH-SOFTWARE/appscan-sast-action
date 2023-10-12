@@ -15,7 +15,7 @@ limitations under the License.
 */
 
 import * as fs from 'fs';
-import * as HttpsProxyAgent from 'https-proxy-agent';
+import HttpsProxyAgent from 'https-proxy-agent';
 import * as url from 'url';
 import * as path from 'path';
 import extract from 'extract-zip';
