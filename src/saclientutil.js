@@ -93,13 +93,13 @@ function extractClient(zipFile) {
             return;
         }
 
-        extract(zipFile, {dir: path.dirname(zipFile)}, (err) => {
-            if(err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
+        extract(zipFile, {dir: path.dirname(zipFile)})
+        .then(() => {
+            resolve();
+        })
+        .catch((error) => {
+            reject(error);
+        })
     });
 }
 
