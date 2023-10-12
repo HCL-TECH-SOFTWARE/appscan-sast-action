@@ -48,4 +48,4 @@ function getVersion() {
     return constants.CURRENT_VERSION;
 }
 
-module.exports = { getOS, sanitizeString, getClientType, getVersion }
+export default { getOS, sanitizeString, getClientType, getVersion }

@@ -204,4 +204,4 @@ function getScript() {
     }
 }
 
-module.exports = { downloadClient, getScript }
+export default { downloadClient, getScript }

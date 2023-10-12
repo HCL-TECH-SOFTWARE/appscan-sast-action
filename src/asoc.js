@@ -85,4 +85,4 @@ function getRequestHeaders() {
     }
 }
 
-module.exports = { getScanResults }
+export default { getScanResults }

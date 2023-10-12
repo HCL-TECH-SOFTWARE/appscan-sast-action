@@ -175,4 +175,4 @@ function getScanId(output) {
     })
 }
 
-module.exports = { generateIrx, login, runAnalysis, waitForAnalysis }
+export default { generateIrx, login, runAnalysis, waitForAnalysis }

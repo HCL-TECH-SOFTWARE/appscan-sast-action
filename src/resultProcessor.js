@@ -80,4 +80,4 @@ function getSeverityValue(severity) {
     return severityValue;
 }
 
-module.exports = { processResults }
+export default { processResults }
