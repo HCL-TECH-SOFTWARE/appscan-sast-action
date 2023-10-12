@@ -16,7 +16,7 @@ limitations under the License.
 
 import eol from 'eol';
 import shell from 'shelljs';
-import constants  from './constants.js';
+import * as constants  from './constants.js';
 import saclientutil from './saclientutil.js';
 import utils from './utils.js';
 
