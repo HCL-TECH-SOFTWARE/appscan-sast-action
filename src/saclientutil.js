@@ -21,9 +21,9 @@ import * as path from 'path';
 import * as extract from 'extract-zip';
 import * as https from 'https';
 import * as os from 'os';
-import * as settings from './settings.js';
-import * as utils from './utils.js';
-import * as constants from './constants.js';
+import settings from './settings.js';
+import utils from './utils.js';
+import constants from './constants.js';
 
 let parentDir = os.homedir();
 let script = utils.getOS() === 'win' ? 'appscan.bat' : 'appscan.sh';
