@@ -11,7 +11,7 @@
   "dependencies": {
     "@actions/core": "^1.9.1",
     "eol": "^0.9.1",
-    "extract-zip": "^1.7.0",
+    "extract-zip": "^2.0.1",
     "fs": "0.0.1-security",
     "got": "^12.5.3",
     "https": "^1.0.0",
