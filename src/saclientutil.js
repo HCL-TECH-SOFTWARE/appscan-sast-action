@@ -1,5 +1,5 @@
 /*
-Copyright 2022 HCL America, Inc.
+Copyright 2022, 2023 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,19 +14,25 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const fs =  require('fs');
-const HttpsProxyAgent = require('https-proxy-agent');
-const url = require('url');
-const path = require('path');
-const extract = require('extract-zip');
-const https = require('https');
-const os = require('os');
-const settings = require('./settings');
-const utils = require('./utils');
-const constants = require('./constants');
+import * as fs from 'fs';
+import HttpsProxyAgent from 'https-proxy-agent';
+import * as url from 'url';
+import * as path from 'path';
+import extract from 'extract-zip';
+import * as https from 'https';
+import * as os from 'os';
+import * as constants from './constants.js';
+import settings from './settings.js';
+import utils from './utils.js';
 
-let parentDir = os.homedir();
-let script = utils.getOS() === 'win' ? 'appscan.bat' : 'appscan.sh';
+let parentDir = path.join(os.homedir(), '.appscan');
+if(!fs.existsSync(parentDir)) {
+    fs.mkdirSync(parentDir);
+}
+
+let scriptName = utils.getOS() === 'win' ? 'appscan.bat' : 'appscan.sh';
+let clientDir = getClientDir();
+let script = clientDir ? path.join(clientDir, 'bin', scriptName) : undefined;
 
 function downloadClient() {
     return new Promise((resolve, reject) => {
@@ -45,7 +51,7 @@ function downloadClient() {
         zip.on('close', () => {
             extractClient(zipFile)
                 .then(() => {
-                    script = path.join(getClientDir(), 'bin', script);
+                    script = path.join(getClientDir(), 'bin', scriptName);
                     if(fs.existsSync(script)) {
                         resolve(script);
                     }
@@ -77,6 +83,9 @@ function downloadClient() {
                 reject(e);
             });
         })
+        .catch((error) => {
+            reject(error);
+        })
     });
 }
 
@@ -87,13 +96,13 @@ function extractClient(zipFile) {
             return;
         }
 
-        extract(zipFile, {dir: path.dirname(zipFile)}, (err) => {
-            if(err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
+        extract(zipFile, {dir: path.dirname(zipFile)})
+        .then(() => {
+            resolve();
+        })
+        .catch((error) => {
+            reject(error);
+        })
     });
 }
 
@@ -193,15 +202,20 @@ function compareVersions(oldVersion, newVersion) {
 }
 
 function getScript() {
-    if(!fs.existsSync(script)) {
-        downloadClient()
-        .then(() => {
-            return script;
-        })
-    }
-    else {
-        return script;
-    }
+    return new Promise((resolve, reject) => {
+        if(!fs.existsSync(script)) {
+            downloadClient()
+            .then(() => {
+                resolve(script);
+            })
+            .catch((error) => {
+                reject(error);
+            })
+        }
+        else {
+            resolve(script);
+        }
+    })
 }
 
-module.exports = { downloadClient, getScript }
+export default { downloadClient, getScript }

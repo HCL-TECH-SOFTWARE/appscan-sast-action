@@ -1,5 +1,5 @@
 /*
-Copyright 2022 HCL America, Inc.
+Copyright 2022, 2023 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const constants = require('./constants.js');
+import * as constants from './constants.js';
 
 let serviceUrl = null;
 
@@ -41,7 +41,7 @@ function getServiceUrl() {
         }
         else {
             serviceUrl = constants.SERVICE_URL;
-            asoc_key = process.env.INPUT_ASOC_KEY;
+            let asoc_key = process.env.INPUT_ASOC_KEY;
             if(asoc_key && asoc_key.startsWith('eu-central')) {
                 serviceUrl += '/eu';
             }
@@ -54,4 +54,4 @@ function getScanUrl(scanId) {
     return `${getServiceUrl()}/main/myapps/${process.env.INPUT_APPLICATION_ID}/scans/${scanId}/scanOverview`;
 }
 
-module.exports = { getProxyUrl, getProxyPort, getProxyUser, getProxyPwd, getServiceUrl, getScanUrl }
+export default { getProxyUrl, getProxyPort, getProxyUser, getProxyPwd, getServiceUrl, getScanUrl }

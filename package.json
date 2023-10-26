@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Runs HCL AppScan Static Analyzer.",
   "main": "main.js",
+  "type": "module",
   "scripts": {},
   "keywords": [],
   "author": "",

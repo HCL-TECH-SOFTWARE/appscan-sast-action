@@ -1,5 +1,5 @@
 /*
-Copyright 2022 HCL America, Inc.
+Copyright 2022, 2023 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const got = require('got');
-const constants = require('./constants');
-const resultProcessor = require('./resultProcessor');
-const settings = require('./settings');
-const utils = require('./utils');
+import got from 'got';
+import * as constants from './constants.js';
+import resultProcessor from './resultProcessor.js';
+import settings from './settings.js';
+import utils from './utils.js';
 
 let token = null
 
@@ -85,4 +85,4 @@ function getRequestHeaders() {
     }
 }
 
-module.exports = { getScanResults }
+export default { getScanResults }

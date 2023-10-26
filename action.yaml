@@ -14,8 +14,10 @@ inputs:
     description: 'The url of the AppScan service.'
     required: false
   acceptssl:
-    description: 'Allow connections with invalid/untrusted certificate.'
+    description: 'Allow connections to a service with an untrusted certificate. Recommended for testing purposes only.'
     required: false
+    type: boolean
+    default: false
   application_id:
     description: 'The application id where your scan will appear.'
     required: true

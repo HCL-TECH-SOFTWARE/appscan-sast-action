@@ -14,11 +14,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const eol = require('eol');
-const shell = require('shelljs');
-const constants = require('./constants');
-const saclientutil = require('./saclientutil');
-const utils = require('./utils');
+import eol from 'eol';
+import shell from 'shelljs';
+import * as constants  from './constants.js';
+import saclientutil from './saclientutil.js';
+import utils from './utils.js';
 
 let start = null;
 const timeout_minutes = process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES ? process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES : 30;
@@ -133,14 +133,19 @@ function executeCommand(args) {
             args += " -acceptssl";
         }
 
-        let script = saclientutil.getScript();
-        let result = shell.exec(`${script} ${args}`);
-        if(result.code === 0) {
-            resolve(result.stdout);
-         }
-         else {
-            reject(result.stderr);
-         }
+        saclientutil.getScript()
+        .then((script) => {
+            let result = shell.exec(`${script} ${args}`);
+            if(result.code === 0) {
+                resolve(result.stdout);
+            }
+            else {
+                reject(result.stderr);
+            }
+        })
+        .catch((error) => {
+            reject(error);
+        })
     });
 }
 
@@ -175,4 +180,4 @@ function getScanId(output) {
     })
 }
 
-module.exports = { generateIrx, login, runAnalysis, waitForAnalysis }
+export default { generateIrx, login, runAnalysis, waitForAnalysis }

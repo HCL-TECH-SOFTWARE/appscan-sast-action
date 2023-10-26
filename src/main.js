@@ -1,5 +1,5 @@
 /*
-Copyright 2022 HCL America, Inc.
+Copyright 2022, 2023 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,12 +14,12 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const core = require('@actions/core');
-const constants = require('./constants');
-const client = require('./client');
-const saclientutil = require('./saclientutil');
-const asoc = require('./asoc');
-const settings = require('./settings');
+import core from '@actions/core';
+import * as constants from './constants.js';
+import client from './client.js';
+import saclientutil from './saclientutil.js';
+import asoc from './asoc.js';
+import settings from './settings.js';
 
 core.info(constants.DOWNLOADING_CLIENT);
 saclientutil.downloadClient()
