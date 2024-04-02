@@ -70,5 +70,5 @@ inputs:
     - High
     - Critical
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'src/main.js'
