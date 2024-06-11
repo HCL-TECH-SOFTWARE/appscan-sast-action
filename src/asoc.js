@@ -63,7 +63,7 @@ function getScanResults(scanId) {
 
 function getNonCompliantIssues(scanId) {
     return new Promise((resolve, reject) => {
-        let queryString = '?applyPolicies=All&%24filter=Status%20eq%20%27Open%27%20or%20Status%20eq%20%27InProgress%27%20or%20Status%20eq%20%27Reopened%27%20or%20Status%20eq%20%27New%27&%24apply=groupby%28%28Severity%29%2Caggregate%28%24count%20as%20Count%29%29';
+        let queryString = '?applyPolicies=All&%24top=100&%24apply=filter%28Status%20eq%20%27Open%27%20or%20Status%20eq%20%27InProgress%27%20or%20Status%20eq%20%27Reopened%27%20or%20Status%20eq%20%27New%27%29%2Fgroupby%28%28Severity%29%2Caggregate%28%24count%20as%20Count%29%29';
         let url = settings.getServiceUrl() + constants.API_ISSUES + scanId + queryString;
         got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] } })
         .then((response) => {
