@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const CURRENT_VERSION = '1.0.4';
+const CURRENT_VERSION = '1.0.5';
 const _CURRENT_VERSION = CURRENT_VERSION;
 export { _CURRENT_VERSION as CURRENT_VERSION };
 
