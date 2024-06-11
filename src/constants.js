@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2023 HCL America, Inc.
+Copyright 2022, 2024 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,19 +14,19 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const CURRENT_VERSION = '1.0.3';
+const CURRENT_VERSION = '1.0.4';
 const _CURRENT_VERSION = CURRENT_VERSION;
 export { _CURRENT_VERSION as CURRENT_VERSION };
 
 //Service url and endpoints:
 const _SERVICE_URL = 'https://cloud.appscan.com';
 export { _SERVICE_URL as SERVICE_URL };
-const _SACLIENT_PATH = '/api/SCX/StaticAnalyzer/SAClientUtil?os=';
+const _SACLIENT_PATH = '/api/v4/Tools/SAClientUtil?os=';
 export { _SACLIENT_PATH as SACLIENT_PATH };
-const _API_LOGIN = '/api/V2/Account/ApiKeyLogin';
+const _API_LOGIN = '/api/v4/Account/ApiKeyLogin';
 export { _API_LOGIN as API_LOGIN };
-const _API_SCAN_COUNT_BY_SEVERITY = '/api/v2/Issues/CountBySeverity/scan/';
-export { _API_SCAN_COUNT_BY_SEVERITY as API_SCAN_COUNT_BY_SEVERITY };
+const _API_ISSUES = '/api/v4/Issues/Scan/';
+export { _API_ISSUES as API_ISSUES };
 const _CLIENT_TYPE = 'github-sast';
 export { _CLIENT_TYPE as CLIENT_TYPE };
 
