@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2023 HCL America, Inc.
+Copyright 2022, 2024 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -63,11 +63,12 @@ function getScanResults(scanId) {
 
 function getNonCompliantIssues(scanId) {
     return new Promise((resolve, reject) => {
-        let url = settings.getServiceUrl() + constants.API_SCAN_COUNT_BY_SEVERITY + scanId + '?applyPolicies=All';
+        let queryString = '?applyPolicies=All&%24filter=Status%20eq%20%27Open%27%20or%20Status%20eq%20%27InProgress%27%20or%20Status%20eq%20%27Reopened%27%20or%20Status%20eq%20%27New%27&%24apply=groupby%28%28Severity%29%2Caggregate%28%24count%20as%20Count%29%29';
+        let url = settings.getServiceUrl() + constants.API_ISSUES + scanId + queryString;
         got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] } })
         .then((response) => {
             let responseJson = JSON.parse(response.body);
-            return resultProcessor.processResults(responseJson);
+            return resultProcessor.processResults(responseJson.Items);
         })
         .then((result) => {
             resolve(result);
