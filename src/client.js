@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2023 HCL America, Inc.
+Copyright 2022, 2024 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -160,19 +160,20 @@ function analysisTimedOut() {
 }
 
 function getScanId(output) {
-    return new Promise((resolve, reject) => {
-        let lines = eol.split(output);
-        let scanId = lines[lines.length - 2];
+    return new Promise((resolve) => {
+        let lines = eol.split(output.trim());
+        let scanId = lines[lines.length - 1];
         //Make sure we have a valid scan id.
         let regex = /[0-9a-fA-f]{8}-[0-9a-fA-f]{4}-[0-9a-fA-f]{4}-[0-9a-fA-f]{4}-[0-9a-fA-f]{12}/;
         let matches = scanId.match(regex);
         
         if(!matches) {
-            //If we didn't get a match, check the next line
-            scanId = lines[lines.length - 1];
+            //If we didn't get a match, check the previous line
+            scanId = lines[lines.length - 2];
             matches = scanId.match(regex);
             if(!matches) {
-                return reject(constants.ERROR_BAD_SCAN_ID);
+                //If still no match, log it.
+                return resolve(constants.NO_SCAN_ID);
             }
         }
 
