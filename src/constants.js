@@ -53,6 +53,8 @@ const _TOTAL_ISSUES = 'Total issues: ';
 export { _TOTAL_ISSUES as TOTAL_ISSUES };
 const _ISSUES_COLON = ' issues: ';
 export { _ISSUES_COLON as ISSUES_COLON };
+const _NO_SCAN_ID = 'The scan was submitted, but a problem occurred retrieving the scan id.';
+export { _NO_SCAN_ID as NO_SCAN_ID };
 
 //Error messages:
 const _ERROR_DOWNLOADING_CLIENT = 'An error occurred downloading the SAClientUtil. Status code ';
