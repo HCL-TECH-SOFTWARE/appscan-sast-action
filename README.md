@@ -29,7 +29,8 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
 | scan_name | The name of the scan created in ASoC. | The GitHub repository name |
 | personal_scan | Make this a [personal scan](https://help.hcltechsw.com/appscan/ASoC/appseccloud_scans_personal.html). | false |
 | static_analysis_only | Only run static analysis. Do not run SCA (Software Composition Analysis). | false |
-| open_source_only | Only run SCA (Software Composition Analysis). Do not run static analysis. | false
+| open_source_only | Only run SCA (Software Composition Analysis). Do not run static analysis. | false |
+| secrets_only | Only scan for secrets. Do not run static analysis or software composition analysis. | false |
 | scan_build_outputs | By default only source code files will be analyzed. Enabling this option will result in build output files for Java and .NET to be analyzed (.jar/.war/.ear/.dll/.exe). Additionally, Maven, Gradle, and Visual Studio solutions will be built if the build environment is available. | false |
 | wait_for_analysis | By default this action will initiate the scan in ASoC, but it will not wait for analysis to complete. Enabling this option will cause the action to wait for analysis to complete. Note that this will cause the action to run longer. | false |
 | analysis_timeout_minutes | If **wait_for_analysis** is true, the number of minutes to wait for analysis to complete. | 30 minutes |
@@ -48,7 +49,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Run AppScan SAST scan
-        uses: HCL-TECH-SOFTWARE/appscan-sast-action@v1.0.6
+        uses: HCL-TECH-SOFTWARE/appscan-sast-action@v1.0.7
         with:
           asoc_key: ${{secrets.ASOC_KEY}}
           asoc_secret: ${{secrets.ASOC_SECRET}}
