@@ -38,6 +38,7 @@ function generateIrx() {
     }
     if(isArgumentEnabled(process.env.INPUT_SECRETS_ONLY)) {
         args += '-so ';
+        args += '-sao ';
     }
 	
     if(isArgumentEnabled(process.env.INPUT_SCAN_BUILD_OUTPUTS)) {
