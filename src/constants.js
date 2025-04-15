@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2024 HCL America, Inc.
+Copyright 2022, 2025 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const CURRENT_VERSION = '1.0.5';
+const CURRENT_VERSION = '1.0.7';
 const _CURRENT_VERSION = CURRENT_VERSION;
 export { _CURRENT_VERSION as CURRENT_VERSION };
 

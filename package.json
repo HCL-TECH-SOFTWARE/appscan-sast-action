@@ -1,6 +1,6 @@
 {
   "name": "appscan-static-analyzer-action",
-  "version": "1.0.0",
+  "version": "1.0.7",
   "description": "Runs HCL AppScan Static Analyzer.",
   "main": "main.js",
   "type": "module",

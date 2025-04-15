@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2024 HCL America, Inc.
+Copyright 2022, 2025 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,6 +35,10 @@ function generateIrx() {
     }
     if(isArgumentEnabled(process.env.INPUT_OPEN_SOURCE_ONLY)) {
         args += '-oso ';
+    }
+    if(isArgumentEnabled(process.env.INPUT_SECRETS_ONLY)) {
+        args += '-so ';
+        args += '-sao ';
     }
 	
     if(isArgumentEnabled(process.env.INPUT_SCAN_BUILD_OUTPUTS)) {
