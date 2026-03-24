@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2023 HCL America, Inc.
+Copyright 2022, 2026 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@ limitations under the License.
 
 import * as fs from 'fs';
 import HttpsProxyAgent from 'https-proxy-agent';
-import * as url from 'url';
+import { URL } from 'url';
 import * as path from 'path';
 import extract from 'extract-zip';
 import * as https from 'https';
@@ -137,10 +137,10 @@ function getRequestOptions() {
                     port: proxyPort
                 }
             }			
-            options = url.parse(endpoint);
+            options = new URL(endpoint);
             options.agent = new HttpsProxyAgent(proxy);
         } else { // Normal connection without proxy
-            options = url.parse(endpoint);
+            options = new URL(endpoint);
         }
 
         if (process.env.INPUT_ACCEPTSSL) {
