@@ -37,8 +37,8 @@ saclientutil.downloadClient()
 })
 .then((scanIds) => {
     core.info(constants.IRX_SUBMIT_SUCCESS);
-    sastScanId = scanIds[0];
-    scaScanId = scanIds[1];
+    sastScanId = scanIds.sastScanId;
+    scaScanId = scanIds.scaScanId;
 
     if(sastScanId) {
         core.info(`SAST Scan ID: ${sastScanId}`)
