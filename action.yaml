@@ -30,6 +30,7 @@ inputs:
   scan_name:
     description: 'The name of the scan created in the AppScan service.'
     required: false
+    default: ${{ github.event.repository.name }}
   personal_scan:
     description: 'Make the scan a personal scan.'
     required: false
