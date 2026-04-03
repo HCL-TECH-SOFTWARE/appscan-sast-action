@@ -15,7 +15,7 @@
     "fs": "0.0.1-security",
     "got": "^12.5.3",
     "https": "^1.0.0",
-    "https-proxy-agent": "5.0.0",
+    "https-proxy-agent": "^5.0.0",
     "shelljs": "^0.10.0"
   }
 }

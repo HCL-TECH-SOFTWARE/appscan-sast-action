@@ -143,7 +143,7 @@ function getRequestOptions() {
             options = new URL(endpoint);
         }
 
-        if (process.env.INPUT_ACCEPTSSL) {
+        if (settings.shouldDisableSSL()) {
             options.rejectUnauthorized = false;
         }
 

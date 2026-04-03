@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2023 HCL America, Inc.
+Copyright 2022, 2026 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ function getOS() {
 
 function sanitizeString(input) {
     if(input) {
-        input = input.replace('[^a-zA-Z0-9\\-\\._:\\/]', '');
+        input = input.replace(/[^a-zA-Z0-9\-\._:\/\+=]/g, '');
     }
     return input;
 }

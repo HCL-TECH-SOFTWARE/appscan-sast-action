@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2025 HCL America, Inc.
+Copyright 2022, 2026 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,6 +19,7 @@ import shell from 'shelljs';
 import * as constants  from './constants.js';
 import saclientutil from './saclientutil.js';
 import utils from './utils.js';
+import settings from './settings.js';
 
 let start = null;
 const timeout_minutes = process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES ? process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES : 30;
@@ -133,7 +134,7 @@ function waitForAnalysis(scanId) {
 
 function executeCommand(args) {
     return new Promise((resolve, reject) => {
-        if (process.env.INPUT_ACCEPTSSL) {
+        if (settings.shouldDisableSSL()) {
             args += " -acceptssl";
         }
 

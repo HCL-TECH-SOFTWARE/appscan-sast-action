@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2025 HCL America, Inc.
+Copyright 2022, 2026 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ export { _CURRENT_VERSION as CURRENT_VERSION };
 //Service url and endpoints:
 const _SERVICE_URL = 'https://cloud.appscan.com';
 export { _SERVICE_URL as SERVICE_URL };
+const _EU_SERVICE_URL = 'https://eu.cloud.appscan.com';
+export { _EU_SERVICE_URL as EU_SERVICE_URL };
 const _SACLIENT_PATH = '/api/v4/Tools/SAClientUtil?os=';
 export { _SACLIENT_PATH as SACLIENT_PATH };
 const _API_LOGIN = '/api/v4/Account/ApiKeyLogin';
