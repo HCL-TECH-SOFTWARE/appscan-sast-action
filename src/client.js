@@ -95,6 +95,8 @@ function executeCommand(args) {
             args += " -acceptssl";
         }
 
+        args += "-Dservice_url=" + settings.getServiceUrl();
+
         saclientutil.getScript()
         .then((script) => {
             let result = shell.exec(`${script} ${args}`);
