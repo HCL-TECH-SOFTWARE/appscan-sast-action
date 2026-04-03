@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import * as asoc from './asoc.js';
+import asoc from './asoc.js';
 import * as constants from './constants.js';
 
 const Informational = 0;
@@ -26,6 +26,7 @@ const Critical = 4;
 const failForNonCompliance = process.env.INPUT_FAIL_FOR_NONCOMPLIANCE === 'true';
 const failureThreshold = getSeverityValue(process.env.INPUT_FAILURE_THRESHOLD);
 let shouldFail = false;
+let summary = '';
 
 function processScanResults(sastScanId, scaScanId) {
     return new Promise((resolve, reject) => {
@@ -35,17 +36,28 @@ function processScanResults(sastScanId, scaScanId) {
         asoc.getScanResults(sastScanId)
         .then((sastResults) => {
             sastScanResults = sastResults;
+            return processResults(sastScanResults, 'SAST');
+        })
+        .then(() => {
             return asoc.getScanResults(scaScanId);
         })
         .then((scaResults) => {
             scaScanResults = scaResults;
+            return processResults(scaScanResults, 'SCA');
+        })
+        .then(() => {
             return aggregateResults(sastScanResults, scaScanResults);
         })
         .then((aggregatedResults) => {
-            return processResults(aggregatedResults);
+            return processResults(aggregatedResults, 'Combined');
         })
-        .then((output) => {
-            resolve(output);
+        .then(() => {
+            if(shouldFail) {
+                return reject('\n' + summary + '\n' + constants.ERROR_NONCOMPLIANT_ISSUES);
+            }
+            else {
+                return resolve(summary);
+            }
         })
         .catch((error) => {
             reject(error);
@@ -53,8 +65,12 @@ function processScanResults(sastScanId, scaScanId) {
     })
 }
 
-function processResults(json) {
+function processResults(json, label) {
     return new Promise((resolve, reject) => {
+        if(json == null || json.Items == null) {
+            return resolve();
+        }
+
         let totalFindings = 0;
         let count = 0;
         let output = '';
@@ -62,15 +78,12 @@ function processResults(json) {
         for(var i = 0; i < json.length; i++) {
             let element = json[i];
             totalFindings += element.Count;
-            output = element.Severity + constants.ISSUES_COLON + element.Count + '\n' + output;
+            output = '\t' + element.Severity + constants.ISSUES_COLON + element.Count + '\n' + output;
             setShouldFail(element.Severity, element.Count);
             if(++count === json.length) {
-                output = constants.TOTAL_ISSUES + totalFindings + '\n' + output;
-                if(shouldFail) {
-                    return reject('\n' + output + '\n' + constants.ERROR_NONCOMPLIANT_ISSUES);
-                }
-
-                return resolve(output);
+                output = '\t' + constants.TOTAL_ISSUES + totalFindings + '\n' + output;
+                summary += label + ' Security Issues\n' + output + '\n';
+                return resolve();
             }
         }
     });
@@ -110,7 +123,7 @@ function getSeverityValue(severity) {
 function aggregateResults(result1, result2) {
     return new Promise((resolve) => {
         if (!result1 || !result2) {
-            return resolve(result1 || result2);
+            return resolve([]]);
         }
 
         // Create a map to store severity counts
