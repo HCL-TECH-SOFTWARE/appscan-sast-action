@@ -67,10 +67,6 @@ function processScanResults(sastScanId, scaScanId) {
 
 function processResults(json, label) {
     return new Promise((resolve, reject) => {
-        if(json == null || json.Items == null) {
-            return resolve();
-        }
-
         let totalFindings = 0;
         let count = 0;
         let output = '';
