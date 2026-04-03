@@ -21,6 +21,7 @@ import saclientutil from './saclientutil.js';
 import asoc from './asoc.js';
 import settings from './settings.js';
 import statusChecker from './statusChecker.js';
+import resultProcessor from './resultProcessor.js';
 
 let sastScanId;
 let scaScanId;
@@ -63,7 +64,7 @@ saclientutil.downloadClient()
         return resolve();
     }
     core.info(constants.GETTING_RESULTS);
-    return asoc.getScanResults(scanId);
+    return resultProcessor.processScanResults(sastScanId, scaScanId);
 })
 .then((results) => {
     if(results) {
