@@ -123,7 +123,7 @@ function getSeverityValue(severity) {
 function aggregateResults(result1, result2) {
     return new Promise((resolve) => {
         if (!result1 || !result2) {
-            return resolve([]]);
+            return resolve([]);
         }
 
         // Create a map to store severity counts
