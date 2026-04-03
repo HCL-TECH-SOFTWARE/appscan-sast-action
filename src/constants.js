@@ -29,6 +29,14 @@ const _API_LOGIN = '/api/v4/Account/ApiKeyLogin';
 export { _API_LOGIN as API_LOGIN };
 const _API_ISSUES = '/api/v4/Issues/Scan/';
 export { _API_ISSUES as API_ISSUES };
+const _API_FILE_UPLOAD = '/api/v4/FileUpload';
+export { _API_FILE_UPLOAD as API_FILE_UPLOAD };
+const _API_SAST_SCAN = '/api/v4/Scans/Sast';
+export { _API_SAST_SCAN as API_SAST_SCAN };
+const _API_SCA_SCAN = '/api/v4/Scans/Sca';
+export { _API_SCA_SCAN as API_SCA_SCAN };
+const _API_SCAN_EXECUTIONS = '/api/v4/Scans/{s}/Executions';
+export { _API_SCAN_EXECUTIONS as API_SCAN_EXECUTIONS };
 const _CLIENT_TYPE = 'github-sast';
 export { _CLIENT_TYPE as CLIENT_TYPE };
 

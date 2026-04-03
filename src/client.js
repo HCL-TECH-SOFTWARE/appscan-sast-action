@@ -49,60 +49,6 @@ function generateIrx() {
     return executeCommand(`prepare ${args}`);
 }
 
-function login() {
-    let key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
-    let secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
-    let options = "api_login -u " + key + " -P " + secret;
-    if (process.env.INPUT_SERVICE_URL) {
-	    let service_url = utils.sanitizeString(process.env.INPUT_SERVICE_URL);
-	    options += " -service_url " + service_url;
-    }
-    
-    return executeCommand(`${options}`);
-}
-
-function runAnalysis() {
-    return new Promise((resolve, reject) => {
-        let args = '';
-
-        let scanNameOption = utils.sanitizeString(process.env.INPUT_SCAN_NAME);
-        if(scanNameOption) {
-            args += '-n \"' + scanNameOption + '\"';
-        }
-
-        if(isArgumentEnabled(process.env.INPUT_PERSONAL_SCAN)) {
-            args += ' -ps';
-        }
-		
-        let commentOption = utils.sanitizeString(process.env.INPUT_COMMENT);
-        if (commentOption) {
-            args += ' -c \"' + commentOption + '\"';
-        }
-
-        let appId = utils.sanitizeString(process.env.INPUT_APPLICATION_ID);
-        if(!appId) {
-            reject(constants.ERROR_INVALID_APP_ID);
-            return;
-        }
-		
-        executeCommand(`queue_analysis -a ${appId} ${args}`)
-        .then((stdout) => {
-            //Get the scan id from stdout and return it.
-            return getScanId(stdout);
-        })
-        .then((scanId) => {
-            resolve(scanId);
-        })
-        .catch((error) => {
-            reject(error);
-        })
-    });
-}
-
-function checkStatus(scanId) {
-    return executeCommand(`status -i ${scanId}`);
-}
-
 function waitForAnalysis(scanId) {
     return new Promise((resolve, reject) => {
         if(!start) {
@@ -164,26 +110,4 @@ function analysisTimedOut() {
     return minutes > timeout_minutes;
 }
 
-function getScanId(output) {
-    return new Promise((resolve) => {
-        let lines = eol.split(output.trim());
-        let scanId = lines[lines.length - 1];
-        //Make sure we have a valid scan id.
-        let regex = /[0-9a-fA-f]{8}-[0-9a-fA-f]{4}-[0-9a-fA-f]{4}-[0-9a-fA-f]{4}-[0-9a-fA-f]{12}/;
-        let matches = scanId.match(regex);
-        
-        if(!matches) {
-            //If we didn't get a match, check the previous line
-            scanId = lines[lines.length - 2];
-            matches = scanId.match(regex);
-            if(!matches) {
-                //If still no match, log it.
-                return resolve(constants.NO_SCAN_ID);
-            }
-        }
-
-        resolve(matches[0]);
-    })
-}
-
-export default { generateIrx, login, runAnalysis, waitForAnalysis }
+export default { generateIrx, waitForAnalysis }

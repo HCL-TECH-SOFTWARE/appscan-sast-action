@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2023 HCL America, Inc.
+Copyright 2022, 2026 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import * as asoc from './asoc.js';
 import * as constants from './constants.js';
 
 const Informational = 0;
@@ -25,6 +26,32 @@ const Critical = 4;
 const failForNonCompliance = process.env.INPUT_FAIL_FOR_NONCOMPLIANCE === 'true';
 const failureThreshold = getSeverityValue(process.env.INPUT_FAILURE_THRESHOLD);
 let shouldFail = false;
+
+function processScanResults(sastScanId, scaScanId) {
+    return new Promise((resolve, reject) => {
+        let sastScanResults = [];
+        let scaScanResults = [];
+
+        asoc.getScanResults(sastScanId)
+        .then((sastResults) => {
+            sastScanResults = sastResults;
+            return asoc.getScanResults(scaScanId);
+        })
+        .then((scaResults) => {
+            scaScanResults = scaResults;
+            return aggregateResults(sastScanResults, scaScanResults);
+        })
+        .then((aggregatedResults) => {
+            return processResults(aggregatedResults);
+        })
+        .then((output) => {
+            resolve(output);
+        })
+        .catch((error) => {
+            reject(error);
+        })
+    })
+}
 
 function processResults(json) {
     return new Promise((resolve, reject) => {
@@ -80,4 +107,42 @@ function getSeverityValue(severity) {
     return severityValue;
 }
 
-export default { processResults }
+function aggregateResults(result1, result2) {
+    return new Promise((resolve) => {
+        if (!result1 || !result2) {
+            return resolve(result1 || result2);
+        }
+
+        // Create a map to store severity counts
+        const severityMap = {};
+        
+        // Process first object's items
+        if (result1.Items && Array.isArray(result1.Items)) {
+            result1.Items.forEach(item => {
+            severityMap[item.Severity] = (severityMap[item.Severity] || 0) + item.Count;
+            });
+        }
+
+        // Process second object's items
+        if (result2.Items && Array.isArray(result2.Items)) {
+            result2.Items.forEach(item => {
+            severityMap[item.Severity] = (severityMap[item.Severity] || 0) + item.Count;
+            });
+        }
+
+        // Convert map back to array
+        const combinedItems = Object.keys(severityMap).map(severity => ({
+            Severity: severity,
+            Count: severityMap[severity]
+        }));
+
+        // Return combined result
+        let combinedResult = {
+            Items: combinedItems,
+            Count: combinedItems.length
+        };
+        resolve(combinedResult);
+    });
+}
+
+export default { processScanResults }

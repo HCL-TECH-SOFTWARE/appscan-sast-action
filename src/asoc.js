@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2024 HCL America, Inc.
+Copyright 2022, 2026 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,13 +14,21 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import * as core from '@actions/core';
 import got from 'got';
 import * as constants from './constants.js';
-import resultProcessor from './resultProcessor.js';
 import settings from './settings.js';
 import utils from './utils.js';
+import FormData from 'form-data';
 
 let token = null
+let key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
+let secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
+let enableSSL = !settings.shouldDisableSSL;
+
+//These should already be masked, but just in case the user hardcoded values.
+core.setSecret(key);
+core.setSecret(secret);
 
 function login(key, secret) {
     return new Promise((resolve, reject) => {
@@ -31,6 +39,7 @@ function login(key, secret) {
                 if(response.statusCode === 200 || response.statusCode === 201) {
                     let responseJson = JSON.parse(response.body);
                     token = responseJson.Token;
+                    core.setSecret(token);
                     resolve();
                 }
                 else {
@@ -49,8 +58,10 @@ function login(key, secret) {
 
 function getScanResults(scanId) {
     return new Promise((resolve, reject) => {
-        let key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
-        let secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
+        if(!scanId) {
+            return resolve([]);
+        }
+        
         login(key, secret)
         .then(() => {
             return resolve(getNonCompliantIssues(scanId));
@@ -68,10 +79,7 @@ function getNonCompliantIssues(scanId) {
         got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] } })
         .then((response) => {
             let responseJson = JSON.parse(response.body);
-            return resultProcessor.processResults(responseJson.Items);
-        })
-        .then((result) => {
-            resolve(result);
+            resolve(responseJson);
         })
         .catch((error) => {
             reject(error);
@@ -82,8 +90,152 @@ function getNonCompliantIssues(scanId) {
 function getRequestHeaders() {
     return {
         Authorization: "Bearer " + token,
-        Accept: "application/json"
+        Accept: "application/json",
+        ClientType: utils.getClientType()
     }
 }
 
-export default { getScanResults }
+function runAnalysis(file) {
+    return new Promise((resolve, reject) => {
+        login(key, secret)
+        .then(() => {
+            return uploadFile(file);
+        })
+        .then((fileId) => {
+            return submitScans(fileId);
+        })
+        .then((scanIds) => {
+            resolve(scanIds);
+        })
+        .catch((error) => {
+            reject(error);
+        });
+    });
+}
+
+function uploadFile(file) {
+    return new Promise((resolve, reject) => {
+        const form = new FormData();
+        form.append('uploadedFile', fs.createReadStream(file))
+        let url = settings.getServiceUrl() + constants.API_FILE_UPLOAD;
+        
+        got.post(url, { body: form, headers: getRequestHeaders(), retry: { limit: 3, methods: ["GET", "POST"] }, https: { rejectUnauthorized: enableSSL } })
+        .then((response) => {
+            let responseJson = JSON.parse(response.body);
+            resolve(responseJson.FileId);
+        })
+        .catch((error) => {
+            reject(error);
+        })
+    });
+}
+
+function submitScans(fileId) {
+    let sastScanId;
+    return new Promise((resolve, reject) => {
+        submitSastScan(fileId)
+        .then((sastScan) => {
+            sastScanId = sastScan;
+            return submitScaScan(fileId);
+        })
+        .then((scaScanId) => {
+            resolve({ sastScanId, scaScanId });
+        })
+        .catch((error) => {
+            reject(error);
+        })
+    });
+}
+
+function submitScan(url, fileId) {
+    return new Promise((resolve, reject) => {
+        let appId = utils.sanitizeString(process.env.INPUT_APPLICATION_ID);
+        let scanName = utils.sanitizeString(process.env.INPUT_SCAN_NAME);
+
+        let body = {
+            "ApplicationFileId": fileId,
+            "AppId": appId,
+            "ScanName": scanName,
+            "Personal": process.env.INPUT_PERSONAL_SCAN === 'true',
+            "FullyAutomatic": true,
+            "EnableMailNotification": false
+        };
+
+        got.post(url, { json: body, headers: getRequestHeaders(), retry: { limit: 3, methods: ["GET", "POST"] }, https: { rejectUnauthorized: enableSSL } })
+        .then((response) => {
+            let responseJson = JSON.parse(response.body);
+            resolve(responseJson.Id);
+        })
+        .catch((error) => {
+            reject(error);
+        })
+    })
+}
+
+function submitScaScan(fileId) {
+    return new Promise((resolve, reject) => {
+        if(process.env.INPUT_STATIC_ANALYSIS_ONLY === 'true') {
+            return resolve();
+        }
+
+        let url = settings.getServiceUrl();
+        if(process.env.INPUT_SCA_SCAN_ID) {
+            let scanId = utils.sanitizeString(process.env.INPUT_SCA_SCAN_ID);
+            url += constants.API_SCAN_EXECUTIONS.replace('{s}', scanId);
+        }
+        else {
+            url += constants.API_SCA_SCAN;
+        }
+        submitScan(url, fileId)
+        .then((scanId) => {
+            resolve(scanId);
+        })
+        .catch((error) => {
+            reject(error);
+        })
+    })
+}
+
+function submitSastScan(fileId) {
+    return new Promise((resolve, reject) => {
+        if(process.env.INPUT_OPEN_SOURCE_ONLY === 'true') {
+            return resolve();
+        }
+
+        let url = settings.getServiceUrl();
+        if(process.env.INPUT_SAST_SCAN_ID) {
+            let scanId = utils.sanitizeString(process.env.INPUT_SAST_SCAN_ID);
+            url += constants.API_SCAN_EXECUTIONS.replace('{s}', scanId);
+        }
+        else {
+            url += constants.API_SAST_SCAN;
+        }
+        submitScan(url, fileId)
+        .then((scanId) => {
+            resolve(scanId);
+        })
+        .catch((error) => {
+            reject(error);
+        })
+    })
+}
+
+async function getScaScanStatus(scanId) {
+    let url = settings.getServiceUrl() + constants.API_SCA_SCAN + '/' + scanId;
+    let status = await getScanStatus(url, scanId);
+    return status;
+}
+
+async function getSastScanStatus(scanId) {
+    let url = settings.getServiceUrl() + constants.API_SAST_SCAN + '/' + scanId;
+    let status = await getScanStatus(url, scanId);
+    return status;
+}
+
+async function getScanStatus(url, scanId) {
+    let response = await got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ["GET"] }, https: { rejectUnauthorized: enableSSL } })
+    let responseJson = JSON.parse(response.body);
+    return responseJson.LatestExecution.Status;
+}
+
+export default { getScanResults, runAnalysis, getSastScanStatus, getScaScanStatus }

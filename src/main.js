@@ -20,6 +20,10 @@ import client from './client.js';
 import saclientutil from './saclientutil.js';
 import asoc from './asoc.js';
 import settings from './settings.js';
+import statusChecker from './statusChecker.js';
+
+let sastScanId;
+let scaScanId;
 
 core.info(constants.DOWNLOADING_CLIENT);
 saclientutil.downloadClient()
@@ -28,45 +32,46 @@ saclientutil.downloadClient()
     return client.generateIrx();
 })
 .then(() => {
-    core.info(constants.AUTHENTICATE_ASOC);
-    return client.login();
-})
-.then(() => {
     core.info(constants.SUBMITTING_IRX);
-    return client.runAnalysis();
+    return asoc.runAnalysis();
 })
-.then((scanId) => {
-    return new Promise((resolve, reject) => {
-        core.info(constants.IRX_SUBMIT_SUCCESS);
-        core.info(`Scan ID: ${scanId}`)
-        core.info(`${settings.getScanUrl(scanId)}`);
+.then((scanIds) => {
+    core.info(constants.IRX_SUBMIT_SUCCESS);
+    sastScanId = scanIds[0];
+    scaScanId = scanIds[1];
 
-        if(process.env.INPUT_WAIT_FOR_ANALYSIS !== 'true') {
-            return resolve();
-        }
+    if(sastScanId) {
+        core.info(`SAST Scan ID: ${sastScanId}`)
+        core.info(`${settings.getScanUrl(sastScanId)}`);
+    }
 
-        core.info(constants.WAIT_FOR_ANALYSIS);
-        client.waitForAnalysis(scanId)
-        .then((timedOut) => {
-            if(timedOut) {
-                core.warning(constants.ANALYSIS_TIMEOUT);
-                return resolve();
-            }
-            core.info(constants.GETTING_RESULTS);
-            return asoc.getScanResults(scanId);
-        })
-        .then((results) => {
-            if(results) {
-                core.info(results);
-                core.info(constants.ANALYSIS_SUCCESS);
-            }
-            resolve();
-        })
-        .catch((error) => {
-            return reject(error);
-        })
-    });
+    if(scaScanId) {
+        core.info(`SCA Scan ID: ${scaScanId}`)
+        core.info(`${settings.getScanUrl(scaScanId)}`);
+    }
+    
+    if(process.env.INPUT_WAIT_FOR_ANALYSIS !== 'true') {
+        return resolve();
+    }
+
+    core.info(constants.WAIT_FOR_ANALYSIS);
+    return statusChecker.waitForAnalysis(sastScanId, scaScanId);
+})
+.then((timedOut) => {
+    if(timedOut) {
+        core.warning(constants.ANALYSIS_TIMEOUT);
+        return resolve();
+    }
+    core.info(constants.GETTING_RESULTS);
+    return asoc.getScanResults(scanId);
+})
+.then((results) => {
+    if(results) {
+        core.info(results);
+        core.info(constants.ANALYSIS_SUCCESS);
+    }
+    resolve();
 })
 .catch((error) => {
-    core.setFailed(error);
+    return reject(error);
 })

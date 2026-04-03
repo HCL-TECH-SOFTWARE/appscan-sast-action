@@ -21,6 +21,12 @@ inputs:
   application_id:
     description: 'The application id where your scan will appear.'
     required: true
+  sast_scan_id:
+    description: 'The ID of an existing SAST scan to use for running a rescan.'
+    required: false
+  sca_scan_id:
+    description: 'The ID of an existing SCA scan to use for running a rescan.'
+    required: false
   scan_name:
     description: 'The name of the scan created in the AppScan service.'
     required: false
