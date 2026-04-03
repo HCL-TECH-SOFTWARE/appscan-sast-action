@@ -31,9 +31,9 @@ saclientutil.downloadClient()
     core.info(constants.GENERATING_IRX);
     return client.generateIrx();
 })
-.then(() => {
+.then((irx) => {
     core.info(constants.SUBMITTING_IRX);
-    return asoc.runAnalysis();
+    return asoc.runAnalysis(irx);
 })
 .then((scanIds) => {
     core.info(constants.IRX_SUBMIT_SUCCESS);
@@ -73,5 +73,5 @@ saclientutil.downloadClient()
     resolve();
 })
 .catch((error) => {
-    return reject(error);
+    core.error(error);
 })

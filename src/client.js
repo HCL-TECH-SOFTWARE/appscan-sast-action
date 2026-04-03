@@ -14,8 +14,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import eol from 'eol';
 import shell from 'shelljs';
+import * as fs from 'fs';
+import * as path from 'path';
 import * as constants  from './constants.js';
 import saclientutil from './saclientutil.js';
 import utils from './utils.js';
@@ -29,24 +30,34 @@ process.env.APPSCAN_IRGEN_CLIENT = 'GitHubSast';
 process.env.IRGEN_CLIENT_PLUGIN_VERSION = utils.getVersion();
 
 function generateIrx() {
-    let args = '-sco '; //Default to running source code only scans.
+    return new Promise((resolve, reject) => {
+        let args = '-sco '; //Default to running source code only scans.
 
-    if(isArgumentEnabled(process.env.INPUT_STATIC_ANALYSIS_ONLY)) {
-        args += '-sao ';
-    }
-    if(isArgumentEnabled(process.env.INPUT_OPEN_SOURCE_ONLY)) {
-        args += '-oso ';
-    }
-    if(isArgumentEnabled(process.env.INPUT_SECRETS_ONLY)) {
-        args += '-so ';
-        args += '-sao ';
-    }
-	
-    if(isArgumentEnabled(process.env.INPUT_SCAN_BUILD_OUTPUTS)) {
-        args = args.replace('-sco ', '');
-    }
+        if(isArgumentEnabled(process.env.INPUT_STATIC_ANALYSIS_ONLY)) {
+            args += '-sao ';
+        }
+        if(isArgumentEnabled(process.env.INPUT_OPEN_SOURCE_ONLY)) {
+            args += '-oso ';
+        }
+        if(isArgumentEnabled(process.env.INPUT_SECRETS_ONLY)) {
+            args += '-so ';
+            args += '-sao ';
+        }
+        
+        if(isArgumentEnabled(process.env.INPUT_SCAN_BUILD_OUTPUTS)) {
+            args = args.replace('-sco ', '');
+        }
 
-    return executeCommand(`prepare ${args}`);
+        executeCommand(`prepare ${args}`)
+        .then(() => {
+            const files = fs.readdirSync(__dirname)
+                .filter(file => path.extname(file).toLowerCase() === ".irx");
+            resolve(files[0]);
+        })
+        .catch((error) => {
+            reject(error);
+        });
+    })
 }
 
 function waitForAnalysis(scanId) {
