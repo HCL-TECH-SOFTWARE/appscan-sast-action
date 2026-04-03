@@ -1,4 +1,4 @@
-import * as asoc from './asoc.js';
+import asoc from './asoc.js';
 
 let start = null;
 const timed_out = 'timed_out';
