@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import * as core from '@actions/core';
+import * as fs from 'fs';
 import got from 'got';
 import * as constants from './constants.js';
 import settings from './settings.js';
