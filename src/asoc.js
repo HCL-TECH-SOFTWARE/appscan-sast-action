@@ -23,19 +23,19 @@ import utils from './utils.js';
 import FormData from 'form-data';
 
 let token = null
-let key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
-let secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
-let enableSSL = !settings.shouldDisableSSL;
+const key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
+const secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
+const enableSSL = !settings.shouldDisableSSL;
 
 //These should already be masked, but just in case the user hardcoded values.
 core.setSecret(key);
 core.setSecret(secret);
 
-function login(key, secret) {
+function login() {
     return new Promise((resolve, reject) => {
         if(key && secret) {
             let url = settings.getServiceUrl() + constants.API_LOGIN;
-            got.post(url, { json: { 'keyId': key, 'keySecret': secret, 'clientType': utils.getClientType() }, retry: { limit: 3, methods: ['GET', 'POST'] } })
+            got.post(url, { json: { 'keyId': key, 'keySecret': secret, 'clientType': utils.getClientType() }, retry: { limit: 3, methods: ['GET', 'POST'] }, https: { rejectUnauthorized: enableSSL } })
             .then((response) => {
                 if(response.statusCode === 200 || response.statusCode === 201) {
                     let responseJson = JSON.parse(response.body);
@@ -63,7 +63,7 @@ function getScanResults(scanId) {
             return resolve([]);
         }
         
-        login(key, secret)
+        login()
         .then(() => {
             return resolve(getNonCompliantIssues(scanId));
         })
@@ -77,7 +77,7 @@ function getNonCompliantIssues(scanId) {
     return new Promise((resolve, reject) => {
         let queryString = '?applyPolicies=All&%24top=100&%24apply=filter%28Status%20eq%20%27Open%27%20or%20Status%20eq%20%27InProgress%27%20or%20Status%20eq%20%27Reopened%27%20or%20Status%20eq%20%27New%27%29%2Fgroupby%28%28Severity%29%2Caggregate%28%24count%20as%20Count%29%29';
         let url = settings.getServiceUrl() + constants.API_ISSUES + scanId + queryString;
-        got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] } })
+        got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] }, https: { rejectUnauthorized: enableSSL } })
         .then((response) => {
             let responseJson = JSON.parse(response.body);
             resolve(responseJson);
@@ -98,7 +98,7 @@ function getRequestHeaders() {
 
 function runAnalysis(file) {
     return new Promise((resolve, reject) => {
-        login(key, secret)
+        login()
         .then(() => {
             return uploadFile(file);
         })
@@ -175,7 +175,9 @@ function submitScan(url, fileId) {
 
 function submitScaScan(fileId) {
     return new Promise((resolve, reject) => {
-        if(process.env.INPUT_STATIC_ANALYSIS_ONLY === 'true') {
+        if(process.env.INPUT_STATIC_ANALYSIS_ONLY === 'true'
+            || process.env.INPUT_SECRETS_ONLY === 'true')
+        {
             return resolve();
         }
 

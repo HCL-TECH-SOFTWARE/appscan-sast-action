@@ -74,4 +74,5 @@ saclientutil.downloadClient()
 })
 .catch((error) => {
     core.error(error);
+    core.setFailed(error);
 })
