@@ -50,7 +50,7 @@ function generateIrx() {
 
         executeCommand(`prepare ${args}`)
         .then(() => {
-            const files = fs.readdirSync(__dirname)
+            const files = fs.readdirSync(process.env.GITHUB_WORKSPACE)
                 .filter(file => path.extname(file).toLowerCase() === ".irx");
             resolve(files[0]);
         })
