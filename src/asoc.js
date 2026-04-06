@@ -171,6 +171,9 @@ function submitScans(fileId) {
 
 function submitScan(url, fileId) {
     return new Promise((resolve, reject) => {
+        let appId = utils.sanitizeString(process.env.INPUT_APPLICATION_ID);
+        let scanName = utils.sanitizeString(process.env.INPUT_SCAN_NAME);
+
         let body = {
             "ApplicationFileId": fileId,
             "AppId": appId,
