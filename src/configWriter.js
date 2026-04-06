@@ -38,6 +38,7 @@ function write(filePaths) {
 
 function escapeXml(str) {
     return str
+        .replace(/\\/g, '/')
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
