@@ -230,7 +230,7 @@ function submitScaScan(fileId) {
         .then((scanId) => {
             resolve(scanId);
         })
-        .catch(() => {
+        .catch((error) => {
             reject(error);
         });
     })
@@ -256,7 +256,7 @@ function submitSastScan(fileId) {
         .then((scanId) => {
             resolve(scanId);
         })
-        .catch(() => {
+        .catch((error) => {
             reject(error);
         })
     })
