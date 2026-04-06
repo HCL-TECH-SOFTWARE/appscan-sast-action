@@ -36,7 +36,7 @@ function generate() {
 
 function getModifiedFiles() {
     return new Promise((resolve, reject) => {
-        const token = core.getInput('github-token', { required: true });
+        const token = process.env.INPUT_GITHUB_TOKEN;
         const octokit = github.getOctokit(token);
         const pullRequest = github.context.payload && github.context.payload.pull_request;
 
