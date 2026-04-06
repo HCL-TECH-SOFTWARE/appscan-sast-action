@@ -36,6 +36,11 @@ inputs:
     required: false
     type: boolean
     default: false
+  incremental_scan:
+    description: 'Only scan added and modified files in a pull request. Incremental scans are only supported when the action is triggered by a pull request.'
+    required: false
+    type: boolean
+    default: false
   static_analysis_only:
     description: 'Only run static analysis. Do not run SCA (Software Composition Analysis).'
     required: false

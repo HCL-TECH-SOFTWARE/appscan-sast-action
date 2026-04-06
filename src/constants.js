@@ -79,3 +79,5 @@ const _ERROR_NONCOMPLIANT_ISSUES = 'Failed. Non-compliant issues were found in t
 export { _ERROR_NONCOMPLIANT_ISSUES as ERROR_NONCOMPLIANT_ISSUES };
 const _ERROR_BAD_SCAN_ID = 'An error occurred submitting the irx for analysis.';
 export { _ERROR_BAD_SCAN_ID as ERROR_BAD_SCAN_ID };
+const _ERROR_NOT_PULL_REQUEST = 'Incremental scans are only supported on pull requests.';
+export { _ERROR_NOT_PULL_REQUEST as ERROR_NOT_PULL_REQUEST };

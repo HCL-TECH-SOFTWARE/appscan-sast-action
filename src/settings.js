@@ -60,4 +60,8 @@ function shouldDisableSSL() {
     return process.env.INPUT_ACCEPTSSL === 'true';
 }
 
-export default { getProxyUrl, getProxyPort, getProxyUser, getProxyPwd, getServiceUrl, getScanUrl, shouldDisableSSL }
+function isIncrementalScan() {
+    return process.env.INPUT_INCREMENTAL_SCAN === 'true';
+}
+
+export default { getProxyUrl, getProxyPort, getProxyUser, getProxyPwd, getServiceUrl, getScanUrl, shouldDisableSSL, isIncrementalScan }

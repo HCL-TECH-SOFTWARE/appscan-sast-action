@@ -17,13 +17,10 @@ limitations under the License.
 import shell from 'shelljs';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as constants  from './constants.js';
 import saclientutil from './saclientutil.js';
 import utils from './utils.js';
 import settings from './settings.js';
-
-let start = null;
-const timeout_minutes = process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES ? process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES : 30;
+import configGenerator from './configGenerator.js';
 
 shell.cd(process.env.GITHUB_WORKSPACE);
 process.env.APPSCAN_IRGEN_CLIENT = 'GitHubSast';
@@ -48,7 +45,10 @@ function generateIrx() {
             args = args.replace('-sco ', '');
         }
 
-        executeCommand(`prepare ${args}`)
+        generateAppScanConfig()
+        .then(() => {
+            return executeCommand(`prepare ${args}`)
+        })
         .then(() => {
             const files = fs.readdirSync(process.env.GITHUB_WORKSPACE)
                 .filter(file => path.extname(file).toLowerCase() === ".irx");
@@ -58,35 +58,6 @@ function generateIrx() {
             reject(error);
         });
     })
-}
-
-function waitForAnalysis(scanId) {
-    return new Promise((resolve, reject) => {
-        if(!start) {
-            start = Date.now();
-        }
-
-        checkStatus(scanId)
-        .then((stdout) => {
-            if(stdout.trim() === 'Ready') {
-                return resolve(false);
-            }
-            else if(stdout.trim() === 'Failed') {
-                return reject(constants.ERROR_ANALYSIS_FAILED);
-            }
-            else if(analysisTimedOut()) {
-                return resolve(true);
-            }
-            else {
-                setTimeout(() => {
-                    return resolve(waitForAnalysis(scanId));
-                }, 30000)
-            }
-        })
-        .catch((error) => {
-            reject(error);
-        })
-    });
 }
 
 function executeCommand(args) {
@@ -117,10 +88,20 @@ function isArgumentEnabled(arg) {
     return arg && arg === 'true';
 }
 
-function analysisTimedOut() {
-    let seconds = (Date.now() - start) / 1000;
-    let minutes = seconds / 60;
-    return minutes > timeout_minutes;
+function generateAppScanConfig() {
+    return new Promise((resolve, reject) => {
+        if(!settings.isIncrementalScan()) {
+            return resolve();
+        }
+
+        configGenerator.generate()
+        .then(() => {
+            resolve();
+        })
+        .catch((error) => {
+            reject(error);
+        })
+    });
 }
 
-export default { generateIrx, waitForAnalysis }
+export default { generateIrx }
