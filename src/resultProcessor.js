@@ -35,14 +35,14 @@ function processScanResults(sastScanId, scaScanId) {
 
         asoc.getScanResults(sastScanId)
         .then((sastResults) => {
-            sastScanResults = sastResults;
+            sastScanResults = sastResults.Items;
             return processResults(sastScanResults, 'SAST');
         })
         .then(() => {
             return asoc.getScanResults(scaScanId);
         })
         .then((scaResults) => {
-            scaScanResults = scaResults;
+            scaScanResults = scaResults.Items;
             return processResults(scaScanResults, 'SCA');
         })
         .then(() => {
@@ -67,6 +67,10 @@ function processScanResults(sastScanId, scaScanId) {
 
 function processResults(json, label) {
     return new Promise((resolve, reject) => {
+        if(!json || json.length === 0) {
+            return resolve();
+        }
+
         let totalFindings = 0;
         let count = 0;
         let output = '';
@@ -87,7 +91,7 @@ function processResults(json, label) {
 
 function setShouldFail(severity, numIssues) {
     if(failForNonCompliance && numIssues > 0) {
-        shouldFail = getSeverityValue(severity) >= failureThreshold;
+        shouldFail ||= getSeverityValue(severity) >= failureThreshold;
     }
 }
 
@@ -126,15 +130,15 @@ function aggregateResults(result1, result2) {
         const severityMap = {};
         
         // Process first object's items
-        if (result1.Items && Array.isArray(result1.Items)) {
-            result1.Items.forEach(item => {
+        if (result1 && Array.isArray(result1)) {
+            result1.forEach(item => {
             severityMap[item.Severity] = (severityMap[item.Severity] || 0) + item.Count;
             });
         }
 
         // Process second object's items
-        if (result2.Items && Array.isArray(result2.Items)) {
-            result2.Items.forEach(item => {
+        if (result2 && Array.isArray(result2)) {
+            result2.forEach(item => {
             severityMap[item.Severity] = (severityMap[item.Severity] || 0) + item.Count;
             });
         }
@@ -145,12 +149,7 @@ function aggregateResults(result1, result2) {
             Count: severityMap[severity]
         }));
 
-        // Return combined result
-        let combinedResult = {
-            Items: combinedItems,
-            Count: combinedItems.length
-        };
-        resolve(combinedResult);
+        resolve(combinedItems);
     });
 }
 
