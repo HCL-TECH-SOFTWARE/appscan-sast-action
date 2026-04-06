@@ -96,6 +96,27 @@ function getRequestHeaders() {
     }
 }
 
+function getScanRequestBody(isRescan, fileId) {
+    if(isRescan) {
+        return {
+            FileId: fileId
+        }
+    }
+    else {
+        let appId = utils.sanitizeString(process.env.INPUT_APPLICATION_ID);
+        let scanName = utils.sanitizeString(process.env.INPUT_SCAN_NAME);
+
+        return {
+            "ApplicationFileId": fileId,
+            "AppId": appId,
+            "ScanName": scanName,
+            "Personal": process.env.INPUT_PERSONAL_SCAN === 'true',
+            "FullyAutomatic": true,
+            "EnableMailNotification": false
+        };
+    }
+}
+
 function runAnalysis(file) {
     return new Promise((resolve, reject) => {
         login()
@@ -148,20 +169,8 @@ function submitScans(fileId) {
     });
 }
 
-function submitScan(url, fileId) {
+function submitScan(url, body) {
     return new Promise((resolve, reject) => {
-        let appId = utils.sanitizeString(process.env.INPUT_APPLICATION_ID);
-        let scanName = utils.sanitizeString(process.env.INPUT_SCAN_NAME);
-
-        let body = {
-            "ApplicationFileId": fileId,
-            "AppId": appId,
-            "ScanName": scanName,
-            "Personal": process.env.INPUT_PERSONAL_SCAN === 'true',
-            "FullyAutomatic": true,
-            "EnableMailNotification": false
-        };
-
         got.post(url, { json: body, headers: getRequestHeaders(), retry: { limit: 3, methods: ["GET", "POST"] }, https: { rejectUnauthorized: enableSSL } })
         .then((response) => {
             let responseJson = JSON.parse(response.body);
@@ -182,14 +191,18 @@ function submitScaScan(fileId) {
         }
 
         let url = settings.getServiceUrl();
+        let body;
         if(process.env.INPUT_SCA_SCAN_ID) {
             let scanId = utils.sanitizeString(process.env.INPUT_SCA_SCAN_ID);
             url += constants.API_SCAN_EXECUTIONS.replace('{s}', scanId);
+            body = getScanRequestBody(true, fileId);
         }
         else {
             url += constants.API_SCA_SCAN;
+            body = getScanRequestBody(false, fileId);
+
         }
-        submitScan(url, fileId)
+        submitScan(url, body)
         .then((scanId) => {
             resolve(scanId);
         })
@@ -206,14 +219,17 @@ function submitSastScan(fileId) {
         }
 
         let url = settings.getServiceUrl();
+        let body;
         if(process.env.INPUT_SAST_SCAN_ID) {
             let scanId = utils.sanitizeString(process.env.INPUT_SAST_SCAN_ID);
             url += constants.API_SCAN_EXECUTIONS.replace('{s}', scanId);
+            body = getScanRequestBody(true, fileId);
         }
         else {
             url += constants.API_SAST_SCAN;
+            body = getScanRequestBody(false, fileId);
         }
-        submitScan(url, fileId)
+        submitScan(url, body)
         .then((scanId) => {
             resolve(scanId);
         })
