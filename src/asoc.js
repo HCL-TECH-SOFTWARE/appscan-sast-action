@@ -216,26 +216,23 @@ function submitScaScan(fileId) {
             return resolve();
         }
 
-        if(process.env.INPUT_SCA_SCAN_ID) {
-            let rescanId = utils.sanitizeString(process.env.INPUT_SCA_SCAN_ID);
-            submitRescan(rescanId)
-            .then((scanId) => {                
-                return resolve(scanId);
-            })
-            .catch((error) => {
-                reject(error);
-            })
-        }
-        else {
-            let url = settings.getServiceUrl() + constants.API_SCA_SCAN;
-            submitScan(url, fileId)
-            .then((scanId) => {
-                return resolve(scanId);
-            })
-            .catch((error) => {
-                reject(error);
-            })
-        }
+        Promise.resolve()
+        .then(() => {
+            if(process.env.INPUT_SCA_SCAN_ID) {
+                let rescanId = utils.sanitizeString(process.env.INPUT_SCA_SCAN_ID);
+                return submitRescan(rescanId)
+            }
+            else {
+                let url = settings.getServiceUrl() + constants.API_SCA_SCAN;
+                return submitScan(url, fileId)
+            }
+        })
+        .then((scanId) => {
+            resolve(scanId);
+        })
+        .catch(() => {
+            reject(error);
+        });
     })
 }
 
@@ -245,26 +242,23 @@ function submitSastScan(fileId) {
             return resolve();
         }
 
-        if(process.env.INPUT_SAST_SCAN_ID) {
-            let rescanId = utils.sanitizeString(process.env.INPUT_SAST_SCAN_ID);
-            submitRescan(rescanId)
-            .then((scanId) => {                
-                return resolve(scanId);
-            })
-            .catch((error) => {
-                reject(error);
-            })
-        }
-        else {
-            url = settings.getServiceUrl() +constants.API_SAST_SCAN;
-            submitScan(url, fileId)
-            .then((scanId) => {
-                return resolve(scanId);
-            })
-            .catch((error) => {
-                reject(error);
-            })
-        }
+        Promise.resolve()
+        .then(() => {
+            if(process.env.INPUT_SAST_SCAN_ID) {
+                let rescanId = utils.sanitizeString(process.env.INPUT_SAST_SCAN_ID);
+                return submitRescan(rescanId);
+            }
+            else {
+                let url = settings.getServiceUrl() +constants.API_SAST_SCAN;
+                return submitScan(url, fileId)
+            }
+        })
+        .then((scanId) => {
+            resolve(scanId);
+        })
+        .catch(() => {
+            reject(error);
+        })
     })
 }
 
