@@ -191,7 +191,7 @@ function submitScan(url, fileId) {
     })
 }
 
-function submitRescan(scanId) {
+function submitRescan(scanId, fileId) {
     return new Promise((resolve, reject) => {
         let url = settings.getServiceUrl();
         url += constants.API_SCAN_EXECUTIONS.replace('{s}', scanId);
@@ -220,7 +220,7 @@ function submitScaScan(fileId) {
         .then(() => {
             if(process.env.INPUT_SCA_SCAN_ID) {
                 let rescanId = utils.sanitizeString(process.env.INPUT_SCA_SCAN_ID);
-                return submitRescan(rescanId)
+                return submitRescan(rescanId, fileId)
             }
             else {
                 let url = settings.getServiceUrl() + constants.API_SCA_SCAN;
@@ -246,7 +246,7 @@ function submitSastScan(fileId) {
         .then(() => {
             if(process.env.INPUT_SAST_SCAN_ID) {
                 let rescanId = utils.sanitizeString(process.env.INPUT_SAST_SCAN_ID);
-                return submitRescan(rescanId);
+                return submitRescan(rescanId, fileId);
             }
             else {
                 let url = settings.getServiceUrl() +constants.API_SAST_SCAN;
