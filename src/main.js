@@ -71,7 +71,6 @@ saclientutil.downloadClient()
         core.info(results);
         core.info(constants.ANALYSIS_SUCCESS);
     }
-    resolve();
 })
 .catch((error) => {
     if(error.response && error.response.body) {
