@@ -96,27 +96,6 @@ function getRequestHeaders() {
     }
 }
 
-function getScanRequestBody(isRescan, fileId) {
-    if(isRescan) {
-        return {
-            FileId: fileId
-        }
-    }
-    else {
-        let appId = utils.sanitizeString(process.env.INPUT_APPLICATION_ID);
-        let scanName = utils.sanitizeString(process.env.INPUT_SCAN_NAME);
-
-        return {
-            "ApplicationFileId": fileId,
-            "AppId": appId,
-            "ScanName": scanName,
-            "Personal": process.env.INPUT_PERSONAL_SCAN === 'true',
-            "FullyAutomatic": true,
-            "EnableMailNotification": false
-        };
-    }
-}
-
 function runAnalysis(file) {
     return new Promise((resolve, reject) => {
         login()
