@@ -192,9 +192,10 @@ function submitScaScan(fileId) {
 
         let url = settings.getServiceUrl();
         let body;
+        let rescanId;
         if(process.env.INPUT_SCA_SCAN_ID) {
-            let scanId = utils.sanitizeString(process.env.INPUT_SCA_SCAN_ID);
-            url += constants.API_SCAN_EXECUTIONS.replace('{s}', scanId);
+            rescanId = utils.sanitizeString(process.env.INPUT_SCA_SCAN_ID);
+            url += constants.API_SCAN_EXECUTIONS.replace('{s}', rescanId);
             body = getScanRequestBody(true, fileId);
         }
         else {
@@ -204,7 +205,12 @@ function submitScaScan(fileId) {
         }
         submitScan(url, body)
         .then((scanId) => {
-            resolve(scanId);
+            if(rescanId) {
+                return resolve(rescanId);
+            }
+            else {
+                return resolve(scanId);
+            }
         })
         .catch((error) => {
             reject(error);
@@ -220,9 +226,10 @@ function submitSastScan(fileId) {
 
         let url = settings.getServiceUrl();
         let body;
+        let rescanId;
         if(process.env.INPUT_SAST_SCAN_ID) {
-            let scanId = utils.sanitizeString(process.env.INPUT_SAST_SCAN_ID);
-            url += constants.API_SCAN_EXECUTIONS.replace('{s}', scanId);
+            rescanId = utils.sanitizeString(process.env.INPUT_SAST_SCAN_ID);
+            url += constants.API_SCAN_EXECUTIONS.replace('{s}', rescanId);
             body = getScanRequestBody(true, fileId);
         }
         else {
@@ -231,7 +238,12 @@ function submitSastScan(fileId) {
         }
         submitScan(url, body)
         .then((scanId) => {
-            resolve(scanId);
+            if(rescanId) {
+                return resolve(rescanId);
+            }
+            else {
+                return resolve(scanId);
+            }
         })
         .catch((error) => {
             reject(error);
