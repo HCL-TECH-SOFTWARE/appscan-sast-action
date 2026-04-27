@@ -33,8 +33,11 @@ saclientutil.downloadClient()
     return client.generateIrx();
 })
 .then((irx) => {
+    if(irx.length > 1) {
+        throw new Error(constants.ERROR_MULTIPLE_IRX);
+    }
     core.info(constants.SUBMITTING_IRX);
-    return asoc.runAnalysis(irx);
+    return asoc.runAnalysis(irx[0]);
 })
 .then((scanIds) => {
     core.info(constants.IRX_SUBMIT_SUCCESS);
