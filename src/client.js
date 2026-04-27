@@ -51,16 +51,22 @@ function executeCommand(args) {
 
         saclientutil.getScript()
         .then((script) => {
-            let result = child_process.spawnSync(script, args, { 
+            const child = child_process.spawn(script, args, { 
                 encoding: 'utf-8',
                 cwd: process.env.GITHUB_WORKSPACE
             });
-            if(result.error) {
-                reject(result.stderr);
-            }
-            else {
-                resolve(result.stdout);
-            }
+
+            child.stdout.on('data', (data) => {
+                console.log(data);
+            });
+
+            child.stderr.on('data', (data) => {
+                console.error(data);
+            });
+
+            child.on('close', (code) => {
+                resolve(getIrxFiles());
+            });
         })
         .catch((error) => {
             reject(error);
@@ -70,6 +76,11 @@ function executeCommand(args) {
 
 function isArgumentEnabled(arg) {
     return arg && arg === 'true';
+}
+
+function getIrxFiles() {
+    const files = fs.readdirSync(process.env.GITHUB_WORKSPACE);
+    return files.filter(file => path.extname(file).toLowerCase() === '.irx');
 }
 
 export default { generateIrx }
