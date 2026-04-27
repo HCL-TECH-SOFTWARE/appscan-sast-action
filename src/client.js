@@ -23,7 +23,7 @@ process.env.APPSCAN_IRGEN_CLIENT = 'GitHubSast';
 process.env.IRGEN_CLIENT_PLUGIN_VERSION = utils.getVersion();
 
 function generateIrx() {
-    let args = [];
+    let args = ['prepare'];
 
     if(!isArgumentEnabled(process.env.INPUT_SCAN_BUILD_OUTPUTS)) {
         args.push('-sco');
@@ -40,7 +40,7 @@ function generateIrx() {
         args.push('-sao');
     }
 
-    return executeCommand(`prepare ${args}`);
+    return executeCommand(args);
 }
 
 function executeCommand(args) {
