@@ -18,6 +18,7 @@ import child_process from 'child_process';
 import saclientutil from './saclientutil.js';
 import utils from './utils.js';
 import settings from './settings.js';
+import * as fs from 'fs';
 
 process.env.APPSCAN_IRGEN_CLIENT = 'GitHubSast';
 process.env.IRGEN_CLIENT_PLUGIN_VERSION = utils.getVersion();
@@ -57,11 +58,11 @@ function executeCommand(args) {
             });
 
             child.stdout.on('data', (data) => {
-                console.log(data);
+                console.log(data.toString());
             });
 
             child.stderr.on('data', (data) => {
-                console.error(data);
+                console.error(data.toString());
             });
 
             child.on('close', (code) => {
