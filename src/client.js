@@ -14,68 +14,52 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import shell from 'shelljs';
-import * as fs from 'fs';
-import * as path from 'path';
+import child_process from {child_process}
 import saclientutil from './saclientutil.js';
 import utils from './utils.js';
 import settings from './settings.js';
-import configGenerator from './configGenerator.js';
 
-shell.cd(process.env.GITHUB_WORKSPACE);
 process.env.APPSCAN_IRGEN_CLIENT = 'GitHubSast';
 process.env.IRGEN_CLIENT_PLUGIN_VERSION = utils.getVersion();
 
 function generateIrx() {
-    return new Promise((resolve, reject) => {
-        let args = '-sco '; //Default to running source code only scans.
+    let args = [];
 
-        if(isArgumentEnabled(process.env.INPUT_STATIC_ANALYSIS_ONLY)) {
-            args += '-sao ';
-        }
-        if(isArgumentEnabled(process.env.INPUT_OPEN_SOURCE_ONLY)) {
-            args += '-oso ';
-        }
-        if(isArgumentEnabled(process.env.INPUT_SECRETS_ONLY)) {
-            args += '-so ';
-            args += '-sao ';
-        }
-        
-        if(isArgumentEnabled(process.env.INPUT_SCAN_BUILD_OUTPUTS)) {
-            args = args.replace('-sco ', '');
-        }
+    if(!isArgumentEnabled(process.env.INPUT_SCAN_BUILD_OUTPUTS)) {
+        args.push('-sco');
+    }
 
-        generateAppScanConfig()
-        .then(() => {
-            return executeCommand(`prepare ${args}`)
-        })
-        .then(() => {
-            const files = fs.readdirSync(process.env.GITHUB_WORKSPACE)
-                .filter(file => path.extname(file).toLowerCase() === ".irx");
-            resolve(files[0]);
-        })
-        .catch((error) => {
-            reject(error);
-        });
-    })
+    if(isArgumentEnabled(process.env.INPUT_STATIC_ANALYSIS_ONLY)) {
+        args.push('-sao');
+    }
+    if(isArgumentEnabled(process.env.INPUT_OPEN_SOURCE_ONLY)) {
+        args.push('-oso');
+    }
+    if(isArgumentEnabled(process.env.INPUT_SECRETS_ONLY)) {
+        args.push('-so');
+        args.push('-sao');
+    }
+
+    return executeCommand(`prepare ${args}`);
 }
 
 function executeCommand(args) {
     return new Promise((resolve, reject) => {
         if (settings.shouldDisableSSL()) {
-            args += " -acceptssl";
+            args.push('-acceptssl');
         }
-
-        args += "-Dservice_url=" + settings.getServiceUrl();
 
         saclientutil.getScript()
         .then((script) => {
-            let result = shell.exec(`${script} ${args}`);
-            if(result.code === 0) {
-                resolve(result.stdout);
+            let result = child_process.spawnSync(script, args, { 
+                encoding: 'utf-8',
+                cwd: process.env.GITHUB_WORKSPACE
+            });
+            if(result.error) {
+                reject(result.stderr);
             }
             else {
-                reject(result.stderr);
+                resolve(result.stdout);
             }
         })
         .catch((error) => {
@@ -86,22 +70,6 @@ function executeCommand(args) {
 
 function isArgumentEnabled(arg) {
     return arg && arg === 'true';
-}
-
-function generateAppScanConfig() {
-    return new Promise((resolve, reject) => {
-        if(!settings.isIncrementalScan()) {
-            return resolve();
-        }
-
-        configGenerator.generate()
-        .then(() => {
-            resolve();
-        })
-        .catch((error) => {
-            reject(error);
-        })
-    });
 }
 
 export default { generateIrx }
