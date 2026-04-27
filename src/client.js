@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import child_process from {child_process}
+import child_process from 'child_process';
 import saclientutil from './saclientutil.js';
 import utils from './utils.js';
 import settings from './settings.js';
