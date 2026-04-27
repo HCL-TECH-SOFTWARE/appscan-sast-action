@@ -19,6 +19,7 @@ import saclientutil from './saclientutil.js';
 import utils from './utils.js';
 import settings from './settings.js';
 import * as fs from 'fs';
+import * as path from 'path';
 
 process.env.APPSCAN_IRGEN_CLIENT = 'GitHubSast';
 process.env.IRGEN_CLIENT_PLUGIN_VERSION = utils.getVersion();
