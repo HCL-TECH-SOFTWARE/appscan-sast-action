@@ -1,6 +1,17 @@
 name: "HCL AppScan SAST"
 on:
-  workflow_dispatch
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 jobs:
   scan:
     runs-on: ubuntu-latest
@@ -13,3 +24,21 @@ jobs:
           asoc_key: ${{secrets.ASOC_KEY}}
           asoc_secret: ${{secrets.ASOC_SECRET}}
           application_id: a9320435-541c-4a16-bebf-427d1e123999
+          # waiting for scan to complete and results to become available before continuing
+          wait_for_analysis: true
+                   
+      # Upload PR HTML report
+      - name: Upload PR report
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: appscan-pr-report
+          path: appscan-pr-report.html
+
+      # Upload build summary HTML report
+      - name: Upload Build report
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: appscan-build-report
+          path: appscan-build-summary-report.html
