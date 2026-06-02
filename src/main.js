@@ -36,6 +36,10 @@ saclientutil.downloadClient()
     if(irx.length > 1) {
         throw new Error(constants.ERROR_MULTIPLE_IRX);
     }
+    else if(irx.length === 0) {
+        throw new Error(constants.ERROR_NO_IRX);
+    }
+    
     core.info(constants.SUBMITTING_IRX);
     return asoc.runAnalysis(irx[0]);
 })

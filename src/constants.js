@@ -83,3 +83,5 @@ const _ERROR_NOT_PULL_REQUEST = 'Incremental scans are only supported on pull re
 export { _ERROR_NOT_PULL_REQUEST as ERROR_NOT_PULL_REQUEST };
 const _ERROR_MULTIPLE_IRX = 'More than 1 .irx file is present. Ensure your repository does not contain a .irx file.';
 export { _ERROR_MULTIPLE_IRX as ERROR_MULTIPLE_IRX };
+const _ERROR_NO_IRX = 'A problem occurred generating the .irx file.';
+export { _ERROR_NO_IRX as ERROR_NO_IRX };
