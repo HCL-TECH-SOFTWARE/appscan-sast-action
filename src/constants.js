@@ -29,6 +29,14 @@ const _API_LOGIN = '/api/v4/Account/ApiKeyLogin';
 export { _API_LOGIN as API_LOGIN };
 const _API_ISSUES = '/api/v4/Issues/Scan/';
 export { _API_ISSUES as API_ISSUES };
+const _API_FILE_UPLOAD = '/api/v4/FileUpload';
+export { _API_FILE_UPLOAD as API_FILE_UPLOAD };
+const _API_SAST_SCAN = '/api/v4/Scans/Sast';
+export { _API_SAST_SCAN as API_SAST_SCAN };
+const _API_SCA_SCAN = '/api/v4/Scans/Sca';
+export { _API_SCA_SCAN as API_SCA_SCAN };
+const _API_SCAN_EXECUTIONS = '/api/v4/Scans/{s}/Executions';
+export { _API_SCAN_EXECUTIONS as API_SCAN_EXECUTIONS };
 const _CLIENT_TYPE = 'github-sast';
 export { _CLIENT_TYPE as CLIENT_TYPE };
 
@@ -71,3 +79,9 @@ const _ERROR_NONCOMPLIANT_ISSUES = 'Failed. Non-compliant issues were found in t
 export { _ERROR_NONCOMPLIANT_ISSUES as ERROR_NONCOMPLIANT_ISSUES };
 const _ERROR_BAD_SCAN_ID = 'An error occurred submitting the irx for analysis.';
 export { _ERROR_BAD_SCAN_ID as ERROR_BAD_SCAN_ID };
+const _ERROR_NOT_PULL_REQUEST = 'Incremental scans are only supported on pull requests.';
+export { _ERROR_NOT_PULL_REQUEST as ERROR_NOT_PULL_REQUEST };
+const _ERROR_MULTIPLE_IRX = 'More than 1 .irx file is present. Ensure your repository does not contain a .irx file.';
+export { _ERROR_MULTIPLE_IRX as ERROR_MULTIPLE_IRX };
+const _ERROR_NO_IRX = 'A problem occurred generating the .irx file.';
+export { _ERROR_NO_IRX as ERROR_NO_IRX };

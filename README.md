@@ -27,7 +27,10 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
 | service_url | The url for connections to AppScan 360. Not required for connections to AppScan on Cloud (ASoC) | https://cloud.appscan.com |
 | acceptssl | Allow connections to an AppScan 360 service with an untrusted certificate. Recommended for testing purposes only. | false |
 | scan_name | The name of the scan created in ASoC. | The GitHub repository name |
+| incremental_scan | Only scan files that were added or modified in a pull request. | false |
 | personal_scan | Make this a [personal scan](https://help.hcltechsw.com/appscan/ASoC/appseccloud_scans_personal.html). | false |
+| sast_scan_id | The ID of an existing SAST scan to use for running a rescan. | null |
+| sca_scan_id | The ID of an existing SCA scan to use for running a rescan. | null |
 | static_analysis_only | Only run static analysis. Do not run SCA (Software Composition Analysis). | false |
 | open_source_only | Only run SCA (Software Composition Analysis). Do not run static analysis. | false |
 | secrets_only | Only scan for secrets. Do not run static analysis or software composition analysis. | false |

@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2023 HCL America, Inc.
+Copyright 2022, 2026 HCL America, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import asoc from './asoc.js';
 import * as constants from './constants.js';
 
 const Informational = 0;
@@ -25,9 +26,51 @@ const Critical = 4;
 const failForNonCompliance = process.env.INPUT_FAIL_FOR_NONCOMPLIANCE === 'true';
 const failureThreshold = getSeverityValue(process.env.INPUT_FAILURE_THRESHOLD);
 let shouldFail = false;
+let summary = '';
 
-function processResults(json) {
+function processScanResults(sastScanId, scaScanId) {
     return new Promise((resolve, reject) => {
+        let sastScanResults = [];
+        let scaScanResults = [];
+
+        asoc.getScanResults(sastScanId)
+        .then((sastResults) => {
+            sastScanResults = sastResults.Items;
+            return processResults(sastScanResults, 'SAST');
+        })
+        .then(() => {
+            return asoc.getScanResults(scaScanId);
+        })
+        .then((scaResults) => {
+            scaScanResults = scaResults.Items;
+            return processResults(scaScanResults, 'SCA');
+        })
+        .then(() => {
+            return aggregateResults(sastScanResults, scaScanResults);
+        })
+        .then((aggregatedResults) => {
+            return processResults(aggregatedResults, 'Combined');
+        })
+        .then(() => {
+            if(shouldFail) {
+                return reject('\n' + summary + '\n' + constants.ERROR_NONCOMPLIANT_ISSUES);
+            }
+            else {
+                return resolve(summary);
+            }
+        })
+        .catch((error) => {
+            reject(error);
+        })
+    })
+}
+
+function processResults(json, label) {
+    return new Promise((resolve, reject) => {
+        if(!json || json.length === 0) {
+            return resolve();
+        }
+
         let totalFindings = 0;
         let count = 0;
         let output = '';
@@ -35,15 +78,12 @@ function processResults(json) {
         for(var i = 0; i < json.length; i++) {
             let element = json[i];
             totalFindings += element.Count;
-            output = element.Severity + constants.ISSUES_COLON + element.Count + '\n' + output;
+            output = '\t' + element.Severity + constants.ISSUES_COLON + element.Count + '\n' + output;
             setShouldFail(element.Severity, element.Count);
             if(++count === json.length) {
-                output = constants.TOTAL_ISSUES + totalFindings + '\n' + output;
-                if(shouldFail) {
-                    return reject('\n' + output + '\n' + constants.ERROR_NONCOMPLIANT_ISSUES);
-                }
-
-                return resolve(output);
+                output = '\t' + constants.TOTAL_ISSUES + totalFindings + '\n' + output;
+                summary += label + ' Security Issues\n' + output + '\n';
+                return resolve();
             }
         }
     });
@@ -51,7 +91,7 @@ function processResults(json) {
 
 function setShouldFail(severity, numIssues) {
     if(failForNonCompliance && numIssues > 0) {
-        shouldFail = getSeverityValue(severity) >= failureThreshold;
+        shouldFail ||= getSeverityValue(severity) >= failureThreshold;
     }
 }
 
@@ -80,4 +120,37 @@ function getSeverityValue(severity) {
     return severityValue;
 }
 
-export default { processResults }
+function aggregateResults(result1, result2) {
+    return new Promise((resolve) => {
+        if (!result1 || !result2) {
+            return resolve([]);
+        }
+
+        // Create a map to store severity counts
+        const severityMap = {};
+        
+        // Process first object's items
+        if (result1 && Array.isArray(result1)) {
+            result1.forEach(item => {
+            severityMap[item.Severity] = (severityMap[item.Severity] || 0) + item.Count;
+            });
+        }
+
+        // Process second object's items
+        if (result2 && Array.isArray(result2)) {
+            result2.forEach(item => {
+            severityMap[item.Severity] = (severityMap[item.Severity] || 0) + item.Count;
+            });
+        }
+
+        // Convert map back to array
+        const combinedItems = Object.keys(severityMap).map(severity => ({
+            Severity: severity,
+            Count: severityMap[severity]
+        }));
+
+        resolve(combinedItems);
+    });
+}
+
+export default { processScanResults }

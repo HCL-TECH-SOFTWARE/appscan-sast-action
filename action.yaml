@@ -21,11 +21,23 @@ inputs:
   application_id:
     description: 'The application id where your scan will appear.'
     required: true
+  sast_scan_id:
+    description: 'The ID of an existing SAST scan to use for running a rescan.'
+    required: false
+  sca_scan_id:
+    description: 'The ID of an existing SCA scan to use for running a rescan.'
+    required: false
   scan_name:
     description: 'The name of the scan created in the AppScan service.'
     required: false
+    default: ${{ github.event.repository.name }}
   personal_scan:
     description: 'Make the scan a personal scan.'
+    required: false
+    type: boolean
+    default: false
+  incremental_scan:
+    description: 'Only scan added and modified files in a pull request. Incremental scans are only supported when the action is triggered by a pull request.'
     required: false
     type: boolean
     default: false
