@@ -25,28 +25,21 @@ import settings from './settings.js';
  detect PR context
 */
 const isPR = process.env.INPUT_IS_PR_SCAN === "true" || process.env.GITHUB_EVENT_NAME === "pull_request";
-
 /*
- PR metadata from workflow inputs
-*/
+ PR metadata from workflow inputs*/
 const prNumber = process.env.INPUT_PR_NUMBER || "";
-
 const branchName = process.env.INPUT_BRANCH_NAME || process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME || "";
-
 const repoName = process.env.INPUT_REPO_NAME || process.env.GITHUB_REPOSITORY || "";
-
 const commitSha = process.env.GITHUB_SHA || "";
-
 core.info(`GitHub Event: ${process.env.GITHUB_EVENT_NAME}`);
-
-if(isPR){
+if (isPR) {
     core.info("Running SAST scan for Pull Request");
     core.info(`Repository: ${repoName}`);
     core.info(`PR Number: ${prNumber}`);
     core.info(`Branch: ${branchName}`);
     core.info(`Commit: ${commitSha}`);
 }
-else{
+else {
     core.info("Running SAST scan for Push/Manual trigger");
 }
 /*
@@ -71,22 +64,20 @@ saclientutil.downloadClient()
         core.info(constants.IRX_SUBMIT_SUCCESS);
         core.info(`Scan ID: ${scanId}`)
         core.info(`${settings.getScanUrl(scanId)}`);
-        
          /*
          PR metadata logging
         */
-        if(isPR){
+        if (isPR) {
             core.info(`PR scan detected`);
             core.info(`PR branch: ${process.env.GITHUB_HEAD_REF}`);
         }
-        if(process.env.INPUT_WAIT_FOR_ANALYSIS !== 'true') {
+        if (process.env.INPUT_WAIT_FOR_ANALYSIS !== 'true') {
             return resolve();
         }
-
         core.info(constants.WAIT_FOR_ANALYSIS);
         client.waitForAnalysis(scanId)
         .then((timedOut) => {
-            if(timedOut) {
+            if (timedOut) {
                 core.warning(constants.ANALYSIS_TIMEOUT);
                 return resolve();
             }
@@ -98,7 +89,7 @@ saclientutil.downloadClient()
             return asoc.getScanResults(scanId, {isPR, prNumber, branchName, repoName, commitSha});
         })
         .then((results) => {
-            if(results) {
+            if (results) {
                 core.info(results);
                 core.info(constants.ANALYSIS_SUCCESS);
             }

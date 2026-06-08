@@ -158,9 +158,7 @@ async function getNonCompliantIssues(scanId) {
 				const branchUrl =`https://github.com/${repoName}/tree/${branchName}`;
 				const commitUrl =`https://github.com/${repoName}/commit/${process.env.GITHUB_SHA}`;
 				const issueBaseUrl =`${baseUrl}/main/myapps/${applicationId}/scans/${scanId}/scanIssues?executionId=${executionId}`;				
-				const prSection =
-    isPR
-    ? `
+				const prSection = isPR ? `
 
 ## Pull Request Information
 
@@ -205,7 +203,6 @@ ${prSection}
 ${viewScanValue}
 
 `;
-
 				const mdFileName = isPR ? "appscan-pr-report.md": "appscan-build-summary-report.md";
 				fs.writeFileSync(mdFileName, md);
 				/*
@@ -281,55 +278,39 @@ function generateHtmlReport(issues, counts, scanUrl, appName, issueBaseUrl,	scan
 	return `
 
 <html>
-
 <head>
-
 <style>
-
 body {
  font-family: Arial;
  margin: 40px;
 }
-
 table {
  border-collapse: collapse;
  width: 100%;
  margin-bottom: 30px;
 }
-
 th, td {
  border: 1px solid #ddd;
  padding: 8px;
 }
-
 th {
  background: #f5f5f5;
 }
-
 .sev-critical { color: black; }
 .sev-high { color: black; }
 .sev-medium { color: black; }
 .sev-low { color: black; }
-
 </style>
-
 </head>
-
 <body>
-
 <h1>HCL AppScan SAST ${isPR ? "PR Scan Summary" : "Scan Summary"}</h1>
-
 ${isPR ? `
-
 <h3>Pull Request Information</h3>
-
 <table>
-
 <tr>
 <th>Field</th>
 <th>Value</th>
 </tr>
-
 <tr>
 <td>PR Number</td>
 <td>
@@ -338,7 +319,6 @@ ${isPR ? `
 </a>
 </td>
 </tr>
-
 <tr>
 <td>Branch</td>
 <td>
@@ -347,7 +327,6 @@ ${branchName}
 </a>
 </td>
 </tr>
-
 <tr>
 <td>Commit</td>
 <td>
@@ -356,27 +335,20 @@ ${commitSha}
 </a>
 </td>
 </tr>
-
 </table>
-
 <br/>
 
 ` : ""}
-
 <h3>Scan Information</h3>
-
 <table>
-
 <tr>
 <th>Field</th>
 <th>Value</th>
 </tr>
-
 <tr>
 <td>Scan Type</td>
 <td>SAST</td>
 </tr>
-
 <tr>
 <td>Scan ID</td>
 <td>
@@ -385,7 +357,6 @@ ${scanId}
 </a>
 </td>
 </tr>
-
 <tr>
 <td>Application Name</td>
 <td>
@@ -394,148 +365,88 @@ ${appName}
 </a>
 </td>
 </tr>
-
 <tr>
 <td>Repository</td>
 <td>${process.env.GITHUB_REPOSITORY}</td>
 </tr>
-
 <tr>
 <td>Scan Time</td>
 <td>${scanTime}</td>
 </tr>
-
 </table>
-
 <h2>Application: ${appName}</h2>
-
 <h3>Summary</h3>
-
 <table>
-
 <tr>
-
 <th>Critical</th>
 <th>High</th>
 <th>Medium</th>
 <th>Low</th>
 <th>Info</th>
-
 </tr>
-
 <tr>
-
 <td>${counts.Critical}</td>
 <td>${counts.High}</td>
 <td>${counts.Medium}</td>
 <td>${counts.Low}</td>
 <td>${counts.Informational}</td>
-
 </tr>
-
 </table>
-
 <h3>Issues</h3>
-
 <table>
-
 <tr>
-
 <th>Severity</th>
 <th>Issue type</th>
 <th>Location</th>
 <th>Line</th>
 <th>How to fix</th>
-
 </tr>
-
 ${issues.map(i => `
-
 <tr>
-
 <td class="sev-${i.Severity.toLowerCase()}">
-
 ${i.Severity}
-
 </td>
-
 <td>
-
 ${i.IssueType}
-
 </td>
-
 <td>
-
 ${(() => {
 	const location = i.Location || "";
 	const parsed = parseLocation(location);
 	const filePath = parsed.filePath;
 	const lineNumber = parsed.lineNumber;
 	const githubFileUrl =`https://github.com/${repoName}/blob/${process.env.GITHUB_SHA}/${filePath}#L${lineNumber}`;
-
     return `
-
         <a href="${githubFileUrl}" target="_blank">
-
             ${location}
-
         </a>
-
     `;
-
 })()}
-
 </td>
-
 <td>
-
 ${(i.Location || "").split(":").pop()}
-
 </td>
-
 <td>
-
 ${(() => {
-
     const issueDetailsUrl =`${settings.getServiceUrl().replace('/api/v4','')}` + `/main/myapps/${process.env.INPUT_APPLICATION_ID}` +`/issues/${i.Id}`;
-
     return `
-
         <a href="${issueDetailsUrl}" target="_blank">
-
             View Issue Details
-
         </a>
-
     `;
-
 })()}
-
 </td>
-
 </tr>
-
 `).join("")}
-
 </table>
-
 <p>
-
 Full scan:
-
 <a href="${scanUrl}">
-
 View in AppScan
-
 </a>
-
 </p>
-
 </body>
-
 </html>
-
 `;
 }
 
