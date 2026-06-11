@@ -210,7 +210,10 @@ function compareVersions(oldVersion, newVersion) {
 }
 
 function getScript() {
+	console.log("Debug GS1 script: ", script);
+	console.log("Debug GS2 clientDir: ", clientDir);
     return new Promise((resolve, reject) => {
+		console.log("Debug GS3 existsSync arg: ", script);
         if(!fs.existsSync(script)) {
             downloadClient()
             .then(() => {
