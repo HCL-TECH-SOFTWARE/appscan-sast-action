@@ -53,17 +53,24 @@ function downloadClient() {
         });
         zip.on('close', () => {
 			console.log("Debug D3 close event");
+			console.log("Debug D4 before extract client");
             extractClient(zipFile)
                 .then(() => {
+					console.log("Debug D5 extract client resolved");
                     script = path.join(getClientDir(), 'bin', scriptName);
+					console.log("Debug D6 script", script);
                     if(fs.existsSync(script)) {
+						console.log("Debug D7 script exists");
                         resolve(script);
                     }
                     else {
+						console.log("Debug D8 script is missing");
                         reject(constants.ERROR_FILE_DOES_NOT_EXIST + script);
                     }
                 })
                 .catch((error) => {
+					console.log("Debug D9 extract client rejected");
+					console.log(error);
                     reject(error);
                 });
         });
