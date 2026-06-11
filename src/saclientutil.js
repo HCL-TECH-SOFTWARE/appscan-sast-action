@@ -96,13 +96,32 @@ function extractClient(zipFile) {
             return;
         }
 
-        extract(zipFile, {dir: path.dirname(zipFile)})
-        .then(() => {
-            resolve();
-        })
-        .catch((error) => {
-            reject(error);
-        })
+        (async () => {
+			try {
+				console.log("Debug U1: starting unzip");
+				console.log(
+				  "Debug U0",
+				  `unzip -o "${zipFile}" -d "${path.dirname(zipFile)}"`
+				);
+
+				const { stdout, stderr } = await execAsync(
+				  `unzip -o "${zipFile}" -d "${path.dirname(zipFile)}"`
+				);
+				clearTimeout(timeout);
+				console.log("Debug U2: unzip completed");
+				console.log("Debug U3: stdout:", stdout);
+				console.log("Debug U4: stderr:", stderr);
+				console.log("files after unzip are: " + fs.readdirSync(path.dirname(zipFile)).join(", "));
+				console.log("client dir after unzip inside try: ", getClientDir());
+				resolve();
+			}
+			catch(error) {
+				clearTimeout(timeout);
+				console.log("Debug U5: unzip failed");
+				console.log(error);
+				reject(error);
+			}				
+		})();
     });
 }
 
