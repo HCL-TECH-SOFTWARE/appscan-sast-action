@@ -98,6 +98,9 @@ function extractClient(zipFile) {
 
         extract(zipFile, {dir: path.dirname(zipFile)})
         .then(() => {
+			console.log("Debug X1: parentdir: ", parentDir);
+			console.log("Debug X2: files: ", fs.readdirSync(parentDir));
+			console.log("Debug X3: getClientDir: ", getClientDir());
             resolve();
         })
         .catch((error) => {
