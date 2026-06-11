@@ -107,7 +107,6 @@ function extractClient(zipFile) {
 				const { stdout, stderr } = await execAsync(
 				  `unzip -o "${zipFile}" -d "${path.dirname(zipFile)}"`
 				);
-				clearTimeout(timeout);
 				console.log("Debug U2: unzip completed");
 				console.log("Debug U3: stdout:", stdout);
 				console.log("Debug U4: stderr:", stderr);
@@ -116,7 +115,6 @@ function extractClient(zipFile) {
 				resolve();
 			}
 			catch(error) {
-				clearTimeout(timeout);
 				console.log("Debug U5: unzip failed");
 				console.log(error);
 				reject(error);
