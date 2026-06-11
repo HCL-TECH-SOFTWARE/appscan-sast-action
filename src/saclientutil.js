@@ -152,7 +152,9 @@ function getRequestOptions() {
 }
 
 function getClientDir() {
+	console.log("Debug gd1 parentdir: ", parentDir);
     let files = fs.readdirSync(parentDir);
+	console.log("Debug gd2 files: ", files);
     let clientDirs = new Array();
 
     files.forEach((file) => {
@@ -160,10 +162,13 @@ function getClientDir() {
             if(fs.lstatSync(parentDir + path.sep + file).isDirectory() && file.startsWith("SAClientUtil"))
                 clientDirs.push(parentDir + path.sep + file);
         } catch(e) {
+			console.log("Debug gd3 error processing: ", file);
+			console.log(e);
             //ignore and continue
         }
     });
-
+	console.log("Debug gd4 clientdirs: ", clientDirs);
+	
     if(clientDirs.length > 1) {
         let clientDir = clientDirs[0];
         for(let iter = 1; iter < clientDirs.length; iter++) {
