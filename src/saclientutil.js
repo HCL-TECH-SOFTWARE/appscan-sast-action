@@ -43,12 +43,16 @@ function downloadClient() {
 
         let zip = fs.createWriteStream(zipFile);
         zip.on('finish', () => {
+			console.log("Debug D1 finish event");
             zip.close();
         });
         zip.on('error', (e) => {
+			console.log("Debug D2 zip error");
+			console.log(e);
             reject(e);
         });
         zip.on('close', () => {
+			console.log("Debug D3 close event");
             extractClient(zipFile)
                 .then(() => {
                     script = path.join(getClientDir(), 'bin', scriptName);
