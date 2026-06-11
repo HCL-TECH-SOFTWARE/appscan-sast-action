@@ -35,6 +35,7 @@ if(!fs.existsSync(parentDir)) {
 let scriptName = utils.getOS() === 'win' ? 'appscan.bat' : 'appscan.sh';
 let clientDir = getClientDir();
 let script = clientDir ? path.join(clientDir, 'bin', scriptName) : undefined;
+const execAsync = promisify(exec);
 
 function downloadClient() {
     return new Promise((resolve, reject) => {
