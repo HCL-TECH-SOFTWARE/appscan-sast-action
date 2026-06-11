@@ -19,8 +19,6 @@ import HttpsProxyAgent from 'https-proxy-agent';
 import { URL } from 'url';
 import * as path from 'path';
 import extract from 'extract-zip';
-import { exec } from 'child_process';
-import { promisify } from 'util';
 import * as https from 'https';
 import * as os from 'os';
 import * as constants from './constants.js';
@@ -35,7 +33,6 @@ if(!fs.existsSync(parentDir)) {
 let scriptName = utils.getOS() === 'win' ? 'appscan.bat' : 'appscan.sh';
 let clientDir = getClientDir();
 let script = clientDir ? path.join(clientDir, 'bin', scriptName) : undefined;
-const execAsync = promisify(exec);
 
 function downloadClient() {
     return new Promise((resolve, reject) => {
@@ -99,30 +96,13 @@ function extractClient(zipFile) {
             return;
         }
 
-        (async () => {
-			try {
-				console.log("Debug U1: starting unzip");
-				console.log(
-				  "Debug U0",
-				  `unzip -o "${zipFile}" -d "${path.dirname(zipFile)}"`
-				);
-
-				const { stdout, stderr } = await execAsync(
-				  `unzip -o "${zipFile}" -d "${path.dirname(zipFile)}"`
-				);
-				console.log("Debug U2: unzip completed");
-				console.log("Debug U3: stdout:", stdout);
-				console.log("Debug U4: stderr:", stderr);
-				console.log("files after unzip are: " + fs.readdirSync(path.dirname(zipFile)).join(", "));
-				console.log("client dir after unzip inside try: ", getClientDir());
-				resolve();
-			}
-			catch(error) {
-				console.log("Debug U5: unzip failed");
-				console.log(error);
-				reject(error);
-			}				
-		})();
+        extract(zipFile, {dir: path.dirname(zipFile)})
+        .then(() => {
+            resolve();
+        })
+        .catch((error) => {
+            reject(error);
+        })
     });
 }
 
