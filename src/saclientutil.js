@@ -19,6 +19,8 @@ import HttpsProxyAgent from 'https-proxy-agent';
 import { URL } from 'url';
 import * as path from 'path';
 import extract from 'extract-zip';
+import { exec } from 'child_process';
+import { promisify } from 'util';
 import * as https from 'https';
 import * as os from 'os';
 import * as constants from './constants.js';
