@@ -53,6 +53,7 @@ function executeCommand(args) {
 
         saclientutil.getScript()
         .then((script) => {
+			console.log("Node version =", process.version);
 			console.log("SP1 script =", script);
 			console.log("SP2 args =", JSON.stringify(args));
 			console.log("SP3 cwd =", process.env.GITHUB_WORKSPACE);
