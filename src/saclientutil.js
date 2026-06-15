@@ -43,34 +43,23 @@ function downloadClient() {
 
         let zip = fs.createWriteStream(zipFile);
         zip.on('finish', () => {
-			console.log("Debug D1 finish event");
             zip.close();
         });
         zip.on('error', (e) => {
-			console.log("Debug D2 zip error");
-			console.log(e);
             reject(e);
         });
         zip.on('close', () => {
-			console.log("Debug D3 close event");
-			console.log("Debug D4 before extract client");
             extractClient(zipFile)
                 .then(() => {
-					console.log("Debug D5 extract client resolved");
                     script = path.join(getClientDir(), 'bin', scriptName);
-					console.log("Debug D6 script", script);
                     if(fs.existsSync(script)) {
-						console.log("Debug D7 script exists");
                         resolve(script);
                     }
                     else {
-						console.log("Debug D8 script is missing");
                         reject(constants.ERROR_FILE_DOES_NOT_EXIST + script);
                     }
                 })
                 .catch((error) => {
-					console.log("Debug D9 extract client rejected");
-					console.log(error);
                     reject(error);
                 });
         });
@@ -109,9 +98,6 @@ function extractClient(zipFile) {
 
         extract(zipFile, {dir: path.dirname(zipFile)})
         .then(() => {
-			console.log("Debug X1: parentdir: ", parentDir);
-			console.log("Debug X2: files: ", fs.readdirSync(parentDir));
-			console.log("Debug X3: getClientDir: ", getClientDir());
             resolve();
         })
         .catch((error) => {
@@ -166,9 +152,7 @@ function getRequestOptions() {
 }
 
 function getClientDir() {
-	console.log("Debug gd1 parentdir: ", parentDir);
     let files = fs.readdirSync(parentDir);
-	console.log("Debug gd2 files: ", files);
     let clientDirs = new Array();
 
     files.forEach((file) => {
@@ -176,13 +160,10 @@ function getClientDir() {
             if(fs.lstatSync(parentDir + path.sep + file).isDirectory() && file.startsWith("SAClientUtil"))
                 clientDirs.push(parentDir + path.sep + file);
         } catch(e) {
-			console.log("Debug gd3 error processing: ", file);
-			console.log(e);
             //ignore and continue
         }
     });
-	console.log("Debug gd4 clientdirs: ", clientDirs);
-	
+
     if(clientDirs.length > 1) {
         let clientDir = clientDirs[0];
         for(let iter = 1; iter < clientDirs.length; iter++) {
@@ -221,10 +202,7 @@ function compareVersions(oldVersion, newVersion) {
 }
 
 function getScript() {
-	console.log("Debug GS1 script: ", script);
-	console.log("Debug GS2 clientDir: ", clientDir);
     return new Promise((resolve, reject) => {
-		console.log("Debug GS3 existsSync arg: ", script);
         if(!fs.existsSync(script)) {
             downloadClient()
             .then(() => {
