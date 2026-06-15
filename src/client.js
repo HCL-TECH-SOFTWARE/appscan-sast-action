@@ -53,10 +53,17 @@ function executeCommand(args) {
 
         saclientutil.getScript()
         .then((script) => {
+			let executable = script;
+			let spawnArgs = args;
+			if (process.platform === 'win32') {
+				console.log("Win32 executable =", executable);
+				console.log("Win32 spawn args =", JSON.stringify(spawnArgs));
+				executable = 'cmd.exe';
+				spawnArgs = ['/c', script, ...args];
+			}
             const child = child_process.spawn(script, args, { 
                 encoding: 'utf-8',
                 cwd: process.env.GITHUB_WORKSPACE,
-				shell: true
             });
 
             child.stdout.on('data', (data) => {
