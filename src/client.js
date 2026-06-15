@@ -58,7 +58,9 @@ function executeCommand(args) {
 			console.log("SP2 args =", JSON.stringify(args));
 			console.log("SP3 cwd =", process.env.GITHUB_WORKSPACE);
             const child = child_process.spawn(script, args, { 
-                cwd: process.env.GITHUB_WORKSPACE
+                encoding: 'utf-8',
+                cwd: process.env.GITHUB_WORKSPACE,
+				shell: true
             });
 
             child.stdout.on('data', (data) => {
