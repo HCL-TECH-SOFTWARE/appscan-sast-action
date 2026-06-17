@@ -17,5 +17,8 @@
     "https": "^1.0.0",
     "https-proxy-agent": "^5.0.0",
     "shelljs": "^0.10.0"
+  },
+  "overrides": {
+    "yauzl": "^3.3.1"
   }
 }
