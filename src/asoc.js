@@ -32,6 +32,7 @@ core.setSecret(key);
 core.setSecret(secret);
 
 function login() {
+	console.log(">>>>>>>>>> login called inside asoc.js <<<<<<<<<<<<<<<<<<<<");
     return new Promise((resolve, reject) => {
         if(key && secret) {
             let url = settings.getServiceUrl() + constants.API_LOGIN;

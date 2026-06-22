@@ -59,7 +59,7 @@ saclientutil.downloadClient()
     }
     
     if(process.env.INPUT_WAIT_FOR_ANALYSIS !== 'true') {
-        return resolve();
+        return;
     }
 
     core.info(constants.WAIT_FOR_ANALYSIS);
@@ -68,7 +68,7 @@ saclientutil.downloadClient()
 .then((timedOut) => {
     if(timedOut) {
         core.warning(constants.ANALYSIS_TIMEOUT);
-        return resolve();
+        return;
     }
     core.info(constants.GETTING_RESULTS);
     return resultProcessor.processScanResults(sastScanId, scaScanId);
