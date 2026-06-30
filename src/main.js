@@ -22,9 +22,32 @@ import asoc from './asoc.js';
 import settings from './settings.js';
 import statusChecker from './statusChecker.js';
 import resultProcessor from './resultProcessor.js';
+import asoc from './asoc.js';
 
 let sastScanId;
 let scaScanId;
+
+/*
+ detect PR context
+*/
+const isPR = process.env.INPUT_IS_PR_SCAN === "true" || process.env.GITHUB_EVENT_NAME === "pull_request";
+/*
+ PR metadata from workflow inputs*/
+const prNumber = process.env.INPUT_PR_NUMBER || "";
+const branchName = process.env.INPUT_BRANCH_NAME || process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME || "";
+const repoName = process.env.INPUT_REPO_NAME || process.env.GITHUB_REPOSITORY || "";
+const commitSha = process.env.GITHUB_SHA || "";
+core.info(`GitHub Event: ${process.env.GITHUB_EVENT_NAME}`);
+if (isPR) {
+    core.info("Running SAST scan for Pull Request");
+    core.info(`Repository: ${repoName}`);
+    core.info(`PR Number: ${prNumber}`);
+    core.info(`Branch: ${branchName}`);
+    core.info(`Commit: ${commitSha}`);
+}
+else {
+    core.info("Running SAST scan for Push/Manual trigger");
+}
 
 core.info(constants.DOWNLOADING_CLIENT);
 saclientutil.downloadClient()
@@ -57,9 +80,17 @@ saclientutil.downloadClient()
         core.info(`SCA Scan ID: ${scaScanId}`)
         core.info(`${settings.getScanUrl(scaScanId)}`);
     }
+	
+	 /*
+         PR metadata logging
+    */
+	if(isPR) {
+            core.info(`PR scan detected`);
+            core.info(`PR branch: ${process.env.GITHUB_HEAD_REF}`);
+	}
     
     if(process.env.INPUT_WAIT_FOR_ANALYSIS !== 'true') {
-        return resolve();
+        return;
     }
 
     core.info(constants.WAIT_FOR_ANALYSIS);
@@ -68,14 +99,16 @@ saclientutil.downloadClient()
 .then((timedOut) => {
     if(timedOut) {
         core.warning(constants.ANALYSIS_TIMEOUT);
-        return resolve();
+        return;
     }
     core.info(constants.GETTING_RESULTS);
     return resultProcessor.processScanResults(sastScanId, scaScanId);
 })
-.then((results) => {
+.then(async(results) => {
     if(results) {
         core.info(results);
+		//Generate markdown + html report
+		await asoc.getNonCompliantIssues(sastScanId);
         core.info(constants.ANALYSIS_SUCCESS);
     }
 })
