@@ -76,12 +76,9 @@ function getScanResults(scanId) {
 async function getSastScanDetails(scanId) {
     const url = settings.getServiceUrl()+ "/api/v4/Scans/Sast/"+ scanId;
     try {
+		console.log("Fetching SAST scan details for scan id: ", scanId);
         const res = await got.get(url, {
-                headers: {
-                    Authorization: "Bearer " + token,
-                    Accept: "application/json",
-					ClientType: utils.getClientType()
-				},
+                headers: getRequestHeaders(),
 				retry: {
 					limit: 3,
 					methods: ["GET", "POST"]
@@ -92,7 +89,11 @@ async function getSastScanDetails(scanId) {
         });
         return JSON.parse(res.body);
     } catch (e) {
-        console.log("Failed to fetch SAST scan details:", e.message);
+        console.log("Failed to fetch SAST scan details:");
+		console.log("URL:", url);
+		console.log("Status:", e.response?.statusCode);
+		console.log("Response:", e.response?.body);
+		console.log("Failed to fetch SAST scan details:", e.message);
         return null;
     }
 }
