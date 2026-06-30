@@ -594,4 +594,4 @@ async function getScanStatus(url, scanId) {
     return responseJson.LatestExecution.Status;
 }
 
-export default { getScanResults, runAnalysis, getSastScanStatus, getScaScanStatus, getNonCompliantIssues, getScaScanResults }
+export default { getScanResults, runAnalysis, getSastScanStatus, getScaScanStatus, getNonCompliantIssues }
