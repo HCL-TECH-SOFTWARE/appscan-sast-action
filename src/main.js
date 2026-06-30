@@ -22,7 +22,6 @@ import asoc from './asoc.js';
 import settings from './settings.js';
 import statusChecker from './statusChecker.js';
 import resultProcessor from './resultProcessor.js';
-import asoc from './asoc.js';
 
 let sastScanId;
 let scaScanId;
