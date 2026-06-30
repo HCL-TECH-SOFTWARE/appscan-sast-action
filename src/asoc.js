@@ -111,6 +111,10 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
         got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] }, https: { rejectUnauthorized: enableSSL } })
         .then((response) => {
             let responseJson = JSON.parse(response.body);
+			console.log("Scan Type:", scanType);
+			console.log("Response keys:", Object.keys(responseJson));
+			console.log("Items length:", responseJson.Items ? responseJson.Items.length : "undefined");
+			console.log("Response:", JSON.stringify(responseJson, null, 2));
             return responseJson.Items || [];
         })
 		// Keep the async report/SARIF generation inside the same promise chain
