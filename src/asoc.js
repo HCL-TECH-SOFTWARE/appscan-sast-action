@@ -108,6 +108,7 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
     return new Promise((resolve, reject) => {
         let queryString = '?applyPolicies=All&%24top=100&%24apply=filter%28Status%20eq%20%27Open%27%20or%20Status%20eq%20%27InProgress%27%20or%20Status%20eq%20%27Reopened%27%20or%20Status%20eq%20%27New%27%29';
         let url = settings.getServiceUrl() + constants.API_ISSUES + scanId + queryString;
+		console.log(">>>>>>>>>>>>>>Issues url: ", url);
         got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] }, https: { rejectUnauthorized: enableSSL } })
         .then((response) => {
             let responseJson = JSON.parse(response.body);
@@ -162,7 +163,7 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
 			} catch (e) {
 					console.log("Failed to read PR information:", e.message);
 			}
-				const scanLabel = isPR ? `${scanType}PR Scan Summary` : `${scanType}Scan Summary`;
+				const scanLabel = isPR ? `${scanType} PR Scan Summary` : `${scanType} Scan Summary`;
 				const prUrl =`https://github.com/${repoName}/pull/${prNumber}`;
 				const branchUrl =`https://github.com/${repoName}/tree/${branchName}`;
 				const commitUrl =`https://github.com/${repoName}/commit/${process.env.GITHUB_SHA}`;
