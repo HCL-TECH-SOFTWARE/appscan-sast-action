@@ -33,23 +33,29 @@ function processScanResults(sastScanId, scaScanId) {
         let sastScanResults = [];
         let scaScanResults = [];
 
-        asoc.getScanResults(sastScanId)
+        (sastScanId ? asoc.getScanResults(sastScanId, 'SAST') : Promise.resolve({Items: []}))
         .then((sastResults) => {
             sastScanResults = sastResults.Items;
             return processResults(sastScanResults, 'SAST');
         })
         .then(() => {
-            return asoc.getScanResults(scaScanId);
+            return scaScanId ? asoc.getScanResults(scaScanId, 'SCA') : Promise.resolve({Items: []});
         })
         .then((scaResults) => {
             scaScanResults = scaResults.Items;
             return processResults(scaScanResults, 'SCA');
         })
         .then(() => {
-            return aggregateResults(sastScanResults, scaScanResults);
+			if(sastScanId && scaScanId) {
+				return aggregateResults(sastScanResults, scaScanResults);
+			}
+            return null;
         })
         .then((aggregatedResults) => {
-            return processResults(aggregatedResults, 'Combined');
+			if(aggregatedResults) {
+				return processResults(aggregatedResults, 'Combined');
+			}
+            return Promise.resolve();
         })
         .then(() => {
             if(shouldFail) {

@@ -57,7 +57,7 @@ function login() {
     })
 }
 
-function getScanResults(scanId) {
+function getScanResults(scanId, scanType = 'SAST') {
     return new Promise((resolve, reject) => {
         if(!scanId) {
             return resolve([]);
@@ -65,7 +65,7 @@ function getScanResults(scanId) {
         
         login()
         .then(() => {
-            return resolve(getNonCompliantIssues(scanId));
+            return resolve(getNonCompliantIssues(scanId, scanType));
         })
         .catch((error) => {
             reject(error);
@@ -98,7 +98,7 @@ async function getSastScanDetails(scanId) {
     }
 }
 
-async function getNonCompliantIssues(scanId) {
+async function getNonCompliantIssues(scanId, scanType = 'SAST') {
 	console.log("=======================================================");
 	console.log(new Date().toISOString());
 	console.log("===================getNonCompliantIssues invoked=====================");
@@ -133,10 +133,12 @@ async function getNonCompliantIssues(scanId) {
 		    let appName = applicationId;
 			let executionId = "";
 			try {
-				const scanDetails = await getSastScanDetails(scanId);				
-				if(scanDetails) {
-					appName = scanDetails.AppName || appName;
-					executionId = scanDetails.ExecutionId || "";
+				if(scanType === 'SAST') {
+					const scanDetails = await getSastScanDetails(scanId);	
+					if(scanDetails) {
+						appName = scanDetails.AppName || appName;
+						executionId = scanDetails.ExecutionId || "";
+					}
 				}
 			} catch (e) {
 					console.log("Failed to fetch AppName from scan details");
@@ -156,11 +158,12 @@ async function getNonCompliantIssues(scanId) {
 			} catch (e) {
 					console.log("Failed to read PR information:", e.message);
 			}
-				const scanLabel = isPR ? "SAST PR Scan Summary" : "SAST Scan Summary";
+				const scanLabel = isPR ? `${scanType}PR Scan Summary` : `${scanType}Scan Summary`;
 				const prUrl =`https://github.com/${repoName}/pull/${prNumber}`;
 				const branchUrl =`https://github.com/${repoName}/tree/${branchName}`;
 				const commitUrl =`https://github.com/${repoName}/commit/${process.env.GITHUB_SHA}`;
-				const issueBaseUrl =`${baseUrl}/main/myapps/${applicationId}/scans/${scanId}/scanIssues?executionId=${executionId}`;				
+				const issueBaseUrl = scanType === 'SAST' ? `${baseUrl}/main/myapps/${applicationId}/scans/${scanId}/scanIssues?executionId=${executionId}`:
+				                     `${baseUrl}/main/myapps/${applicationId}/scans/${scanId}/scanIssues`;				
 				const prSection = isPR ? `
 
 ## Pull Request Information
@@ -187,7 +190,7 @@ ${prSection}
 
 | Field | Value |
 |------|-------|
-| Scan Type | SAST |
+| Scan Type | ${scanType} |
 | Scan ID | ${scanIdValue} |
 | Application Name | ${appNameValue} |
 | Repository | ${process.env.GITHUB_REPOSITORY} |
@@ -591,4 +594,4 @@ async function getScanStatus(url, scanId) {
     return responseJson.LatestExecution.Status;
 }
 
-export default { getScanResults, runAnalysis, getSastScanStatus, getScaScanStatus, getNonCompliantIssues }
+export default { getScanResults, runAnalysis, getSastScanStatus, getScaScanStatus, getNonCompliantIssues, getScaScanResults }

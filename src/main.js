@@ -107,7 +107,12 @@ saclientutil.downloadClient()
     if(results) {
         core.info(results);
 		//Generate markdown + html report
-		await asoc.getNonCompliantIssues(sastScanId);
+		if(sastScanId) {
+			await asoc.getNonCompliantIssues(sastScanId, 'SAST');
+		}
+		if(scaScanId) {
+			await asoc.getNonCompliantIssues(scaScanId, 'SCA');
+		}
         core.info(constants.ANALYSIS_SUCCESS);
     }
 })
