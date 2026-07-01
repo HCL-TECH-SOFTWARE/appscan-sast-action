@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import child_process from 'child_process';
+import configGenerator from './configGenerator.js';
 import saclientutil from './saclientutil.js';
 import utils from './utils.js';
 import settings from './settings.js';
