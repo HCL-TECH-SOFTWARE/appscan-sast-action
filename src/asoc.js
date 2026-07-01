@@ -120,10 +120,10 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
 			try {
 				if(scanType === 'SAST') {
 					const scanDetails = await getSastScanDetails(scanId);	
-					console.log("Status :", scanDetails.Status);
-					console.log("Execution progress :", scanDetails.ExecutionProgress);
-					console.log("Progress :", scanDetails.Progress);
-					console.log("Issues found :", scanDetails.NIssuesFound);
+					console.log("Status :", scanDetails.LatestExecution?.Status);
+					console.log("Execution progress :", scanDetails.LatestExecution?.ExecutionProgress);
+					console.log("Progress :", scanDetails.LatestExecution?.Progress);
+					console.log("Issues found :", scanDetails.LatestExecution?.NIssuesFound);
 					if(scanDetails) {
 						console.log("Scan details:", JSON.stringify(scanDetails, null, 2));
 						console.log("Critical :", scanDetails.NCriticalIssues);
@@ -133,7 +133,7 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
 						console.log("Info :", scanDetails.NInfoIssues);
 						appName = scanDetails.AppName || appName;
 						executionId = scanDetails.ExecutionId || "";
-						counts = {Critical: scanDetails.NCriticalIssues || 0, High: scanDetails.NHighIssues || 0, Medium: scanDetails.NMediumIssues || 0, Low: scanDetails.NLowIssues || 0, Informational: scanDetails.NInfoIssues || 0};
+						counts = {Critical: scanDetails.LatestExecution?.NCriticalIssues || 0, High: scanDetails.LatestExecution?.NHighIssues || 0, Medium: scanDetails.LatestExecution?.NMediumIssues || 0, Low: scanDetails.LatestExecution?.NLowIssues || 0, Informational: scanDetails.LatestExecution?.NInfoIssues || 0};
 					}
 				}
 			} catch (e) {
