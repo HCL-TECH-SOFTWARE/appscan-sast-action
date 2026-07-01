@@ -72,6 +72,7 @@ async function waitForSastAnalysis(scanId) {
             return timed_out;
         }
         result = await asoc.getSastScanStatus(scanId);
+		console.log("Polling SAST status: ", result);
     }
     return result;
 }
