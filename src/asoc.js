@@ -114,7 +114,7 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
                 if (
                     counts[i.Severity] !== undefined
                 ) {
-                    counts[i.Severity]++;
+                    counts[i.Severity] = i.Count;
                 }
             });
             const total = Object.values(counts).reduce((a,b)=>a+b, 0);
@@ -129,7 +129,6 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
 					if(scanDetails) {
 						appName = scanDetails.AppName || appName;
 						executionId = scanDetails.ExecutionId || "";
-						counts = {Critical: scanDetails.LatestExecution?.NCriticalIssues || 0, High: scanDetails.LatestExecution?.NHighIssues || 0, Medium: scanDetails.LatestExecution?.NMediumIssues || 0, Low: scanDetails.LatestExecution?.NLowIssues || 0, Informational: scanDetails.LatestExecution?.NInfoIssues || 0};
 					}
 				}
 			} catch (e) {
@@ -218,6 +217,31 @@ ${viewScanValue}
             reject(error);
         })
     });
+}
+
+/**
+ * Parses an AppScan issue location string into a file path and line number.
+ * Used by report generation to create source code links and
+ * was originally introduced for SARIF result locations.
+ */
+function parseLocation(location) {
+    if (!location) {
+        return {
+            filePath: "source",
+            lineNumber: 1
+        };
+    }
+    const lastColon = location.lastIndexOf(":");
+    if (lastColon === -1) {
+        return {
+            filePath: location,
+            lineNumber: 1
+        };
+    }
+    return {
+        filePath: location.substring(0, lastColon),
+        lineNumber: parseInt(location.substring(lastColon + 1)) || 1
+    };
 }
 
 function generateHtmlReport(issues, counts, scanUrl, appName, issueBaseUrl,	scanId, appUrl, scanTime) {
