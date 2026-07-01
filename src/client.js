@@ -25,6 +25,10 @@ process.env.APPSCAN_IRGEN_CLIENT = 'GitHubSast';
 process.env.IRGEN_CLIENT_PLUGIN_VERSION = utils.getVersion();
 
 function generateIrx() {
+    if(settings.isIncrementalScan()) {
+        configGenerator.generate();
+    }
+
     let args = ['prepare'];
 
     if(!isArgumentEnabled(process.env.INPUT_SCAN_BUILD_OUTPUTS)) {
