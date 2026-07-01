@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import child_process from 'child_process';
+import configGenerator from './configGenerator.js';
 import saclientutil from './saclientutil.js';
 import utils from './utils.js';
 import settings from './settings.js';
@@ -25,6 +26,10 @@ process.env.APPSCAN_IRGEN_CLIENT = 'GitHubSast';
 process.env.IRGEN_CLIENT_PLUGIN_VERSION = utils.getVersion();
 
 function generateIrx() {
+    if(settings.isIncrementalScan()) {
+        configGenerator.generate();
+    }
+
     let args = ['prepare'];
 
     if(!isArgumentEnabled(process.env.INPUT_SCAN_BUILD_OUTPUTS)) {
