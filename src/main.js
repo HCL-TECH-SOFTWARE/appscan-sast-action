@@ -25,7 +25,7 @@ import resultProcessor from './resultProcessor.js';
 
 let sastScanId;
 let scaScanId;
-
+core.info("******** USING MODIFIED main.js ****************");
 /*
  detect PR context
 */
