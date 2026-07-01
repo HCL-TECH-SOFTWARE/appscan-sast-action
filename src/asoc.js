@@ -100,14 +100,24 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
         got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] }, https:{ rejectUnauthorized: enableSSL }})
         .then((response) => {
             let responseJson = JSON.parse(response.body);
-			console.log("<<<<< responseJson.Items || [] >>>>>>>>>>>>", responseJson.Items);
+			// Use raw issue items for PR/build summary, HTML report, and SARIF generation.
+			// resultProcessor.processResults() returns aggregated data which is not iterable.
 			return responseJson.Items || [];
         })
 		// Keep the async report/SARIF generation inside the same promise chain
 		// so the workflow completes only after all reports are fully written.
-        .then(async issues => {			
+        .then(async issues => {
+            issues = issues || [];			
 			//const enableGithubSecurity = process.env.INPUT_ENABLE_GITHUB_SECURITY !== 'false';
-            let counts = {Critical: 0, High: 0, Medium: 0, Low: 0, Informational: 0};
+            const counts = {Critical: 0, High: 0, Medium: 0, Low: 0, Informational: 0};
+            issues.forEach(i => {
+                if (
+                    counts[i.Severity] !== undefined
+                ) {
+                    counts[i.Severity]++;
+                }
+            });
+            const total = Object.values(counts).reduce((a,b)=>a+b, 0);
             const baseUrl = settings.getServiceUrl().replace("/api/v4","");		
             const scanUrl =`${baseUrl}/main/myapps/${process.env.INPUT_APPLICATION_ID}/scans/${scanId}`;			
 			const applicationId = process.env.INPUT_APPLICATION_ID;
@@ -125,7 +135,6 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
 			} catch (e) {
 					console.log("Failed to fetch AppName from scan details");
 			}
-				const total = Object.values(counts).reduce((a,b)=>a+b, 0);
 				const appUrl =`${baseUrl}/main/myapps/${applicationId}`;
 				const scanTime = new Date().toISOString().replace("T"," ").substring(0,19);				
 				const isPR = process.env.GITHUB_EVENT_NAME === 'pull_request';
