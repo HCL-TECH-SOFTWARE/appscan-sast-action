@@ -106,31 +106,11 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
 	console.trace("Call Stack");
 	console.log("=======================================================");
     return new Promise((resolve, reject) => {
-        let queryString = '?applyPolicies=All&%24top=100&%24apply=filter%28Status%20eq%20%27Open%27%20or%20Status%20eq%20%27InProgress%27%20or%20Status%20eq%20%27Reopened%27%20or%20Status%20eq%20%27New%27%29';
-        let url = settings.getServiceUrl() + constants.API_ISSUES + scanId + queryString;
-		console.log(">>>>>>>>>>>>>>Issues url: ", url);
-        got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] }, https: { rejectUnauthorized: enableSSL } })
-        .then((response) => {
-            let responseJson = JSON.parse(response.body);
-			console.log("Scan Type:", scanType);
-			console.log("Response keys:", Object.keys(responseJson));
-			console.log("Items length:", responseJson.Items ? responseJson.Items.length : "undefined");
-			console.log("Response:", JSON.stringify(responseJson, null, 2));
-            return responseJson.Items || [];
-        })
 		// Keep the async report/SARIF generation inside the same promise chain
 		// so the workflow completes only after all reports are fully written.
-        .then(async issues => {
-            issues = issues || [];			
+        .then(async issues => {			
 			//const enableGithubSecurity = process.env.INPUT_ENABLE_GITHUB_SECURITY !== 'false';
-            const counts = {Critical: 0, High: 0, Medium: 0, Low: 0, Informational: 0};
-            issues.forEach(i => {
-                if (
-                    counts[i.Severity] !== undefined
-                ) {
-                    counts[i.Severity]++;
-                }
-            });
+            let counts = {Critical: 0, High: 0, Medium: 0, Low: 0, Informational: 0};
             const total = Object.values(counts).reduce((a,b)=>a+b, 0);
             const baseUrl = settings.getServiceUrl().replace("/api/v4","");		
             const scanUrl =`${baseUrl}/main/myapps/${process.env.INPUT_APPLICATION_ID}/scans/${scanId}`;			
@@ -143,6 +123,7 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
 					if(scanDetails) {
 						appName = scanDetails.AppName || appName;
 						executionId = scanDetails.ExecutionId || "";
+						counts = {Critical: scanDetails.NCriticalIssues || 0, High: scanDetails.NHighIssues || 0, Medium: scanDetails.NMediumIssues || 0, Low: scanDetails.NLowIssues || 0, Informational: scanDetails.NInfoIssues || 0};
 					}
 				}
 			} catch (e) {
