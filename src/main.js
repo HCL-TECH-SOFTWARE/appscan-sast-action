@@ -25,7 +25,7 @@ import resultProcessor from './resultProcessor.js';
 
 let sastScanId;
 let scaScanId;
-core.info("******** USING MODIFIED main.js ****************");
+
 /*
  detect PR context
 */
@@ -91,7 +91,7 @@ saclientutil.downloadClient()
     if(process.env.INPUT_WAIT_FOR_ANALYSIS !== 'true') {
         return;
     }
-    core.info("INPUT_WAIT_FOR_ANALYSIS = "+ process.env.INPUT_WAIT_FOR_ANALYSIS);
+
     core.info(constants.WAIT_FOR_ANALYSIS);
     return statusChecker.waitForAnalysis(sastScanId, scaScanId);
 })

@@ -76,7 +76,6 @@ function getScanResults(scanId, scanType = 'SAST') {
 async function getSastScanDetails(scanId) {
     const url = settings.getServiceUrl()+ "/api/v4/Scans/Sast/"+ scanId;
     try {
-		console.log("Fetching SAST scan details for scan id: ", scanId);
         const res = await got.get(url, {
                 headers: getRequestHeaders(),
 				retry: {
@@ -89,10 +88,6 @@ async function getSastScanDetails(scanId) {
         });
         return JSON.parse(res.body);
     } catch (e) {
-        console.log("Failed to fetch SAST scan details:");
-		console.log("URL:", url);
-		console.log("Status:", e.response?.statusCode);
-		console.log("Response:", e.response?.body);
 		console.log("Failed to fetch SAST scan details:", e.message);
         return null;
     }
@@ -105,6 +100,7 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
         got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] }, https:{ rejectUnauthorized: enableSSL }})
         .then((response) => {
             let responseJson = JSON.parse(response.body);
+			console.log("<<<<< responseJson.Items || [] >>>>>>>>>>>>", responseJson.Items);
 			return responseJson.Items || [];
         })
 		// Keep the async report/SARIF generation inside the same promise chain
@@ -120,17 +116,7 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
 			try {
 				if(scanType === 'SAST') {
 					const scanDetails = await getSastScanDetails(scanId);	
-					console.log("Status :", scanDetails.LatestExecution?.Status);
-					console.log("Execution progress :", scanDetails.LatestExecution?.ExecutionProgress);
-					console.log("Progress :", scanDetails.LatestExecution?.Progress);
-					console.log("Issues found :", scanDetails.LatestExecution?.NIssuesFound);
 					if(scanDetails) {
-						console.log("Scan details:", JSON.stringify(scanDetails, null, 2));
-						console.log("Critical :", scanDetails.NCriticalIssues);
-						console.log("High :", scanDetails.NHighIssues);
-						console.log("Medium :", scanDetails.NHighIssues);
-						console.log("Low :", scanDetails.NLowIssues);
-						console.log("Info :", scanDetails.NInfoIssues);
 						appName = scanDetails.AppName || appName;
 						executionId = scanDetails.ExecutionId || "";
 						counts = {Critical: scanDetails.LatestExecution?.NCriticalIssues || 0, High: scanDetails.LatestExecution?.NHighIssues || 0, Medium: scanDetails.LatestExecution?.NMediumIssues || 0, Low: scanDetails.LatestExecution?.NLowIssues || 0, Informational: scanDetails.LatestExecution?.NInfoIssues || 0};
