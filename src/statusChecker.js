@@ -57,7 +57,6 @@ async function waitForScaAnalysis(scanId) {
 }
 
 async function waitForSastAnalysis(scanId) {
-	console.log("<<<<<<<<<waitForSastAnalysis called inside statuschecker.js>>>>>>>>>>>>>> ");
     if(!scanId) {
         return;
     }
@@ -73,7 +72,6 @@ async function waitForSastAnalysis(scanId) {
             return timed_out;
         }
         result = await asoc.getSastScanStatus(scanId);
-		console.log("Polling SAST status: ", result);
     }
     return result;
 }

@@ -91,9 +91,8 @@ saclientutil.downloadClient()
     if(process.env.INPUT_WAIT_FOR_ANALYSIS !== 'true') {
         return;
     }
-
+    core.info("INPUT_WAIT_FOR_ANALYSIS = "+ process.env.INPUT_WAIT_FOR_ANALYSIS);
     core.info(constants.WAIT_FOR_ANALYSIS);
-	console.log(">>>>>>>calling waitForAnalysis");
     return statusChecker.waitForAnalysis(sastScanId, scaScanId);
 })
 .then((timedOut) => {
