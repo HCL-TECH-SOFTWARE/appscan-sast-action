@@ -93,6 +93,7 @@ saclientutil.downloadClient()
     }
 
     core.info(constants.WAIT_FOR_ANALYSIS);
+	console.log(">>>>>>>calling waitForAnalysis");
     return statusChecker.waitForAnalysis(sastScanId, scaScanId);
 })
 .then((timedOut) => {
