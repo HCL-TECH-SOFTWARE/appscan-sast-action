@@ -120,6 +120,10 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
 			try {
 				if(scanType === 'SAST') {
 					const scanDetails = await getSastScanDetails(scanId);	
+					console.log("Status :", scanDetails.Status);
+					console.log("Execution progress :", scanDetails.ExecutionProgress);
+					console.log("Progress :", scanDetails.Progress);
+					console.log("Issues found :", scanDetails.NIssuesFound);
 					if(scanDetails) {
 						console.log("Scan details:", JSON.stringify(scanDetails, null, 2));
 						console.log("Critical :", scanDetails.NCriticalIssues);
