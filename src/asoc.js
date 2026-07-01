@@ -105,7 +105,6 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
         got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] }, https:{ rejectUnauthorized: enableSSL }})
         .then((response) => {
             let responseJson = JSON.parse(response.body);
-			console.log("responseJson.Items>>>>>>>>>>>>>", responseJson.Items);
 			return responseJson.Items || [];
         })
 		// Keep the async report/SARIF generation inside the same promise chain
@@ -122,6 +121,12 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
 				if(scanType === 'SAST') {
 					const scanDetails = await getSastScanDetails(scanId);	
 					if(scanDetails) {
+						console.log("Scan details:", JSON.stringify(scanDetails, null, 2));
+						console.log("Critical :", scanDetails.NCriticalIssues);
+						console.log("High :", scanDetails.NHighIssues);
+						console.log("Medium :", scanDetails.NHighIssues);
+						console.log("Low :", scanDetails.NLowIssues);
+						console.log("Info :", scanDetails.NInfoIssues);
 						appName = scanDetails.AppName || appName;
 						executionId = scanDetails.ExecutionId || "";
 						counts = {Critical: scanDetails.NCriticalIssues || 0, High: scanDetails.NHighIssues || 0, Medium: scanDetails.NMediumIssues || 0, Low: scanDetails.NLowIssues || 0, Informational: scanDetails.NInfoIssues || 0};
