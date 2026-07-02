@@ -261,6 +261,12 @@ function generateHtmlReport(issues, counts, scanUrl, appName, issueBaseUrl,	scan
 	const prUrl = `https://github.com/${repoName}/pull/${prNumber}`;
 	const branchUrl = `https://github.com/${repoName}/tree/${branchName}`;
 	const commitUrl = `https://github.com/${repoName}/commit/${process.env.GITHUB_SHA}`;
+	console.log("====== HTML report debug ======");
+	console.log("====== Total issues ======", issues.length);
+	if (issues.length > 0) {
+		console.log("====== first issue ======");
+		console.log(JSON.stringify(issues[0], null, 2));
+	}		
 	return `
 
 <html>
