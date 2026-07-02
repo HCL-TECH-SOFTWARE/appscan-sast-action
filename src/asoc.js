@@ -100,6 +100,11 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
         got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] }, https:{ rejectUnauthorized: enableSSL }})
         .then((response) => {
             let responseJson = JSON.parse(response.body);
+			console.log("=========== Items returned ==============", responseJson.Items?.length);
+			console.log("====== Total count ======", responseJson.TotalCount);
+			console.log(JSON.stringify(issues[0], null, 2));
+			console.log("================== Keys =============", Object.keys(responseJson));
+			console.log("====== Next link ======", responseJson["@odata.nextLink"]);
 			// Use raw issue items for PR/build summary, HTML report, and SARIF generation.
 			// resultProcessor.processResults() returns aggregated data which is not iterable.
 			return responseJson.Items || [];
@@ -205,11 +210,6 @@ ${viewScanValue}
 				/*
 				 ADD HTML REPORT GENERATION HERE
 				*/
-                console.log("=========== Before generate html report ==============");
-				console.log("====== Issues length in ======", issues.length);
-				console.log("====== first issue ======");
-				console.log(JSON.stringify(issues[0], null, 2));
-				console.log("================================");
 				const htmlReport = generateHtmlReport(issues, counts, scanUrl, appName, issueBaseUrl, scanId, appUrl, scanTime);			
 				const fileName = isPR ? "appscan-pr-report.html": "appscan-build-summary-report.html";
 				fs.writeFileSync(fileName, htmlReport);
