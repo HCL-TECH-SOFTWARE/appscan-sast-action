@@ -102,7 +102,6 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
             let responseJson = JSON.parse(response.body);
 			console.log("=========== Items returned ==============", responseJson.Items?.length);
 			console.log("====== Total count ======", responseJson.TotalCount);
-			console.log(JSON.stringify(issues[0], null, 2));
 			console.log("================== Keys =============", Object.keys(responseJson));
 			console.log("====== Next link ======", responseJson["@odata.nextLink"]);
 			// Use raw issue items for PR/build summary, HTML report, and SARIF generation.
@@ -114,6 +113,7 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
         .then(async issues => {
             issues = issues || [];			
 			//const enableGithubSecurity = process.env.INPUT_ENABLE_GITHUB_SECURITY !== 'false';
+			console.log(JSON.stringify(issues[0], null, 2));
             const counts = {Critical: 0, High: 0, Medium: 0, Low: 0, Informational: 0};
             issues.forEach(i => {
                 if (
