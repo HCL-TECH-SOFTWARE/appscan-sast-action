@@ -204,7 +204,12 @@ ${viewScanValue}
 				fs.writeFileSync(mdFileName, md);
 				/*
 				 ADD HTML REPORT GENERATION HERE
-				*/			
+				*/
+                console.log("=========== Before generate html report ==============");
+				console.log("====== Issues length in ======", issues.length);
+				console.log("====== first issue ======");
+				console.log(JSON.stringify(issues[0], null, 2));
+				console.log("================================");
 				const htmlReport = generateHtmlReport(issues, counts, scanUrl, appName, issueBaseUrl, scanId, appUrl, scanTime);			
 				const fileName = isPR ? "appscan-pr-report.html": "appscan-build-summary-report.html";
 				fs.writeFileSync(fileName, htmlReport);
@@ -260,13 +265,7 @@ function generateHtmlReport(issues, counts, scanUrl, appName, issueBaseUrl,	scan
 	}
 	const prUrl = `https://github.com/${repoName}/pull/${prNumber}`;
 	const branchUrl = `https://github.com/${repoName}/tree/${branchName}`;
-	const commitUrl = `https://github.com/${repoName}/commit/${process.env.GITHUB_SHA}`;
-	console.log("====== HTML report debug ======");
-	console.log("====== Total issues ======", issues.length);
-	if (issues.length > 0) {
-		console.log("====== first issue ======");
-		console.log(JSON.stringify(issues[0], null, 2));
-	}		
+	const commitUrl = `https://github.com/${repoName}/commit/${process.env.GITHUB_SHA}`;	
 	return `
 
 <html>
