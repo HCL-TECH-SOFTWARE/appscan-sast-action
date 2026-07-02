@@ -205,18 +205,20 @@ ${prSection}
 ${viewScanValue}
 
 `;
-				const mdFileName = isPR ? "appscan-pr-report.md": "appscan-build-summary-report.md";
+				const mdFileName = isPR ? `appscan-${scanType.toLowerCase()}-pr-report.md`: `appscan-${scanType.toLowerCase()}-build-summary-report.md`;
 				fs.writeFileSync(mdFileName, md);
 				/*
 				 ADD HTML REPORT GENERATION HERE
 				*/
-				const htmlReport = generateHtmlReport(issues, counts, scanUrl, appName, issueBaseUrl, scanId, appUrl, scanTime);			
-				const fileName = isPR ? "appscan-pr-report.html": "appscan-build-summary-report.html";
+				const report = {total, counts, issues, scanId, scanUrl, appName, appUrl, scanTime, scanType};
+				const htmlReport = generateHtmlReport(report);			
+				const fileName = isPR ? `appscan-${scanType.toLowerCase()}-pr-report.html`: `appscan-${scanType.toLowerCase()}-build-summary-report.html`;
 				fs.writeFileSync(fileName, htmlReport);
 				if (process.env.GITHUB_STEP_SUMMARY) {
 					fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
 				}
-				resolve({total, counts});
+				//resolve({total, counts});
+				resolve({total, counts, issues, scanId, scanUrl, appName, appUrl, scanTime, scanType});
 		})
         .catch((error) => {
             reject(error);
@@ -249,7 +251,7 @@ function parseLocation(location) {
     };
 }
 
-function generateHtmlReport(issues, counts, scanUrl, appName, issueBaseUrl,	scanId, appUrl, scanTime) {
+function generateHtmlReport(report) {
 	const isPR = process.env.GITHUB_EVENT_NAME === 'pull_request';
 	const repoName = process.env.GITHUB_REPOSITORY || "";
 	const branchName = process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME || "";
@@ -294,7 +296,7 @@ th {
 </style>
 </head>
 <body>
-<h1>HCL AppScan SAST ${isPR ? "PR Scan Summary" : "Scan Summary"}</h1>
+<h1>HCL AppScan ${report.scanType} ${isPR ? "PR Scan Summary" : "Scan Summary"}</h1>
 ${isPR ? `
 <h3>Pull Request Information</h3>
 <table>
@@ -338,21 +340,21 @@ ${commitSha}
 </tr>
 <tr>
 <td>Scan Type</td>
-<td>SAST</td>
+<td>${report.scanType}</td>
 </tr>
 <tr>
 <td>Scan ID</td>
 <td>
-<a href="${scanUrl}" target="_blank">
-${scanId}
+<a href="${report.scanUrl}" target="_blank">
+${report.scanId}
 </a>
 </td>
 </tr>
 <tr>
 <td>Application Name</td>
 <td>
-<a href="${appUrl}" target="_blank">
-${appName}
+<a href="${report.appUrl}" target="_blank">
+${report.appName}
 </a>
 </td>
 </tr>
@@ -362,10 +364,10 @@ ${appName}
 </tr>
 <tr>
 <td>Scan Time</td>
-<td>${scanTime}</td>
+<td>${report.scanTime}</td>
 </tr>
 </table>
-<h2>Application: ${appName}</h2>
+<h2>Application: ${report.appName}</h2>
 <h3>Summary</h3>
 <table>
 <tr>
@@ -376,11 +378,11 @@ ${appName}
 <th>Info</th>
 </tr>
 <tr>
-<td>${counts.Critical}</td>
-<td>${counts.High}</td>
-<td>${counts.Medium}</td>
-<td>${counts.Low}</td>
-<td>${counts.Informational}</td>
+<td>${report.counts.Critical}</td>
+<td>${report.counts.High}</td>
+<td>${report.counts.Medium}</td>
+<td>${report.counts.Low}</td>
+<td>${report.counts.Informational}</td>
 </tr>
 </table>
 <h3>Issues</h3>
@@ -392,7 +394,7 @@ ${appName}
 <th>Line</th>
 <th>How to fix</th>
 </tr>
-${issues.map(i => `
+${report.issues.map(i => `
 <tr>
 <td class="sev-${i.Severity.toLowerCase()}">
 ${i.Severity}
@@ -432,7 +434,7 @@ ${(() => {
 </table>
 <p>
 Full scan:
-<a href="${scanUrl}">
+<a href="${report.scanUrl}">
 View in AppScan
 </a>
 </p>
