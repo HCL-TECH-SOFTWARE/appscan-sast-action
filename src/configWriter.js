@@ -15,6 +15,7 @@ limitations under the License.
 */
 
 import * as fs from 'fs';
+import * as core from '@actions/core';
 
 function write(filePaths) {
     return new Promise((resolve) => {
@@ -31,6 +32,7 @@ function write(filePaths) {
             </Targets>
         </Configuration>`;
 
+        core.info(xml);
         fs.writeFileSync('appscan-config.xml', xml, 'utf8');
         resolve();
     });
