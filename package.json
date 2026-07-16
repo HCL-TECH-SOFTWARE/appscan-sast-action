@@ -13,7 +13,7 @@
     "@actions/github": "^9.0.0",
     "eol": "^0.9.1",
     "extract-zip": "^2.0.1",
-    "form-data": "^4.0.5",
+    "form-data": "^4.0.6",
     "got": "^12.5.3",
     "https": "^1.0.0",
     "https-proxy-agent": "^5.0.0"
