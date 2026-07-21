@@ -86,6 +86,10 @@ inputs:
     - Medium
     - High
     - Critical
+  scan_info_hyperlinks:
+     description: Enable hyperlinks in GitHub Step scan infomation
+     required: false
+     default: true
 runs:
   using: 'node24'
   main: 'src/main.js'
