@@ -193,7 +193,7 @@ function writeSummaryMarkdown(summaryData, reportDownloadLink) {
 
 ---`
 : "";
-    const enableHyperlinks = process.env.INPUT_SUMMARY_HYPERLINKS !== "false";
+    const enableHyperlinks = process.env.INPUT_SCAN_INFO_HYPERLINKS !== "false";
 	const scanIdValue = enableHyperlinks ? `[${scanId}](${scanUrl})` : scanId;
 	const appNameValue = enableHyperlinks ? `[${appName}](${appUrl})` : appName;
 	const reportLabel = `Download ${scanType} HTML Report`;
@@ -257,7 +257,7 @@ async function generateMinimumSummary(scanId, scanType) {
     const scanTime = new Date().toISOString().replace("T", " ").substring(0, 19);
 	const githubContext = getGitHubContext();
 	const {isPR, repoName, branchName, commitSha, prNumber} = githubContext;
-    const enableHyperlinks = process.env.INPUT_SUMMARY_HYPERLINKS !== "false";
+    const enableHyperlinks = process.env.INPUT_SCAN_INFO_HYPERLINKS !== "false";
     const scanIdValue = enableHyperlinks ? `[${scanId}](${scanUrl})` : scanId;
     const appNameValue = enableHyperlinks ? `[${appName}](${appUrl})` : appName;
 	const prUrl = `https://github.com/${repoName}/pull/${prNumber}`;
