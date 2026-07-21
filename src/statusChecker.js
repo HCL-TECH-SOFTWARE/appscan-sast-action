@@ -88,9 +88,6 @@ async function waitForSecurityReport(reportId) {
         }
 		report = await asoc.getSecurityReport(reportId);
 	}
-	if(report) {
-		console.log("Final report status: ", report.Status);
-	}
 	return report;
 }
 
