@@ -21,6 +21,7 @@ import * as constants from './constants.js';
 import settings from './settings.js';
 import utils from './utils.js';
 import FormData from 'form-data';
+import summaryWriter from './summaryWriter.js';
 
 let token = null
 const key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
@@ -65,93 +66,13 @@ function getScanResults(scanId, scanType = 'SAST') {
         
         login()
         .then(() => {
-            return resolve(getNonCompliantIssues(scanId, scanType));
+            return getNonCompliantIssues(scanId, scanType);
         })
-        .catch((error) => {
-            reject(error);
-        })
-    });
-}
-
-async function getSastScanDetails(scanId) {
-    const url = settings.getServiceUrl()+ "/api/v4/Scans/Sast/"+ scanId;
-    try {
-        const res = await got.get(url, {
-                headers: getRequestHeaders(),
-				retry: {
-					limit: 3,
-					methods: ["GET", "POST"]
-				},
-				https: {
-					rejectUnauthorized: enableSSL
-				}
-        });
-        const responseJSON = JSON.parse(res.body);
-		return { AppName : responseJSON.AppName, ExecutionId : responseJSON.LatestExecution?.Id };
-    } catch (e) {
-		console.log("Failed to fetch SAST scan details:", e.message);
-        return null;
-    }
-}
-
-async function getScaScanDetails(scanId) {
-    const url = settings.getServiceUrl()+ "/api/v4/Scans/Sca/"+ scanId;
-    try {
-        const res = await got.get(url, {
-                headers: getRequestHeaders(),
-				retry: {
-					limit: 3,
-					methods: ["GET", "POST"]
-				},
-				https: {
-					rejectUnauthorized: enableSSL
-				}
-        });
-        const responseJSON = JSON.parse(res.body);
-		return { AppName : responseJSON.AppName, ExecutionId : responseJSON.LatestExecution?.Id };
-    } catch (e) {
-		console.log("Failed to fetch SCA scan details:", e.message);
-        return null;
-    }
-}
-
-async function getNonCompliantIssues(scanId, scanType = 'SAST') {
-    return new Promise((resolve, reject) => {
-        const queryString = "?applyPolicies=All" + "&%24filter=Status%20eq%20%27Open%27%20or%20Status%20eq%20%27InProgress%27%20or%20Status%20eq%20%27Reopened%27%20or%20Status%20eq%20%27New%27" +    "&%24apply=groupby((Status,Severity),aggregate(%24count%20as%20N))";
-        const url = settings.getServiceUrl() + constants.API_ISSUES + scanId + queryString;
-		got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET'] }, https: { rejectUnauthorized: enableSSL } })
-		.then(async response => {
-			const responseJson = JSON.parse(response.body);
-            const counts = {Critical: 0, High: 0, Medium: 0, Low: 0, Informational: 0};
-			const groupedItems = responseJson.Items || [];
-            groupedItems.forEach(item => {
-                if (counts[item.Severity] !== undefined) {
-                    counts[item.Severity] += Number(item.N || 0);
-                }
-            });
-            const total = Object.values(counts).reduce((a,b)=>a+b, 0);
-			const serviceUrl = settings.getServiceUrl();
-            const baseUrl = serviceUrl.replace("/api/v4","");		
-            const scanUrl =`${baseUrl}/main/myapps/${process.env.INPUT_APPLICATION_ID}/scans/${scanId}`;		
-			const applicationId = process.env.INPUT_APPLICATION_ID;
-		    let appName = applicationId;
-			try {
-				let scanDetails = null;
-				if(scanType === 'SAST') {
-					scanDetails = await getSastScanDetails(scanId);	
-				} else if(scanType === 'SCA') {
-					scanDetails = await getScaScanDetails(scanId);
-				}
-				if(scanDetails) {
-						appName = scanDetails.AppName || appName;
-				}
-			} catch (e) {
-					console.log("Failed to fetch AppName from scan details");
-			}
-			const appUrl =`${baseUrl}/main/myapps/${applicationId}`;
-			const scanTime = new Date().toISOString().replace("T"," ").substring(0,19);				
-			const githubContext = getGitHubContext();
-			resolve({total, counts, issues: [], scanId, scanUrl, appName, appUrl, scanTime, scanType, ...githubContext});
+		.then(items => {
+			return summaryWriter.buildIssueSummary(getScanDetails, items, scanId, scanType);
+		})
+		.then(summary => {
+			resolve(summary);
 		})
         .catch((error) => {
             reject(error);
@@ -159,145 +80,31 @@ async function getNonCompliantIssues(scanId, scanType = 'SAST') {
     });
 }
 
-function getGitHubContext() {
-    const isPR = process.env.GITHUB_EVENT_NAME === 'pull_request';
-    const repoName = process.env.GITHUB_REPOSITORY || "";
-    const branchName = process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME || "";
-    const commitSha = process.env.GITHUB_SHA ? process.env.GITHUB_SHA.substring(0, 7) : "";
-    let prNumber = "";
+async function getScanDetails(scanId, scanType) {
+    const url = settings.getServiceUrl()+ "/api/v4/Scans/"+ scanType + "/"+ scanId;
     try {
-        if (process.env.GITHUB_EVENT_PATH && fs.existsSync(process.env.GITHUB_EVENT_PATH)) {
-            const eventPayload = JSON.parse(fs.readFileSync(process.env.GITHUB_EVENT_PATH, "utf8"));
-            prNumber = eventPayload.pull_request?.number || "";
-        }
+        const res = await got.get(url, { headers: getRequestHeaders(), retry: {	limit: 3, methods: ["GET", "POST"] }, https: { rejectUnauthorized: enableSSL } });
+        const responseJSON = JSON.parse(res.body);
+		return { AppName : responseJSON.AppName, ExecutionId : responseJSON.LatestExecution?.Id };
     } catch (e) {
-        console.log("Failed to read PR information:", e.message);
+		console.log(`Failed to fetch ${scanType} scan details:`, e.message);
+        return null;
     }
-    return {isPR, repoName, branchName, commitSha, prNumber};
 }
 
-function writeSummaryMarkdown(summaryData, reportDownloadLink) {
-	const {total, counts, scanId, scanUrl, appName, appUrl, scanTime, scanType, isPR, repoName, branchName, commitSha, prNumber} = summaryData;
-	const scanLabel = isPR ? `${scanType} PR Scan Summary` : `${scanType} Scan Summary`;
-	const prUrl = `https://github.com/${repoName}/pull/${prNumber}`;
-	const branchUrl = `https://github.com/${repoName}/tree/${branchName}`;
-	const commitUrl = `https://github.com/${repoName}/commit/${process.env.GITHUB_SHA}`;
-	const prSection = isPR ? `
-## Pull Request Information
-
-| Field | Value |
-|------|------|
-| PR Number | [#${prNumber}](${prUrl}) |
-| Branch | [${branchName}](${branchUrl}) |
-| Commit | [${commitSha}](${commitUrl}) |
-
----`
-: "";
-    const enableHyperlinks = process.env.INPUT_SCAN_INFO_HYPERLINKS !== "false";
-	const scanIdValue = enableHyperlinks ? `[${scanId}](${scanUrl})` : scanId;
-	const appNameValue = enableHyperlinks ? `[${appName}](${appUrl})` : appName;
-	const reportLabel = `Download ${scanType} HTML Report`;
-	const reportValue = enableHyperlinks ? `[${reportLabel}](${reportDownloadLink})` : "";
-	const md = `
-# HCL AppScan ${scanLabel}
-
-${prSection}
-
-### Scan Information
-
-| Field | Value |
-|------|-------|
-| Scan Type | ${scanType} |
-| Scan ID | ${scanIdValue} |
-| Application Name | ${appNameValue} |
-| Repository | ${repoName} |
-| Scan Time | ${scanTime} |
-
----
-
-## Total Vulnerabilities: ${total}
-
-| Critical | High | Medium | Low | Info |
-|----------|------|--------|-----|------|
-| ${counts.Critical} | ${counts.High} | ${counts.Medium} | ${counts.Low} | ${counts.Informational} |
-
----
-
-${reportValue}
-
-`;
-     const mdFileName = isPR ? `appscan-${scanType.toLowerCase()}-pr-report.md` : `appscan-${scanType.toLowerCase()}-build-summary-report.md`;
-	 fs.writeFileSync(mdFileName, md);
-	 if (process.env.GITHUB_STEP_SUMMARY) {
-		 fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
-	}
-}
-
-async function generateMinimumSummary(scanId, scanType) {
-    const serviceUrl = settings.getServiceUrl();
-    const baseUrl = serviceUrl.replace("/api/v4", "");
-    const applicationId = process.env.INPUT_APPLICATION_ID;
-    const scanUrl = `${baseUrl}/main/myapps/${applicationId}/scans/${scanId}`;
-    const appUrl = `${baseUrl}/main/myapps/${applicationId}`;
-    let appName = applicationId;
-    try {
-        let scanDetails = null;
-        if (scanType === "SAST") {
-            scanDetails = await getSastScanDetails(scanId);
-        } else if (scanType === "SCA") {
-            scanDetails = await getScaScanDetails(scanId);
-        }
-        if (scanDetails) {
-            appName = scanDetails.AppName || appName;
-        }
-    }
-    catch (e) {
-        console.log("Failed to fetch AppName from scan details:", e.message);
-    }
-    const scanTime = new Date().toISOString().replace("T", " ").substring(0, 19);
-	const githubContext = getGitHubContext();
-	const {isPR, repoName, branchName, commitSha, prNumber} = githubContext;
-    const enableHyperlinks = process.env.INPUT_SCAN_INFO_HYPERLINKS !== "false";
-    const scanIdValue = enableHyperlinks ? `[${scanId}](${scanUrl})` : scanId;
-    const appNameValue = enableHyperlinks ? `[${appName}](${appUrl})` : appName;
-	const prUrl = `https://github.com/${repoName}/pull/${prNumber}`;
-	const branchUrl = `https://github.com/${repoName}/tree/${branchName}`;
-	const commitUrl = `https://github.com/${repoName}/commit/${process.env.GITHUB_SHA}`;
-	const prSection = isPR ? `
-## Pull Request Information
-
-| Field | Value |
-|------|------|
-| PR Number | [#${prNumber}](${prUrl}) |
-| Branch | [${branchName}](${branchUrl}) |
-| Commit | [${commitSha}](${commitUrl}) |
-
----`
-: "";	
-    const md = `
-# HCL AppScan ${scanType} ${isPR ? "PR " : ""}Scan Summary
-
-${prSection}
-
-### Scan Information
-
-| Field | Value |
-|--------|-------|
-| Scan Type | ${scanType} |
-| Scan ID | ${scanIdValue} |
-| Application Name | ${appNameValue} |
-| Repository | ${repoName} |
-| Scan Time | ${scanTime} |
-
----
-
-`;
-
-    const mdFileName = `appscan-${scanType.toLowerCase()}-minimum-summary.md`;
-    fs.writeFileSync(mdFileName, md);
-    if (process.env.GITHUB_STEP_SUMMARY) {
-        fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
-    }
+async function getNonCompliantIssues(scanId) {
+    return new Promise((resolve, reject) => {
+        const queryString = "?applyPolicies=All" + "&%24filter=Status%20eq%20%27Open%27%20or%20Status%20eq%20%27InProgress%27%20or%20Status%20eq%20%27Reopened%27%20or%20Status%20eq%20%27New%27" +    "&%24apply=groupby((Status,Severity),aggregate(%24count%20as%20N))";
+        const url = settings.getServiceUrl() + constants.API_ISSUES + scanId + queryString;
+		got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET'] }, https: { rejectUnauthorized: enableSSL } })
+		.then(async response => {
+			const responseJson = JSON.parse(response.body);
+            resolve(responseJson.Items || []);
+		})
+        .catch((error) => {
+            reject(error);
+        })
+    });
 }
 
 function createSecurityReport(executionId) {
@@ -367,7 +174,7 @@ async function downloadSecurityReport(report, reportType = "SAST") {
     try {
         const response = await got.get(downloadLink, { headers: getRequestHeaders(), retry: { limit: 3, methods: ["GET"] }, https: { rejectUnauthorized: enableSSL } });
 		fs.writeFileSync(reportName, response.body);
-        return { html: response.body, downloadLink: downloadLink};
+        return {html: response.body, downloadLink: downloadLink};
     }catch (e) {
         console.log("Failed to download security report:", e.message);
         return null;
@@ -391,16 +198,7 @@ function runAnalysis(file) {
         .then((fileId) => {
             return submitScans(fileId);
         })
-        .then(async (scanIds) => {
-			if (process.env.INPUT_WAIT_FOR_ANALYSIS !== 'true') {
-				core.info("Generating minimum summary...");
-				if (scanIds.sastScanId) {
-					await generateMinimumSummary(scanIds.sastScanId, "SAST");
-				}
-				if (scanIds.scaScanId) {
-					await generateMinimumSummary(scanIds.scaScanId, "SCA");
-				}
-			}
+        .then((scanIds) => {
             resolve(scanIds);
         })
         .catch((error) => {
@@ -557,4 +355,4 @@ async function getScanStatus(url, scanId) {
     return responseJson.LatestExecution.Status;
 }
 
-export default { getScanResults, runAnalysis, getSastScanStatus, getScaScanStatus, getNonCompliantIssues, getSastScanDetails, createSecurityReport, getSecurityReport,downloadSecurityReport, getScaScanDetails, generateMinimumSummary, writeSummaryMarkdown }
+export default { getScanResults, runAnalysis, getSastScanStatus, getScaScanStatus, getNonCompliantIssues, createSecurityReport, getSecurityReport, downloadSecurityReport, getScanDetails }

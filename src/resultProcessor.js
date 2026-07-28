@@ -17,6 +17,7 @@ limitations under the License.
 import asoc from './asoc.js';
 import * as constants from './constants.js';
 import statusChecker from './statusChecker.js';
+import summaryWriter from './summaryWriter.js';
 
 const failForNonCompliance = process.env.INPUT_FAIL_FOR_NONCOMPLIANCE === 'true';
 const failureThreshold = getSeverityValue(process.env.INPUT_FAILURE_THRESHOLD);
@@ -55,66 +56,16 @@ function processScanResults(sastScanId, scaScanId) {
             return Promise.resolve();
         })
 		.then(() => {
-			if(!sastScanId) {
-				return Promise.resolve();
-			}
-			return asoc.getSastScanDetails(sastScanId);
+			return generateSecurityReport(sastScanId, "Sast", "SAST", sastSummary);
 		})
-		.then((scanDetails) => {
-			if(!scanDetails || !scanDetails.ExecutionId) {
-				return Promise.resolve();
-			}
-			return asoc.createSecurityReport(scanDetails.ExecutionId);
-		})
-		.then((reportId) => {
-			if(!reportId) {
-				return Promise.resolve();
-			}
-			return statusChecker.waitForSecurityReport(reportId);
-		})
-		.then((report) => {
-			if(!report || !report.DownloadLink) {
-				return Promise.resolve();
-			}
-			return asoc.downloadSecurityReport(report, "SAST");
-		})
-		.then((reportResult) => {
-			if(reportResult) {
-				sastDownloadLink = reportResult.downloadLink;
-				asoc.writeSummaryMarkdown(sastSummary, reportResult.downloadLink);
-			}
-			return reportResult;
+		.then((downloadLink) => {
+			sastDownloadLink = downloadLink || "";
 		})
 		.then(() => {
-			if(!scaScanId) {
-				return Promise.resolve();
-			}
-			return asoc.getScaScanDetails(scaScanId);
+			return generateSecurityReport(scaScanId, "Sca", "SCA", scaSummary);
 		})
-		.then((scanDetails) => {
-			if(!scanDetails || !scanDetails.ExecutionId) {
-				return Promise.resolve();
-			}
-			return asoc.createSecurityReport(scanDetails.ExecutionId);
-		})
-		.then((reportId) => {
-			if(!reportId) {
-				return Promise.resolve();
-			}
-			return statusChecker.waitForSecurityReport(reportId);
-		})
-		.then((report) => {
-			if(!report || !report.DownloadLink) {
-				return Promise.resolve();
-			}
-			return asoc.downloadSecurityReport(report, "SCA");
-		})
-		.then((reportResult) => {
-			if(reportResult) {
-				scaDownloadLink = reportResult.downloadLink;
-				asoc.writeSummaryMarkdown(scaSummary, reportResult.downloadLink);
-			}
-			return reportResult;
+		.then((downloadLink) => {
+			scaDownloadLink = downloadLink || "";
 		})
         .then(() => {
             if(shouldFail) {
@@ -202,6 +153,41 @@ function getSastDownloadLink() {
 
 function getScaDownloadLink() {
 	return scaDownloadLink;
+}
+
+function generateSecurityReport(scanId, apiScanType, reportType, summaryData) {
+    if (!scanId) {
+        return Promise.resolve(null);
+    }
+    return asoc.getScanDetails(scanId, apiScanType)
+        .then((scanDetails) => {
+            if (!scanDetails || !scanDetails.ExecutionId) {
+                return Promise.resolve();
+            }
+            return asoc.createSecurityReport(scanDetails.ExecutionId);
+        })
+        .then((reportId) => {
+            if (!reportId) {
+                return Promise.resolve();
+            }
+            return statusChecker.waitForSecurityReport(reportId);
+        })
+        .then((report) => {
+            if (!report || !report.DownloadLink) {
+                return Promise.resolve();
+            }
+            return asoc.downloadSecurityReport(report, reportType);
+        })
+        .then((reportResult) => {
+            if (!reportResult) {
+                return null;
+            }
+            summaryWriter.writeSummaryMarkdown(
+                summaryData,
+                reportResult.downloadLink
+            );
+            return reportResult.downloadLink;
+        });
 }
 
 export default { processScanResults, getSastDownloadLink, getScaDownloadLink }
