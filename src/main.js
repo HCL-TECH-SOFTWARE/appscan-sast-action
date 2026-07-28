@@ -74,9 +74,6 @@ saclientutil.downloadClient()
     return statusChecker.waitForAnalysis(sastScanId, scaScanId);
 })
 .then((timedOut) => {
-	if(timedOut) {
-		return;
-	}
     if(timedOut) {
         core.warning(constants.ANALYSIS_TIMEOUT);
         return;
