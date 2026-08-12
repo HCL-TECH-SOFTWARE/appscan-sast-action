@@ -45,7 +45,7 @@ function generateSummaryMarkdown(summaryData, reportDownloadLink, reportName) {
 	const prSection = isPR ? `
 ## Pull Request Information
 
-| Field | Value |
+| | |
 |------|------|
 | PR Number | [#${prNumber}](${prUrl}) |
 | Branch | [${branchName}](${branchUrl}) |
@@ -56,34 +56,38 @@ function generateSummaryMarkdown(summaryData, reportDownloadLink, reportName) {
     const enableHyperlinks = process.env.INPUT_SCAN_INFO_HYPERLINKS !== "false";
 	const scanIdValue = enableHyperlinks ? `[${scanId}](${scanUrl})` : scanId;
 	const appNameValue = enableHyperlinks ? `[${appName}](${appUrl})` : appName;
-	const reportLabel = `${reportName} ${scanType}`;
+	const reportLabel = `📥 ${reportName} ${scanType}`;
 	const reportValue = enableHyperlinks ? `[${reportLabel}](${reportDownloadLink})` : "";
 	const md = `<!-- HCL_APPSCAN_SUMMARY -->
-# HCL AppScan ${scanLabel}
+# 🛡️ HCL AppScan ${scanLabel}
 
 ${prSection}
 
-### Scan Information
+## 🔍 Scan Information
 
-| Field | Value |
+| | |
 |------|-------|
 | Scan Type | ${scanType} |
 | Scan ID | ${scanIdValue} |
 | Application Name | ${appNameValue} |
 | Repository | ${repoName} |
 | Scan Time | ${scanTime} |
+| Report | ${reportValue} |
+
+
+## 🚨 Vulnerability Summary
+
+| Severity | Count |
+|----------|------:|
+| 🔴 Critical | **${counts.Critical}** |
+| 🟠 High | **${counts.High}** |
+| 🟠 Medium | **${counts.Medium}** |
+| 🟡 Low | **${counts.Low}** |
+| ⚪ Informational | **${counts.Informational}** |
+
+### 📊 **Total Vulnerabilities: ${total}**
 
 ---
-
-## Total Vulnerabilities: ${total}
-
-| Critical | High | Medium | Low | Info |
-|----------|------|--------|-----|------|
-| ${counts.Critical} | ${counts.High} | ${counts.Medium} | ${counts.Low} | ${counts.Informational} |
-
----
-
-${reportValue}
 
 `;
     return md;
@@ -112,7 +116,7 @@ async function generateMinimumSummary(getScanDetails, scanId, scanType) {
 	const prSection = isPR ? `
 ## Pull Request Information
 
-| Field | Value |
+| | |
 |------|------|
 | PR Number | [#${prNumber}](${prUrl}) |
 | Branch | [${branchName}](${branchUrl}) |
@@ -125,9 +129,9 @@ async function generateMinimumSummary(getScanDetails, scanId, scanType) {
 
 ${prSection}
 
-### Scan Information
+## 🔍 Scan Information
 
-| Field | Value |
+| | |
 |--------|-------|
 | Scan Type | ${scanType} |
 | Scan ID | ${scanIdValue} |
@@ -192,8 +196,8 @@ function combineMarkdown(sastMarkdown, scaMarkdown) {
             removePullRequestSection(
 				sastMarkdown
 				.replace("<!-- HCL_APPSCAN_SUMMARY -->", "")
-				.replace("# HCL AppScan SAST PR Scan Summary", "## SAST Scan Summary")
-				.replace("# HCL AppScan SAST Scan Summary", "## SAST Scan Summary")
+				.replace("# 🛡️ HCL AppScan SAST PR Scan Summary", "## 🛡️ SAST Scan Summary")
+				.replace("# 🛡️ HCL AppScan SAST Scan Summary", "## 🛡️ SAST Scan Summary")
 			)
         );
     }
@@ -202,8 +206,8 @@ function combineMarkdown(sastMarkdown, scaMarkdown) {
             removePullRequestSection(
 				scaMarkdown
 				.replace("<!-- HCL_APPSCAN_SUMMARY -->", "")
-				.replace("# HCL AppScan SCA PR Scan Summary", "## SCA Scan Summary")
-				.replace("# HCL AppScan SCA Scan Summary", "## SCA Scan Summary")
+				.replace("# 🛡️ HCL AppScan SCA PR Scan Summary", "## 🛡️ SCA Scan Summary")
+				.replace("# 🛡️ HCL AppScan SCA Scan Summary", "## 🛡️ SCA Scan Summary")
 			)
         );
     }
@@ -232,11 +236,11 @@ ${markdowns.join("\n\n---\n\n")}
 }
 
 function removePullRequestSection(markdown) {
-    const start = markdown.indexOf("## Pull Request Information");
+    const start = markdown.indexOf("## 🔀 Pull Request Information");
     if (start === -1) {
         return markdown;
     }
-    const end = markdown.indexOf("### Scan Information");
+    const end = markdown.indexOf("## 🔍 Scan Information");
     if (end === -1) {
         return markdown;
     }
