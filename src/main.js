@@ -61,34 +61,34 @@ saclientutil.downloadClient()
     }
     
     if(process.env.INPUT_WAIT_FOR_ANALYSIS !== 'true') {
-		const promises = [];
-		let sastMarkdown = "";
-		let scaMarkdown = "";
-		if(sastScanId) {
-			promises.push(summaryWriter.generateMinimumSummary(asoc.getScanDetails, sastScanId, "SAST")
-				.then((markdown) => {
-					sastMarkdown = markdown || "";
-				})
-			);
-		}
-		if(scaScanId) {
-			promises.push(summaryWriter.generateMinimumSummary(asoc.getScanDetails, scaScanId, "SCA")
-				.then((markdown) => {
-					scaMarkdown = markdown || "";
-				})
-			);
-		}
-		return Promise.all(promises)
-			.then(() => {
-				const markdown = summaryWriter.combineMarkdown(sastMarkdown, scaMarkdown);
-				if(markdown) {
-					return postComment(markdown).catch(() => {});
-				}
-				return Promise.resolve();
-			})
-			.then(() => true);
+        const promises = [];
+        let sastMarkdown = "";
+        let scaMarkdown = "";
+        if (sastScanId) {
+            promises.push(summaryWriter.generateMinimumSummary(asoc.getScanDetails, sastScanId, "SAST")
+                .then((markdown) => {
+                    sastMarkdown = markdown || "";
+                })
+            );
+        }
+        if (scaScanId) {
+            promises.push(summaryWriter.generateMinimumSummary(asoc.getScanDetails, scaScanId, "SCA")
+                .then((markdown) => {
+                    scaMarkdown = markdown || "";
+                })
+            );
+        }
+        return Promise.all(promises)
+            .then(() => {
+                const markdown = summaryWriter.combineMarkdown(sastMarkdown, scaMarkdown);
+                if (markdown) {
+                    return postComment(markdown).catch(() => {
+                    });
+                }
+                return Promise.resolve();
+            })
+            .then(() => true);
     }
-
     core.info(constants.WAIT_FOR_ANALYSIS);
     return statusChecker.waitForAnalysis(sastScanId, scaScanId);
 })

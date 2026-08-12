@@ -194,7 +194,7 @@ async function downloadSecurityReport(report, reportType = "SAST") {
             https: {rejectUnauthorized: enableSSL}
         });
         fs.writeFileSync(reportName, response.body);
-        return {html: response.body, downloadLink: downloadLink, reportName.report.Name};
+        return {html: response.body, downloadLink: downloadLink, reportName: report.Name};
     } catch (e) {
         console.log("Failed to download security report:", e.message);
         return null;
