@@ -23,6 +23,7 @@ import settings from './settings.js';
 import statusChecker from './statusChecker.js';
 import resultProcessor from './resultProcessor.js';
 import summaryWriter from './summaryWriter.js';
+import { postComment } from './prCommentWriter.js';
 
 let sastScanId;
 let scaScanId;
@@ -61,28 +62,50 @@ saclientutil.downloadClient()
     
     if(process.env.INPUT_WAIT_FOR_ANALYSIS !== 'true') {
 		const promises = [];
+		let sastMarkdown = "";
+		let scaMarkdown = "";
 		if(sastScanId) {
-			promises.push(summaryWriter.generateMinimumSummary(asoc.getScanDetails, sastScanId, "SAST"));
+			promises.push(summaryWriter.generateMinimumSummary(asoc.getScanDetails, sastScanId, "SAST")
+				.then((markdown) => {
+					sastMarkdown = markdown || "";
+				})
+			);
 		}
 		if(scaScanId) {
-			promises.push(summaryWriter.generateMinimumSummary(asoc.getScanDetails, scaScanId, "SCA"));
+			promises.push(summaryWriter.generateMinimumSummary(asoc.getScanDetails, scaScanId, "SCA")
+				.then((markdown) => {
+					scaMarkdown = markdown || "";
+				})
+			);
 		}
-		return Promise.all(promises).then(() => false);
+		return Promise.all(promises)
+			.then(() => {
+				const markdown = summaryWriter.combineMarkdown(sastMarkdown, scaMarkdown);
+				if(markdown) {
+					return postComment(markdown).catch(() => {});
+				}
+				return Promise.resolve();
+			})
+			.then(() => true);
     }
 
     core.info(constants.WAIT_FOR_ANALYSIS);
     return statusChecker.waitForAnalysis(sastScanId, scaScanId);
 })
 .then((timedOut) => {
+	if(timedOut === true && process.env.INPUT_WAIT_FOR_ANALYSIS !== 'true') {
+		return Promise.resolve();
+	}
     if(timedOut) {
         core.warning(constants.ANALYSIS_TIMEOUT);
-        return;
+        return Promise.resolve();
     }
     core.info(constants.GETTING_RESULTS);
     return resultProcessor.processScanResults(sastScanId, scaScanId);
 })
 .then((results) => {
-    if(results) {
+    // adding && condition to log results only if wait for analysis is true.
+    if(results && process.env.INPUT_WAIT_FOR_ANALYSIS === 'true') {
         core.info(results);
         core.info(constants.ANALYSIS_SUCCESS);
     }

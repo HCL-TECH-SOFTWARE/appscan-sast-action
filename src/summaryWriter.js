@@ -23,6 +23,7 @@ function getGitHubContext() {
     const repoName = process.env.GITHUB_REPOSITORY || "";
     const branchName = process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME || "";
     const commitSha = process.env.GITHUB_SHA ? process.env.GITHUB_SHA.substring(0, 7) : "";
+	const serverUrl = process.env.GITHUB_SERVER_URL || "https://github.com";
     let prNumber = "";
     try {
         if (process.env.GITHUB_EVENT_PATH && fs.existsSync(process.env.GITHUB_EVENT_PATH)) {
@@ -32,15 +33,15 @@ function getGitHubContext() {
     } catch (e) {
         console.log("Failed to read PR information:", e.message);
     }
-    return {isPR, repoName, branchName, commitSha, prNumber};
+    return {isPR, repoName, branchName, commitSha, prNumber, serverUrl};
 }
 
-function writeSummaryMarkdown(summaryData, reportDownloadLink) {
-	const {total, counts, scanId, scanUrl, appName, appUrl, scanTime, scanType, isPR, repoName, branchName, commitSha, prNumber} = summaryData;
+function generateSummaryMarkdown(summaryData, reportDownloadLink, reportName) {
+	const {total, counts, scanId, scanUrl, appName, appUrl, scanTime, scanType, isPR, repoName, branchName, commitSha, prNumber, serverUrl} = summaryData;
 	const scanLabel = isPR ? `${scanType} PR Scan Summary` : `${scanType} Scan Summary`;
-	const prUrl = `https://github.com/${repoName}/pull/${prNumber}`;
-	const branchUrl = `https://github.com/${repoName}/tree/${branchName}`;
-	const commitUrl = `https://github.com/${repoName}/commit/${process.env.GITHUB_SHA}`;
+	const prUrl = `${serverUrl}/${repoName}/pull/${prNumber}`;
+	const branchUrl = `${serverUrl}/${repoName}/tree/${branchName}`;
+	const commitUrl = `${serverUrl}/${repoName}/commit/${process.env.GITHUB_SHA}`;
 	const prSection = isPR ? `
 ## Pull Request Information
 
@@ -55,9 +56,9 @@ function writeSummaryMarkdown(summaryData, reportDownloadLink) {
     const enableHyperlinks = process.env.INPUT_SCAN_INFO_HYPERLINKS !== "false";
 	const scanIdValue = enableHyperlinks ? `[${scanId}](${scanUrl})` : scanId;
 	const appNameValue = enableHyperlinks ? `[${appName}](${appUrl})` : appName;
-	const reportLabel = `Download ${scanType} HTML Report`;
+	const reportLabel = `${reportName} ${scanType}`;
 	const reportValue = enableHyperlinks ? `[${reportLabel}](${reportDownloadLink})` : "";
-	const md = `
+	const md = `<!-- HCL_APPSCAN_SUMMARY -->
 # HCL AppScan ${scanLabel}
 
 ${prSection}
@@ -85,22 +86,29 @@ ${prSection}
 ${reportValue}
 
 `;
-     const mdFileName = isPR ? `appscan-${scanType.toLowerCase()}-pr-report.md` : `appscan-${scanType.toLowerCase()}-build-summary-report.md`;
-	 fs.writeFileSync(mdFileName, md);
-	 if (process.env.GITHUB_STEP_SUMMARY) {
-		 fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
+    return md;
+}
+
+function writeSummaryMarkdown(summaryData, reportDownloadLink, reportName) {
+	const md = generateSummaryMarkdown(summaryData, reportDownloadLink, reportName);
+	const {scanType, isPR} = summaryData;
+	const mdFileName = isPR ? `appscan-${scanType.toLowerCase()}-pr-report.md` : `appscan-${scanType.toLowerCase()}-build-summary-report.md`;
+	fs.writeFileSync(mdFileName, md);
+	if (process.env.GITHUB_STEP_SUMMARY) {
+		fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
 	}
+	return md;
 }
 
 async function generateMinimumSummary(getScanDetails, scanId, scanType) {
     const summaryContext = await getSummaryContext(getScanDetails, scanId, scanType);
-	const {scanUrl, appUrl, appName, scanTime, isPR, repoName, branchName, commitSha, prNumber} = summaryContext;
+	const {scanUrl, appUrl, appName, scanTime, isPR, repoName, branchName, commitSha, prNumber, serverUrl} = summaryContext;
     const enableHyperlinks = process.env.INPUT_SCAN_INFO_HYPERLINKS !== "false";
     const scanIdValue = enableHyperlinks ? `[${scanId}](${scanUrl})` : scanId;
     const appNameValue = enableHyperlinks ? `[${appName}](${appUrl})` : appName;
-	const prUrl = `https://github.com/${repoName}/pull/${prNumber}`;
-	const branchUrl = `https://github.com/${repoName}/tree/${branchName}`;
-	const commitUrl = `https://github.com/${repoName}/commit/${process.env.GITHUB_SHA}`;
+	const prUrl = `${serverUrl}/${repoName}/pull/${prNumber}`;
+	const branchUrl = `${serverUrl}/${repoName}/tree/${branchName}`;
+	const commitUrl = `${serverUrl}/${repoName}/commit/${process.env.GITHUB_SHA}`;
 	const prSection = isPR ? `
 ## Pull Request Information
 
@@ -112,7 +120,7 @@ async function generateMinimumSummary(getScanDetails, scanId, scanType) {
 
 ---`
 : "";	
-    const md = `
+    const md = `<!-- HCL_APPSCAN_SUMMARY -->
 # HCL AppScan ${scanType} ${isPR ? "PR " : ""}Scan Summary
 
 ${prSection}
@@ -136,6 +144,7 @@ ${prSection}
     if (process.env.GITHUB_STEP_SUMMARY) {
         fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, md);
     }
+	return md;
 }
 
 async function buildIssueSummary(getScanDetails, groupedItems, scanId, scanType) {
@@ -175,4 +184,64 @@ async function getSummaryContext(getScanDetails, scanId, scanType) {
     return {scanId, scanUrl, appName, appUrl, scanTime, scanType, ...getGitHubContext()};
 }
 
-export default { generateMinimumSummary, writeSummaryMarkdown, getGitHubContext, buildIssueSummary }
+function combineMarkdown(sastMarkdown, scaMarkdown) {
+    const markdowns = [];
+
+    if (sastMarkdown) {
+        markdowns.push(
+            removePullRequestSection(
+				sastMarkdown
+				.replace("<!-- HCL_APPSCAN_SUMMARY -->", "")
+				.replace("# HCL AppScan SAST PR Scan Summary", "## SAST Scan Summary")
+				.replace("# HCL AppScan SAST Scan Summary", "## SAST Scan Summary")
+			)
+        );
+    }
+    if (scaMarkdown) {
+        markdowns.push(
+            removePullRequestSection(
+				scaMarkdown
+				.replace("<!-- HCL_APPSCAN_SUMMARY -->", "")
+				.replace("# HCL AppScan SCA PR Scan Summary", "## SCA Scan Summary")
+				.replace("# HCL AppScan SCA Scan Summary", "## SCA Scan Summary")
+			)
+        );
+    }
+    const summaryContext = getGitHubContext();
+    const prUrl = `${summaryContext.serverUrl}/${summaryContext.repoName}/pull/${summaryContext.prNumber}`;
+    const branchUrl = `${summaryContext.serverUrl}/${summaryContext.repoName}/tree/${summaryContext.branchName}`;
+    const commitUrl = `${summaryContext.serverUrl}/${summaryContext.repoName}/commit/${process.env.GITHUB_SHA}`;
+    const prSection = summaryContext.isPR ? `
+## Pull Request Information
+
+| Field | Value |
+|------|------|
+| PR Number | [#${summaryContext.prNumber}](${prUrl}) |
+| Branch | [${summaryContext.branchName}](${branchUrl}) |
+| Commit | [${summaryContext.commitSha}](${commitUrl}) |
+
+---
+` : "";
+
+    return `<!-- HCL_APPSCAN_SUMMARY -->
+# HCL AppScan ${summaryContext.isPR ? "PR " : ""}Scan Summary
+${prSection}
+
+${markdowns.join("\n\n---\n\n")}
+`;
+}
+
+function removePullRequestSection(markdown) {
+    const start = markdown.indexOf("## Pull Request Information");
+    if (start === -1) {
+        return markdown;
+    }
+    const end = markdown.indexOf("### Scan Information");
+    if (end === -1) {
+        return markdown;
+    }
+    return markdown.substring(0, start) + markdown.substring(end);
+}
+
+
+export default { generateMinimumSummary, generateSummaryMarkdown, writeSummaryMarkdown, getGitHubContext, buildIssueSummary, combineMarkdown }

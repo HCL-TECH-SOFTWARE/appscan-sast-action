@@ -18,6 +18,7 @@ import asoc from './asoc.js';
 import * as constants from './constants.js';
 import statusChecker from './statusChecker.js';
 import summaryWriter from './summaryWriter.js';
+import { postComment } from './prCommentWriter.js';
 
 const failForNonCompliance = process.env.INPUT_FAIL_FOR_NONCOMPLIANCE === 'true';
 const failureThreshold = getSeverityValue(process.env.INPUT_FAILURE_THRESHOLD);
@@ -30,6 +31,8 @@ function processScanResults(sastScanId, scaScanId) {
     return new Promise((resolve, reject) => {
         let sastSummary = null;
         let scaSummary = null;
+		let sastMarkdown = null;
+		let scaMarkdown = null;
 
         (sastScanId ? asoc.getScanResults(sastScanId, 'SAST') : Promise.resolve(null))
         .then((sastResults) => {
@@ -58,14 +61,27 @@ function processScanResults(sastScanId, scaScanId) {
 		.then(() => {
 			return generateSecurityReport(sastScanId, "Sast", "SAST", sastSummary);
 		})
-		.then((downloadLink) => {
-			sastDownloadLink = downloadLink || "";
+		.then((reportData) => {
+			if(reportData) {
+				sastDownloadLink = reportData.downloadLink || "";
+				sastMarkdown = reportData.markdown || "";
+			}
 		})
 		.then(() => {
 			return generateSecurityReport(scaScanId, "Sca", "SCA", scaSummary);
 		})
-		.then((downloadLink) => {
-			scaDownloadLink = downloadLink || "";
+		.then((reportData) => {
+			if(reportData) {
+				scaDownloadLink = reportData.downloadLink || "";
+				scaMarkdown = reportData.markdown || "";
+			}
+		})
+		.then(() => {
+			const markdown = summaryWriter.combineMarkdown(sastMarkdown, scaMarkdown);
+			if(markdown) {
+				return postComment(markdown).catch(() => {});
+			}
+			return Promise.resolve();
 		})
         .then(() => {
             if(shouldFail) {
@@ -182,11 +198,8 @@ function generateSecurityReport(scanId, apiScanType, reportType, summaryData) {
             if (!reportResult) {
                 return null;
             }
-            summaryWriter.writeSummaryMarkdown(
-                summaryData,
-                reportResult.downloadLink
-            );
-            return reportResult.downloadLink;
+            const markdown = summaryWriter.writeSummaryMarkdown(summaryData, reportResult.downloadLink, reportResult.reportName);
+            return { markdown, downloadLink: reportResult.downloadLink };
         });
 }
 
