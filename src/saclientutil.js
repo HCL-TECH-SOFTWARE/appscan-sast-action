@@ -18,12 +18,13 @@ import * as fs from 'fs';
 import HttpsProxyAgent from 'https-proxy-agent';
 import { URL } from 'url';
 import * as path from 'path';
-import extract from 'extract-zip';
+import * as yauzl from 'yauzl';
 import * as https from 'https';
 import * as os from 'os';
 import * as constants from './constants.js';
 import settings from './settings.js';
 import utils from './utils.js';
+import { pipeline } from 'stream/promises';
 
 let parentDir = path.join(os.homedir(), '.appscan');
 if(!fs.existsSync(parentDir)) {
@@ -89,21 +90,45 @@ function downloadClient() {
     });
 }
 
-function extractClient(zipFile) {
-    return new Promise((resolve, reject) => {
-        if(!fs.existsSync(zipFile)) {
-            reject(constants.ERROR_FILE_DOES_NOT_EXIST + zipFile);
-            return;
+async function extractClient(zipFile) {
+    if(!fs.existsSync(zipFile)) {
+        throw new Error(constants.ERROR_FILE_DOES_NOT_EXIST + zipFile);
+    }
+    const extractDir = path.dirname(zipFile);
+    const resolvedExtractDir = path.resolve(extractDir);
+    const zipfile = await yauzl.openPromise(zipFile, { autoClose: false });
+    try {
+        for await (const entry of zipfile.eachEntry()) {
+            const entryPath = path.resolve(extractDir, entry.fileName);
+            // Prevent ZIP path traversal (Zip Slip)
+            if(entryPath !== resolvedExtractDir && !entryPath.startsWith(resolvedExtractDir + path.sep)) {
+                throw new Error('Unsafe ZIP entry path: ' + entry.fileName);
+            }
+            // Directory entry
+            if(entry.fileName.endsWith('/')) {
+                await fs.promises.mkdir(entryPath, { recursive: true });
+                continue;
+            }
+            // Ensure the parent directory exists
+            const entryDir = path.dirname(entryPath);
+            await fs.promises.mkdir(entryDir, { recursive: true });
+            // Extract the file sequentially
+            const readStream = await zipfile.openReadStreamPromise(entry);
+			const writeStream = fs.createWriteStream(entryPath);
+			await pipeline(readStream, writeStream);
+			// Preserve Unix file permissions stored in the ZIP entry.
+			if((entry.versionMadeBy >>> 8) === 3) {
+				const mode = (entry.externalFileAttributes >>> 16) & 0xffff;
+				const permissionBits = mode & 0o777;
+				if (permissionBits !== 0) {
+					await fs.promises.chmod(entryPath, permissionBits);
+				}
+			}
         }
-
-        extract(zipFile, {dir: path.dirname(zipFile)})
-        .then(() => {
-            resolve();
-        })
-        .catch((error) => {
-            reject(error);
-        })
-    });
+    }
+    finally {
+        zipfile.close();
+    }
 }
 
 function getRequestOptions() {

@@ -24,7 +24,6 @@ async function postComment(markdown) {
 	}
 	const pullRequest = github.context.payload.pull_request;
 	if (!pullRequest) {
-		core.warning("Not a pull request event. Skipping PR comment creation.");
 		return;
 	}		
 	const token = process.env.INPUT_GITHUB_TOKEN;
