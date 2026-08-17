@@ -79,7 +79,7 @@ function generateSummaryMarkdown(summaryData, reportDownloadLink, reportName) {
         ? `<tr><td>Report</td><td>${reportValue}</td></tr>`
         : "";
     const md = `<!-- HCL_APPSCAN_SUMMARY -->
-# 🛡️ HCL AppScan ${scanLabel}
+# HCL AppScan ${scanLabel}
 
 ${prSection}
 
@@ -229,8 +229,8 @@ function combineMarkdown(sastMarkdown, scaMarkdown) {
             removePullRequestSection(
                 sastMarkdown
                     .replace("<!-- HCL_APPSCAN_SUMMARY -->", "")
-                    .replace("# 🛡️ HCL AppScan SAST PR Scan Summary", "## 🛡️ SAST Scan Summary")
-                    .replace("# 🛡️ HCL AppScan SAST Scan Summary", "## 🛡️ SAST Scan Summary")
+                    .replace("# HCL AppScan SAST PR Scan Summary", "## SAST Scan Summary")
+                    .replace("# HCL AppScan SAST Scan Summary", "## SAST Scan Summary")
             )
         );
     }
@@ -239,8 +239,8 @@ function combineMarkdown(sastMarkdown, scaMarkdown) {
             removePullRequestSection(
                 scaMarkdown
                     .replace("<!-- HCL_APPSCAN_SUMMARY -->", "")
-                    .replace("# 🛡️ HCL AppScan SCA PR Scan Summary", "## 🛡️ SCA Scan Summary")
-                    .replace("# 🛡️ HCL AppScan SCA Scan Summary", "## 🛡️ SCA Scan Summary")
+                    .replace("# HCL AppScan SCA PR Scan Summary", "## SCA Scan Summary")
+                    .replace("# HCL AppScan SCA Scan Summary", "## SCA Scan Summary")
             )
         );
     }
