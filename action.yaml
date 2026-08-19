@@ -86,6 +86,13 @@ inputs:
     - Medium
     - High
     - Critical
+  scan_info_hyperlinks:
+     description: Enable hyperlinks in GitHub Step scan infomation.
+     required: false
+     default: true
+  github_token:
+     description: GitHub token used to create pull request comments.
+     required: false 
 runs:
   using: 'node24'
   main: 'src/main.js'
