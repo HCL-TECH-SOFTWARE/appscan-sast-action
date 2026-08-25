@@ -1,3 +1,1729 @@
+-----------------------
+Notices and Information
+-----------------------
+-------------------------------------
+HCL AppScan SAST GitHub Action v1.1.2
+-------------------------------------
+
+======
+DETAIL
+======
+Note: generic licenses are marked with (*)
+Note: missing copyright references are marked with (*)
+********************************************************************
+1. Library: agent-base-6.0.2.tgz Product: AppScan_SAST_GitHub_Action
+********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/670c40e4-d90c-4852-866d-454724c6f754
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+--------------------
+Copyright 1 out of 2
+--------------------
+Copyrighted under Copyright 2013 Nathan Rajlich <nathan@tootallnate.net>
+Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/reader/resource/content/asString/1732f657-4c0f-4373-8b79-9fe991cee9f4
+
+
+--------------------
+Copyright 2 out of 2
+--------------------
+Copyrighted under Copyright 2013 Nathan Rajlich <nathan@tootallnate.net>
+Copyright terms can be found at: https://github.com/TooTallNate/node-agent-base/blob/6.0.2/README.md
+
+
+******************************************************************
+2. Library: asynckit-0.4.0.tgz Product: AppScan_SAST_GitHub_Action
+******************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://github.com/alexindigo/asynckit
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2016 Alex Indigo
+Copyright terms can be found at: https://github.com/alexindigo/asynckit/blob/v0.4.0/LICENSE
+
+
+
+
+********************************************************************
+3. Library: auth-token-6.0.0.tgz Product: AppScan_SAST_GitHub_Action
+********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/789f4ae2-14c2-4dc9-87ae-b69caa615daa
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2019 Octokit contributors
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/789f4ae2-14c2-4dc9-87ae-b69caa615daa
+
+
+
+
+***************************************************************************
+4. Library: before-after-hook-4.0.0.tgz Product: AppScan_SAST_GitHub_Action
+***************************************************************************
+========
+LICENSES
+========
+Licensed under Apache 2.0
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/de077a3f-e043-43db-a1a0-b7f8463c663a
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+--------------------
+Copyright 1 out of 2
+--------------------
+Copyrighted under Copyright 2018 Gregor Martynus and other contributors
+Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/reader/resource/content/asString/daf41d45-cdcc-4736-ac45-2521d10a8074
+
+
+--------------------
+Copyright 2 out of 2
+--------------------
+Copyrighted under Copyright 2018 Gregor Martynus and other contributors
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/de077a3f-e043-43db-a1a0-b7f8463c663a
+
+
+**************************************************************************
+5. Library: cacheable-lookup-7.0.0.tgz Product: AppScan_SAST_GitHub_Action
+**************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/1206c0cf-b9af-4d2e-a8e6-9e34ad700d2f
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2019 Szymon Marczak
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/1206c0cf-b9af-4d2e-a8e6-9e34ad700d2f
+
+
+
+
+*****************************************************************************
+6. Library: cacheable-request-10.2.14.tgz Product: AppScan_SAST_GitHub_Action
+*****************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/606d7d62-73f6-443d-9dd9-bf539738e742
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2017-2022 Luke Childs
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/5c2a6de7-705e-4886-9d3c-5bea787e190b
+
+
+
+
+*********************************************************************************
+7. Library: call-bind-apply-helpers-1.0.2.tgz Product: AppScan_SAST_GitHub_Action
+*********************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/8b8572b9-7396-4dca-8f54-d8c18c401d0e
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2024 Jordan Harband
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/8b8572b9-7396-4dca-8f54-d8c18c401d0e
+
+
+
+
+*************************************************************************
+8. Library: combined-stream-1.0.8.tgz Product: AppScan_SAST_GitHub_Action
+*************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://github.com/felixge/node-combined-stream
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2011 Debuggable Limited <felix@debuggable.com>
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/acca70f5-fb8f-4a29-a03c-f114584c3ab0
+
+
+
+
+**************************************************************
+9. Library: core-3.0.0.tgz Product: AppScan_SAST_GitHub_Action
+**************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/56b59528-bd21-4977-a34d-6a8a723f0149
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2019 GitHub
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/56b59528-bd21-4977-a34d-6a8a723f0149
+
+
+
+
+***************************************************************
+10. Library: core-7.0.6.tgz Product: AppScan_SAST_GitHub_Action
+***************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/599d1e60-c0d8-4b08-b716-a4e95061eb5e
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2019 Octokit contributors
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/599d1e60-c0d8-4b08-b716-a4e95061eb5e
+
+
+
+
+****************************************************************
+11. Library: debug-4.3.4.tgz Product: AppScan_SAST_GitHub_Action
+****************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/25809d8a-581f-4ab9-ab37-31ffeefe1768
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+--------------------
+Copyright 1 out of 2
+--------------------
+Copyrighted under Copyright 2017 TJ Holowaychuk <tj@vision-media.ca>
+Copyright terms can be found at: https://github.com/debug-js/debug/tree/4.3.4
+
+
+--------------------
+Copyright 2 out of 2
+--------------------
+Copyrighted under Copyright 2021 Josh Junon
+Copyright terms can be found at: https://github.com/debug-js/debug/tree/4.3.4
+
+
+******************************************************************************
+12. Library: decompress-response-6.0.0.tgz Product: AppScan_SAST_GitHub_Action
+******************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/eef881d2-a4b6-4a89-b253-f72c00b860ef
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+--------------------
+Copyright 1 out of 2
+--------------------
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/reader/resource/content/asString/eef881d2-a4b6-4a89-b253-f72c00b860ef
+
+
+--------------------
+Copyright 2 out of 2
+--------------------
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/eef881d2-a4b6-4a89-b253-f72c00b860ef
+
+
+***************************************************************************
+13. Library: defer-to-connect-2.0.1.tgz Product: AppScan_SAST_GitHub_Action
+***************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/14ee95a5-9c3a-4e46-ac83-560b616f3f35
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2018 Szymon Marczak
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/14ee95a5-9c3a-4e46-ac83-560b616f3f35
+
+
+
+
+*************************************************************************
+14. Library: delayed-stream-1.0.0.tgz Product: AppScan_SAST_GitHub_Action
+*************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://github.com/felixge/node-delayed-stream
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2011 Debuggable Limited <felix@debuggable.com>
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/ad028b96-2a13-4f73-9f3b-697481cf800a
+
+
+
+
+***********************************************************************
+15. Library: dunder-proto-1.0.1.tgz Product: AppScan_SAST_GitHub_Action
+***********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/1278ebc1-d22f-4773-987d-3a2070cb29b8
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2024 ECMAScript Shims
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/1278ebc1-d22f-4773-987d-3a2070cb29b8
+
+
+
+
+********************************************************************
+16. Library: endpoint-11.0.3.tgz Product: AppScan_SAST_GitHub_Action
+********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/89406c8e-18df-4741-93dc-e2550da6e4f1
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2018 Octokit contributors
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/89406c8e-18df-4741-93dc-e2550da6e4f1
+
+
+
+
+**************************************************************
+17. Library: eol-0.9.1.tgz Product: AppScan_SAST_GitHub_Action
+**************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/c9286a92-b35c-4f85-b213-c52f2b3c7c18
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+(*) The copyright for this library is unknown
+
+*****************************************************************************
+18. Library: es-define-property-1.0.1.tgz Product: AppScan_SAST_GitHub_Action
+*****************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/5783dab2-3c83-4e8e-8f1b-fca155b9839c
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2024 Jordan Harband
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/5783dab2-3c83-4e8e-8f1b-fca155b9839c
+
+
+
+
+********************************************************************
+19. Library: es-errors-1.3.0.tgz Product: AppScan_SAST_GitHub_Action
+********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/914d3fc8-9ba6-45b3-9811-4f84151218ea
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2024 Jordan Harband
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/914d3fc8-9ba6-45b3-9811-4f84151218ea
+
+
+
+
+*****************************************************************************
+20. Library: es-set-tostringtag-2.1.0.tgz Product: AppScan_SAST_GitHub_Action
+*****************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/d159b4f4-3854-4f9b-b97a-5def6a7d32a1
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2022 ECMAScript Shims
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/d159b4f4-3854-4f9b-b97a-5def6a7d32a1
+
+
+
+
+***************************************************************
+21. Library: exec-3.0.0.tgz Product: AppScan_SAST_GitHub_Action
+***************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/70370002-999c-4e38-ad19-3d8dd1f3d7f1
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2019 GitHub
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/70370002-999c-4e38-ad19-3d8dd1f3d7f1
+
+
+
+
+**********************************************************************************
+22. Library: fast-content-type-parse-3.0.0.tgz Product: AppScan_SAST_GitHub_Action
+**********************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/09a21884-93bf-4973-8e7f-106a169d20b6
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2023 The Fastify Team
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/09a21884-93bf-4973-8e7f-106a169d20b6
+
+
+
+
+********************************************************************
+23. Library: form-data-4.0.6.tgz Product: AppScan_SAST_GitHub_Action
+********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/02422aa3-8caa-42ac-a3da-4bc21dd87943
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2012 Felix Geisendörfer felix@debuggable.com and contributors
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/02422aa3-8caa-42ac-a3da-4bc21dd87943
+
+
+
+
+****************************************************************************
+24. Library: form-data-encoder-2.1.4.tgz Product: AppScan_SAST_GitHub_Action
+****************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/5b8cfa28-172a-45c7-b2cf-f9afa01eeed9
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2021 Nick K
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/5b8cfa28-172a-45c7-b2cf-f9afa01eeed9
+
+
+
+
+************************************************************************
+25. Library: function-bind-1.1.2.tgz Product: AppScan_SAST_GitHub_Action
+************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/4fff819f-5ebd-402d-8e69-81c0ad388f77
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2013 Raynos
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/4fff819f-5ebd-402d-8e69-81c0ad388f77
+
+
+
+
+************************************************************************
+26. Library: get-intrinsic-1.3.0.tgz Product: AppScan_SAST_GitHub_Action
+************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/918f3ec8-6d85-408b-b9e3-394f81864bb3
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2020 Jordan Harband
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/918f3ec8-6d85-408b-b9e3-394f81864bb3
+
+
+
+
+*********************************************************************
+27. Library: get-stream-6.0.1.tgz Product: AppScan_SAST_GitHub_Action
+*********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/8546a725-c66b-408b-ace9-27634dd44d8c
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+--------------------
+Copyright 1 out of 2
+--------------------
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/reader/resource/content/asString/8546a725-c66b-408b-ace9-27634dd44d8c
+
+
+--------------------
+Copyright 2 out of 2
+--------------------
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright terms can be found at: https://github.com/sindresorhus/get-stream/blob/v6.0.1/license
+
+
+*****************************************************************
+28. Library: github-9.0.0.tgz Product: AppScan_SAST_GitHub_Action
+*****************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/173bd224-1226-47f5-9bbc-950e22177188
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2019 GitHub
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/173bd224-1226-47f5-9bbc-950e22177188
+
+
+
+
+***************************************************************
+29. Library: gopd-1.2.0.tgz Product: AppScan_SAST_GitHub_Action
+***************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/4d2b824a-5963-4ed6-9d0b-f7955280948a
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2022 Jordan Harband
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/4d2b824a-5963-4ed6-9d0b-f7955280948a
+
+
+
+
+***************************************************************
+30. Library: got-12.6.1.tgz Product: AppScan_SAST_GitHub_Action
+***************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/a49d99ca-bfed-412a-aa76-eb9f56720cd2
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/a49d99ca-bfed-412a-aa76-eb9f56720cd2
+
+
+
+
+******************************************************************
+31. Library: graphql-9.0.3.tgz Product: AppScan_SAST_GitHub_Action
+******************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/cd6edd9f-f4d7-438d-9244-d1eb1c9b0bad
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2018 Octokit contributors
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/cd6edd9f-f4d7-438d-9244-d1eb1c9b0bad
+
+
+
+
+**********************************************************************
+32. Library: has-symbols-1.1.0.tgz Product: AppScan_SAST_GitHub_Action
+**********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/978db1a5-a727-4d7a-898e-bf3f43c9ba2d
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2016 Jordan Harband
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/978db1a5-a727-4d7a-898e-bf3f43c9ba2d
+
+
+
+
+**************************************************************************
+33. Library: has-tostringtag-1.0.2.tgz Product: AppScan_SAST_GitHub_Action
+**************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/9e0372a8-407f-426a-8713-80107dd32f28
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2021 Inspect JS
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/9e0372a8-407f-426a-8713-80107dd32f28
+
+
+
+
+*****************************************************************
+34. Library: hasown-2.0.4.tgz Product: AppScan_SAST_GitHub_Action
+*****************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/cc2fd752-fb6e-4d83-82c5-951aa341aa5c
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright Jordan Harband and contributors
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/cc2fd752-fb6e-4d83-82c5-951aa341aa5c
+
+
+
+
+*******************************************************************************
+35. Library: http-cache-semantics-4.0.3.tgz Product: AppScan_SAST_GitHub_Action
+*******************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/c7016cdd-14cb-466b-9a0e-976785d90e27
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright Microsoft Corporation
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/c7016cdd-14cb-466b-9a0e-976785d90e27
+
+
+
+
+*******************************************************************************
+36. Library: http-cache-semantics-4.1.1.tgz Product: AppScan_SAST_GitHub_Action
+*******************************************************************************
+========
+LICENSES
+========
+Licensed under BSD 2
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/50729589-5056-4e97-ae16-6ede4bca2162
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2016-2018 Kornel Lesi
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/50729589-5056-4e97-ae16-6ede4bca2162
+
+
+
+
+**********************************************************************
+37. Library: http-client-3.0.2.tgz Product: AppScan_SAST_GitHub_Action
+**********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/1efd1a87-2847-41d5-b6e6-bb135db2e9af
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright GitHub, Inc
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/1efd1a87-2847-41d5-b6e6-bb135db2e9af
+
+
+
+
+**********************************************************************
+38. Library: http-client-4.0.0.tgz Product: AppScan_SAST_GitHub_Action
+**********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/d5348daf-a447-46b6-a155-d5f9f2b7379e
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright GitHub, Inc
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/d5348daf-a447-46b6-a155-d5f9f2b7379e
+
+
+
+
+*********************************************************************
+39. Library: http-timer-5.0.1.tgz Product: AppScan_SAST_GitHub_Action
+*********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/f3c8823a-49f7-4601-b8e3-b8c209629110
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2018 Szymon Marczak
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/f3c8823a-49f7-4601-b8e3-b8c209629110
+
+
+
+
+************************************************************************
+40. Library: http2-wrapper-2.2.0.tgz Product: AppScan_SAST_GitHub_Action
+************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/8cd16d6b-4189-4bf1-b0f9-1c12ef543084
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2018 Szymon Marczak
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/8cd16d6b-4189-4bf1-b0f9-1c12ef543084
+
+
+
+
+****************************************************************
+41. Library: https-1.0.0.tgz Product: AppScan_SAST_GitHub_Action
+****************************************************************
+========
+LICENSES
+========
+Licensed under ISC
+License terms can be found at: https://www.npmjs.com/package/https
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Unspecified Copyright
+Reviewed by the WhiteSource Research Team
+Library copyrights could not be established
+
+
+
+
+****************************************************************************
+42. Library: https-proxy-agent-5.0.0.tgz Product: AppScan_SAST_GitHub_Action
+****************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://github.com/TooTallNate/node-https-proxy-agent#readme
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2013 Nathan Rajlich <nathan@tootallnate.net>
+Copyright terms can be found at: https://github.com/TooTallNate/node-https-proxy-agent/blob/5.0.0/README.md
+
+
+
+
+*************************************************************
+43. Library: io-3.0.2.tgz Product: AppScan_SAST_GitHub_Action
+*************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/96872172-4ca3-46d7-8de7-8e95852311ad
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2019 GitHub
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/96872172-4ca3-46d7-8de7-8e95852311ad
+
+
+
+
+*************************************************************
+44. Library: is-5.6.0.tgz Product: AppScan_SAST_GitHub_Action
+*************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/a66b29dd-58b2-4f6b-97b0-47a8c1509424
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/a66b29dd-58b2-4f6b-97b0-47a8c1509424
+
+
+
+
+**********************************************************************
+45. Library: json-buffer-3.0.1.tgz Product: AppScan_SAST_GitHub_Action
+**********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/a36dfb8a-88bd-4725-a518-96e7a30798a4
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2013 Dominic Tarr
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/a36dfb8a-88bd-4725-a518-96e7a30798a4
+
+
+
+
+***************************************************************************
+46. Library: json-with-bigint-3.5.8.tgz Product: AppScan_SAST_GitHub_Action
+***************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/0382bebf-ba6c-4734-8079-776534ef89c6
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2023 Ivan Korolenko
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/0382bebf-ba6c-4734-8079-776534ef89c6
+
+
+
+
+***************************************************************
+47. Library: keyv-4.5.4.tgz Product: AppScan_SAST_GitHub_Action
+***************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/bd2f086e-22e3-4954-9cfd-93eaf4d674ee
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright Jared Wray
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/d63ec4e7-6e37-48c5-abf8-9e03e9f2fa3e
+
+
+
+
+*************************************************************************
+48. Library: lowercase-keys-3.0.0.tgz Product: AppScan_SAST_GitHub_Action
+*************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/c31c7c15-3462-4cfa-b1ad-f45636643ae3
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/c31c7c15-3462-4cfa-b1ad-f45636643ae3
+
+
+
+
+**************************************************************************
+49. Library: math-intrinsics-1.1.0.tgz Product: AppScan_SAST_GitHub_Action
+**************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/37a0ac94-b088-4f4a-b760-814c1eedc9a3
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2024 ECMAScript Shims
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/37a0ac94-b088-4f4a-b760-814c1eedc9a3
+
+
+
+
+*******************************************************************
+50. Library: mime-db-1.52.0.tgz Product: AppScan_SAST_GitHub_Action
+*******************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/8c1fde9b-eed8-475b-a05b-c022c78be64e
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+--------------------
+Copyright 1 out of 2
+--------------------
+Copyrighted under Copyright 2015-2022 Douglas Christopher Wilson <doug@somethingdoug.com>
+Copyright terms can be found at: https://github.com/jshttp/mime-db/blob/v1.52.0/LICENSE
+
+
+--------------------
+Copyright 2 out of 2
+--------------------
+Copyrighted under Copyright 2014 Jonathan Ong <me@jongleberry.com>
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/8c1fde9b-eed8-475b-a05b-c022c78be64e
+
+
+**********************************************************************
+51. Library: mime-types-2.1.35.tgz Product: AppScan_SAST_GitHub_Action
+**********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/1632c3a4-9d48-4066-a2d9-8321f440b236
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+--------------------
+Copyright 1 out of 2
+--------------------
+Copyrighted under Copyright 2015 Douglas Christopher Wilson <doug@somethingdoug.com>
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/1632c3a4-9d48-4066-a2d9-8321f440b236
+
+
+--------------------
+Copyright 2 out of 2
+--------------------
+Copyrighted under Copyright 2014 Jonathan Ong <me@jongleberry.com>
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/1632c3a4-9d48-4066-a2d9-8321f440b236
+
+
+*************************************************************************
+52. Library: mimic-response-3.1.0.tgz Product: AppScan_SAST_GitHub_Action
+*************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/679488c0-5629-41e0-8956-b4218723b491
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+--------------------
+Copyright 1 out of 2
+--------------------
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/reader/resource/content/asString/679488c0-5629-41e0-8956-b4218723b491
+
+
+--------------------
+Copyright 2 out of 2
+--------------------
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/679488c0-5629-41e0-8956-b4218723b491
+
+
+*************************************************************************
+53. Library: mimic-response-4.0.0.tgz Product: AppScan_SAST_GitHub_Action
+*************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/85dd6222-bdda-43a2-b79e-421ed11301de
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+--------------------
+Copyright 1 out of 2
+--------------------
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/reader/resource/content/asString/85dd6222-bdda-43a2-b79e-421ed11301de
+
+
+--------------------
+Copyright 2 out of 2
+--------------------
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright terms can be found at: https://github.com/sindresorhus/mimic-response/blob/v4.0.0/license
+
+
+*************************************************************
+54. Library: ms-2.1.2.tgz Product: AppScan_SAST_GitHub_Action
+*************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://github.com/vercel/ms
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2016 Zeit, Inc
+Copyright terms can be found at: https://github.com/zeit/ms/blob/2.1.2/license.md
+
+
+
+
+=======
+NOTICES
+=======
+Notices:
+NOTICE.txt
+Template Text:Apache Batik
+Copyright 1999-2007 The Apache Software Foundation
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
+
+This software contains code from the World Wide Web Consortium (W3C) for the 
+Document Object Model API (DOM API) and SVG Document Type Definition (DTD).
+
+This software contains code from the International Organisation for
+Standardization for the definition of character entities used in the software's
+documentation.
+
+This product includes images from the Tango Desktop Project
+(http://tango.freedesktop.org/).
+
+This product includes images from the Pasodoble Icon Theme
+(http://www.jesusda.com/projects/pasodoble).
+
+
+************************************************************************
+55. Library: normalize-url-8.0.0.tgz Product: AppScan_SAST_GitHub_Action
+************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/96623916-3006-4fd2-bb99-2a6d4112ee40
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright terms can be found at: https://github.com/sindresorhus/normalize-url/blob/v8.0.0/license
+
+
+
+
+*************************************************************************
+56. Library: openapi-types-27.0.0.tgz Product: AppScan_SAST_GitHub_Action
+*************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/f635d67c-c20e-4f12-a350-be4e9abeab80
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2025 Licensed as MIT
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/f635d67c-c20e-4f12-a350-be4e9abeab80
+
+
+
+
+***********************************************************************
+57. Library: p-cancelable-3.0.0.tgz Product: AppScan_SAST_GitHub_Action
+***********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/bd232b80-d6e5-45df-8576-2b790636c4da
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+--------------------
+Copyright 1 out of 2
+--------------------
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/reader/resource/content/asString/bd232b80-d6e5-45df-8576-2b790636c4da
+
+
+--------------------
+Copyright 2 out of 2
+--------------------
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright terms can be found at: https://github.com/sindresorhus/p-cancelable/blob/v3.0.0/license
+
+
+***************************************************************
+58. Library: pend-1.2.0.tgz Product: AppScan_SAST_GitHub_Action
+***************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/eee50057-ec9c-4726-be86-832a9e2677e0
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2014 Andrew Kelley
+Copyright terms can be found at: https://github.com/andrewrk/node-pend/blob/1.2.0/LICENSE
+
+
+
+
+********************************************************************************
+59. Library: plugin-paginate-rest-14.0.0.tgz Product: AppScan_SAST_GitHub_Action
+********************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/90cbac2f-d0e5-4701-81ae-044fe9842b57
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2019 Octokit contributors
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/90cbac2f-d0e5-4701-81ae-044fe9842b57
+
+
+
+
+****************************************************************************************
+60. Library: plugin-rest-endpoint-methods-17.0.0.tgz Product: AppScan_SAST_GitHub_Action
+****************************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/aa70d413-4472-4a96-9fa4-c6f77e1e7c52
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2019 Octokit contributors
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/aa70d413-4472-4a96-9fa4-c6f77e1e7c52
+
+
+
+
+********************************************************************
+61. Library: quick-lru-5.1.1.tgz Product: AppScan_SAST_GitHub_Action
+********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/ec111c63-44cc-42a6-828c-7fa607be37d4
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (sindresorhus.com)
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/ec111c63-44cc-42a6-828c-7fa607be37d4
+
+
+
+
+*******************************************************************
+62. Library: request-10.0.8.tgz Product: AppScan_SAST_GitHub_Action
+*******************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/218aa7ba-fd5a-44fd-b303-f25e998f546b
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2018 Octokit contributors
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/218aa7ba-fd5a-44fd-b303-f25e998f546b
+
+
+
+
+************************************************************************
+63. Library: request-error-7.1.0.tgz Product: AppScan_SAST_GitHub_Action
+************************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/01596cee-e8c0-4780-ae59-1b84a6664468
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2019 Octokit contributors
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/01596cee-e8c0-4780-ae59-1b84a6664468
+
+
+
+
+***********************************************************************
+64. Library: resolve-alpn-1.2.1.tgz Product: AppScan_SAST_GitHub_Action
+***********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/ece0980e-4e37-44ad-b4f5-5afa786dc871
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+--------------------
+Copyright 1 out of 2
+--------------------
+Copyrighted under Copyright 2018 Szymon Marczak
+Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/reader/resource/content/asString/ece0980e-4e37-44ad-b4f5-5afa786dc871
+
+
+--------------------
+Copyright 2 out of 2
+--------------------
+Copyrighted under Copyright 2018 Szymon Marczak
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/ece0980e-4e37-44ad-b4f5-5afa786dc871
+
+
+***********************************************************************
+65. Library: responselike-3.0.0.tgz Product: AppScan_SAST_GitHub_Action
+***********************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/c2e40323-0d2d-4347-8b8b-c042cc1097ab
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+--------------------
+Copyright 1 out of 2
+--------------------
+Copyrighted under Copyright Luke Childs <lukechilds123@gmail.com> (https://lukechilds.co.uk)
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/c2e40323-0d2d-4347-8b8b-c042cc1097ab
+
+
+--------------------
+Copyright 2 out of 2
+--------------------
+Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/c2e40323-0d2d-4347-8b8b-c042cc1097ab
+
+
+*****************************************************************
+66. Library: tunnel-0.0.6.tgz Product: AppScan_SAST_GitHub_Action
+*****************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://github.com/koichik/node-tunnel/
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2012 Koichi Kobayashi
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/65feb7a1-e183-449b-897b-1ab5699de881
+
+
+
+
+*****************************************************************
+67. Library: types-16.0.0.tgz Product: AppScan_SAST_GitHub_Action
+*****************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/fa71e896-739a-4554-987a-6d11344dcda2
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+--------------------
+Copyright 1 out of 2
+--------------------
+Copyrighted under Copyright 2019 Octokit contributors
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/fa71e896-739a-4554-987a-6d11344dcda2
+
+
+--------------------
+Copyright 2 out of 2
+--------------------
+Copyrighted under Copyright 2019 Octokit contributors
+Copyright terms can be found at: https://github.com/octokit/types.ts/blob/v16.0.0/LICENSE
+
+
+******************************************************************
+68. Library: undici-6.27.0.tgz Product: AppScan_SAST_GitHub_Action
+******************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/d33e6537-1679-4574-a40d-f66587b6355d
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright Matteo Collina and Undici contributors
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/d33e6537-1679-4574-a40d-f66587b6355d
+
+
+
+
+*******************************************************************************
+69. Library: universal-user-agent-7.0.3.tgz Product: AppScan_SAST_GitHub_Action
+*******************************************************************************
+========
+LICENSES
+========
+Licensed under ISC
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/74444088-5a4c-4fd4-a9f9-c4ba89808a46
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+--------------------
+Copyright 1 out of 2
+--------------------
+Copyrighted under Copyright 2018-2021 Gregor Martynus
+Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/reader/resource/content/asString/74444088-5a4c-4fd4-a9f9-c4ba89808a46
+
+
+--------------------
+Copyright 2 out of 2
+--------------------
+Copyrighted under Copyright 2018-2021 Gregor Martynus
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/74444088-5a4c-4fd4-a9f9-c4ba89808a46
+
+
+****************************************************************
+70. Library: yauzl-3.4.0.tgz Product: AppScan_SAST_GitHub_Action
+****************************************************************
+========
+LICENSES
+========
+Licensed under MIT
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/3e9df3c7-ae01-4efc-a397-fbfe259ccec4
+
+License Text Under Appendix
+
+
+
+==========
+COPYRIGHTS
+==========
+Copyrighted under Copyright 2014 Josh Wolfe
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/3e9df3c7-ae01-4efc-a397-fbfe259ccec4
+
+
+
+
+=========================
+APPENDIX: License Details
+=========================
+
+***
+ISC
+***
+License Text:
+# [ISC License](https://spdx.org/licenses/ISC)
+
+Copyright (c) 2018-2021, Gregor Martynus (https://github.com/gr2m)
+
+Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+
+
+
+*****
+BSD 2
+*****
+License Text:
+Copyright 2016-2018 Kornel Lesinski
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+
+
+**********
+Apache 2.0
+**********
+License Text:
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
@@ -178,7 +1904,7 @@
    APPENDIX: How to apply the Apache License to your work.
 
       To apply the Apache License to your work, attach the following
-      boilerplate notice, with the fields enclosed by brackets "[]"
+      boilerplate notice, with the fields enclosed by brackets "{}"
       replaced with your own identifying information. (Don't include
       the brackets!)  The text should be enclosed in the appropriate
       comment syntax for the file format. We also recommend that a
@@ -186,7 +1912,7 @@
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright [yyyy] [name of copyright owner]
+   Copyright 2018 Gregor Martynus and other contributors.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -199,3 +1925,36 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+
+
+
+
+***
+MIT
+***
+License Text:
+The MIT License
+
+Copyright (c) 2019 Octokit contributors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+
+
