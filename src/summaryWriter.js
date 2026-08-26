@@ -22,7 +22,7 @@ function getGitHubContext() {
     const repoName = process.env.GITHUB_REPOSITORY || "";
     const branchName = process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME || "";
     const commitSha = process.env.GITHUB_SHA ? process.env.GITHUB_SHA.substring(0, 7) : "";
-    const serverUrl = process.env.GITHUB_SERVER_URL || "https://github.com";
+    const serverUrl = process.env.GITHUB_SERVER_URL;
     let prNumber = "";
     try {
         if (process.env.GITHUB_EVENT_PATH && fs.existsSync(process.env.GITHUB_EVENT_PATH)) {
@@ -38,19 +38,13 @@ function getGitHubContext() {
 function generateSummaryMarkdown(summaryData, reportDownloadLink, reportName) {
     const {total, counts, scanId, scanUrl, appName, appUrl, scanTime, scanType, isPR, repoName, branchName, commitSha, prNumber, serverUrl} = summaryData;
     const scanLabel = isPR ? `${scanType} PR Scan Summary` : `${scanType} Scan Summary`;
-    const enableHyperlinks = process.env.INPUT_SCAN_INFO_HYPERLINKS !== "false";
-    const prUrl = `${serverUrl}/${repoName}/pull/${prNumber}`;
-    const branchUrl = `${serverUrl}/${repoName}/tree/${branchName}`;
-    const commitUrl = `${serverUrl}/${repoName}/commit/${process.env.GITHUB_SHA}`;
-    const prNumberValue = enableHyperlinks
-        ? `<a href="${prUrl}">#${prNumber}</a>`
-        : `#${prNumber}`;
-    const branchValue = enableHyperlinks
-        ? `<a href="${branchUrl}">${branchName}</a>`
-        : branchName;
-    const commitValue = enableHyperlinks
-        ? `<a href="${commitUrl}">${commitSha}</a>`
-        : commitSha;
+	const enableHyperlinks = process.env.INPUT_SCAN_INFO_HYPERLINKS !== "false";
+	const prUrl = `${serverUrl}/${repoName}/pull/${prNumber}`;
+	const branchUrl = `${serverUrl}/${repoName}/tree/${branchName}`;
+	const commitUrl = `${serverUrl}/${repoName}/commit/${process.env.GITHUB_SHA}`;
+	const prNumberValue = `<a href="${prUrl}">#${prNumber}</a>`;
+	const branchValue = `<a href="${branchUrl}">${branchName}</a>`;
+	const commitValue = `<a href="${commitUrl}">${commitSha}</a>`;
     const prSection = isPR
         ? `
 ## Pull Request Information
@@ -137,15 +131,9 @@ async function generateMinimumSummary(getScanDetails, scanId, scanType) {
     const prUrl = `${serverUrl}/${repoName}/pull/${prNumber}`;
     const branchUrl = `${serverUrl}/${repoName}/tree/${branchName}`;
     const commitUrl = `${serverUrl}/${repoName}/commit/${process.env.GITHUB_SHA}`;
-    const prNumberValue = enableHyperlinks
-        ? `<a href="${prUrl}">#${prNumber}</a>`
-        : `#${prNumber}`;
-    const branchValue = enableHyperlinks
-        ? `<a href="${branchUrl}">${branchName}</a>`
-        : branchName;
-    const commitValue = enableHyperlinks
-        ? `<a href="${commitUrl}">${commitSha}</a>`
-        : commitSha;
+    const prNumberValue = `<a href="${prUrl}">#${prNumber}</a>`;
+	const branchValue = `<a href="${branchUrl}">${branchName}</a>`;
+	const commitValue = `<a href="${commitUrl}">${commitSha}</a>`;
     const prSection = isPR
         ? `
 ## Pull Request Information
@@ -245,19 +233,12 @@ function combineMarkdown(sastMarkdown, scaMarkdown) {
         );
     }
     const summaryContext = getGitHubContext();
-    const enableHyperlinks = process.env.INPUT_SCAN_INFO_HYPERLINKS !== "false";
     const prUrl = `${summaryContext.serverUrl}/${summaryContext.repoName}/pull/${summaryContext.prNumber}`;
-    const branchUrl = `${summaryContext.serverUrl}/${summaryContext.repoName}/tree/${summaryContext.branchName}`;
-    const commitUrl = `${summaryContext.serverUrl}/${summaryContext.repoName}/commit/${process.env.GITHUB_SHA}`;
-    const prNumberValue = enableHyperlinks
-        ? `<a href="${prUrl}">#${summaryContext.prNumber}</a>`
-        : `#${summaryContext.prNumber}`;
-    const branchValue = enableHyperlinks
-        ? `<a href="${branchUrl}">${summaryContext.branchName}</a>`
-        : summaryContext.branchName;
-    const commitValue = enableHyperlinks
-        ? `<a href="${commitUrl}">${summaryContext.commitSha}</a>`
-        : summaryContext.commitSha;
+	const branchUrl = `${summaryContext.serverUrl}/${summaryContext.repoName}/tree/${summaryContext.branchName}`;
+	const commitUrl = `${summaryContext.serverUrl}/${summaryContext.repoName}/commit/${process.env.GITHUB_SHA}`;
+	const prNumberValue = `<a href="${prUrl}">#${summaryContext.prNumber}</a>`;
+	const branchValue = `<a href="${branchUrl}">${summaryContext.branchName}</a>`;
+	const commitValue = `<a href="${commitUrl}">${summaryContext.commitSha}</a>`;
     const prSection = summaryContext.isPR
         ? `
 ## Pull Request Information

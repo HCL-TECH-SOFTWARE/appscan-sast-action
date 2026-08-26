@@ -39,7 +39,6 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
 | analysis_timeout_minutes | If **wait_for_analysis** is true, the number of minutes to wait for analysis to complete. | 30 minutes |
 | fail_for_noncompliance | If **wait_for_analysis** is true, fail the job if any non-compliant issues are found in the scan. | false |
 | failure_threshold | If **fail_for_noncompliance** is enabled, the severity that indicates a failure. Lesser severities will not be considered a failure. For example, if **failure_threshold** is set to Medium, Informational and/or Low severity issues will not cause a failure. Medium, High, and/or Critical issues will cause a failure. | Low |
-| scan_info_hyperlinks | Must be set to false if service_url is configured in GitHub Actions secrets. | true |
 | github_token | Set the value to ${{ github.token }} to display the PR scan summary in the pull request comment section. | github.token|
 
 # Examples
