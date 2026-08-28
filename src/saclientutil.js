@@ -121,7 +121,6 @@ function getRequestOptions() {
             if (proxyUser && proxyPwd) {
                 let auth = 'Basic ' + Buffer.from(proxyUser + ':' + proxyPwd).toString('base64');
                 proxy = {
-                    protocol: 'https:',
                     host: proxyHost, 
                     port: proxyPort,
                     username: proxyUser,
@@ -132,7 +131,6 @@ function getRequestOptions() {
                 }
             } else {
                 proxy = {
-                    protocol: 'https:',
                     host: proxyHost, 
                     port: proxyPort
                 }
