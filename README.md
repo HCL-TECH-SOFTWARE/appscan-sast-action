@@ -41,6 +41,25 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
 | failure_threshold | If **fail_for_noncompliance** is enabled, the severity that indicates a failure. Lesser severities will not be considered a failure. For example, if **failure_threshold** is set to Medium, Informational and/or Low severity issues will not cause a failure. Medium, High, and/or Critical issues will cause a failure. | Low |
 | github_token | Set the value to ${{ github.token }} to display the PR scan summary in the pull request comment section. | github.token|
 
+# Snapshots
+The following snapshots show the scan summary output in the job summary page.
+
+<div>
+  <img src="img/build_summary_sast.png" alt="Build Summary SAST" width="48%">
+  <img src="img/build_summary_sca.png" alt="Build Summary SCA" width="48%">
+</div>
+
+The following snapshots show the scan summary output for a pull request comment section.
+
+<div>
+  <img src="img/pull_request_comment_summary_1.png" alt="Pull Request Comment Summary 1" width="48%">
+  <img src="img/pull_request_comment_summary_2.png" alt="Pull Request Comment Summary 2" width="48%">
+</div>
+
+<div>
+  <img src="img/pull_request_comment_summary_3.png" alt="Pull Request Comment Summary 3" width="48%">
+</div>
+
 # Examples
 The pull_request trigger and permissions block (pull-requests: write, issues: write, contents: read) follow standard GitHub Actions syntax.
 ```yaml
