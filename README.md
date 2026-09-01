@@ -42,7 +42,16 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
 | github_token | Set the value to ${{ github.token }} to display the PR scan summary in the pull request comment section. | github.token|
 
 # Snapshots
-#### The following snapshots show the scan summary output in the job summary page.
+
+- Both the build and pull request (PR) comment summary captures information about the following:
+    - Type of scan executed
+    - The scan id generated
+    - Associated application name in ASoC or AppScan 360
+    - Repository scanned
+    - Scan time
+    - Downloadable report link for the scan type executed
+
+#### The following snapshot show the scan summary output in the job summary page.
 <div>
   <img src="img/build_summary_sast.png" alt="Build Summary SAST" width="48%">
 </div>
