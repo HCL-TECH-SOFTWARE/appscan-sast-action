@@ -10,7 +10,7 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
 ## Setup
 1. Generate your API key and API secret on [the API page](https://cloud.appscan.com/main/settings).
 - The API key and API secret map to the `asoc_key` and `asoc_secret` parameters for this action. Store the API key and API secret as [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) in your repository.
-![adingkeys_animation](img/keyAndSecret.gif)
+![addingkeys_animation](img/keyAndSecret.gif)
 2. Create the application in ASoC or AppScan 360. 
 - The application ID in ASoC/AppScan 360 maps to application_id for this action.
 
@@ -51,7 +51,7 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
     - Scan time
     - Downloadable report link for the scan type executed
 
-#### The following snapshot show the scan summary output in the job summary page.
+#### The following snapshot shows the scan summary output on the job summary page.
 <div>
   <img src="img/build_summary_sast.png" alt="Build Summary SAST" width="48%">
 </div>
@@ -59,14 +59,14 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
 - To view the Scan ID and Application name in ASoC or AS 360, click on the respective hyperlinks.
 - Scan security report for SAST or SCA can be downloaded directly from the Report section in the summary table.
 
-#### The following snapshots show the scan summary output for a pull request comment section.
+#### The following snapshots show the scan summary output in the request comment section.
 
 <div>
   <img src="img/pull_request_comment_summary_1.png" alt="Pull Request Comment Summary 1" width="48%">
   <img src="img/pull_request_comment_summary_2.png" alt="Pull Request Comment Summary 2" width="48%">
 </div>
 
-- Under Pull Request Information table you can directly view the details about the pull request, branch and commit by clicking on their respective hyperlinks.
+- Under the Pull Request Information table you can directly view the details about the pull request, branch and commit by clicking on their respective hyperlinks.
 - To view the Scan ID and Application name in ASoC or AS 360, click on the respective hyperlinks.
 - Scan security report for SAST or SCA can be downloaded directly from the Report section in the summary table.
 

@@ -6,11 +6,11 @@ v1.1.2 (August 31, 2026)
 
 v1.1.1 (August 6, 2026)
 ------
-* Fixed a bug executing on Windows runners.
+* Fixed an issue that caused execution failures on Windows runners.
 
 v1.1.0 (July 2, 2026)
 ------
-* Supports incremental scan and rescan.
+* Added support for incremental scan and rescan.
 
 v1.0.1 (November 2, 2022)
 ------
