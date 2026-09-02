@@ -134,7 +134,10 @@ function getRequestOptions() {
                     host: proxyHost, 
                     port: proxyPort
                 }
-            }			
+            }
+            if (settings.isHttpsProxy()) {
+                proxy.protocol = 'https:';
+            }
             options = new URL(endpoint);
             options.agent = new HttpsProxyAgent(proxy);
         } else { // Normal connection without proxy

@@ -13,6 +13,23 @@ inputs:
   service_url:
     description: 'The url of the AppScan service.'
     required: false
+  proxy_url:
+    description: 'The url of the proxy server.'
+    required: false
+  proxy_port:
+    description: 'The port of the proxy server.'
+    required: false
+  proxy_user:
+    description: 'The username for the proxy server, if required.'
+    required: false
+  proxy_pwd:
+    description: 'The password for the proxy server, if required.'
+    required: false
+  proxy_https:
+    description: 'The proxy server is HTTPS.'
+    required: false
+    type: boolean
+    default: false
   acceptssl:
     description: 'Allow connections to a service with an untrusted certificate. Recommended for testing purposes only.'
     required: false
