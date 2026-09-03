@@ -18,26 +18,6 @@ import * as constants from './constants.js';
 
 let serviceUrl = null;
 
-function getProxyUrl() {
-    return process.env.INPUT_PROXY_URL;
-}
-
-function getProxyPort() {
-    return process.env.INPUT_PROXY_PORT;
-}
-
-function getProxyUser() {
-    return process.env.INPUT_PROXY_USER;
-}
-
-function getProxyPwd() {
-    return process.env.INPUT_PROXY_PWD;
-}
-
-function isHttpsProxy() {
-    return process.env.INPUT_PROXY_HTTPS === 'true';
-}
-
 function getServiceUrl() {
     if(!serviceUrl) {
         if(process.env.INPUT_SERVICE_URL) {
@@ -68,4 +48,4 @@ function isIncrementalScan() {
     return process.env.INPUT_INCREMENTAL_SCAN === 'true';
 }
 
-export default { getProxyUrl, getProxyPort, getProxyUser, getProxyPwd, isHttpsProxy, getServiceUrl, getScanUrl, shouldDisableSSL, isIncrementalScan }
+export default { getServiceUrl, getScanUrl, shouldDisableSSL, isIncrementalScan }

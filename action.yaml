@@ -13,8 +13,8 @@ inputs:
   service_url:
     description: 'The url of the AppScan service.'
     required: false
-  proxy_url:
-    description: 'The url of the proxy server.'
+  proxy_host:
+    description: 'The hostname of the proxy server.'
     required: false
   proxy_port:
     description: 'The port of the proxy server.'

@@ -24,6 +24,7 @@ import * as os from 'os';
 import * as constants from './constants.js';
 import settings from './settings.js';
 import utils from './utils.js';
+import proxyUtil from './proxyUtil.js';
 
 let parentDir = path.join(os.homedir(), '.appscan');
 if(!fs.existsSync(parentDir)) {
@@ -109,39 +110,11 @@ function extractClient(zipFile) {
 function getRequestOptions() {
     return new Promise((resolve) => {
         let endpoint = settings.getServiceUrl() + constants.SACLIENT_PATH + utils.getOS();
-        let options = null;
-        let proxyHost = settings.getProxyUrl();
-        let proxyPort = settings.getProxyPort();
-        let proxyUser = settings.getProxyUser();
-        let proxyPwd  = settings.getProxyPwd();
-
-        if (proxyHost && proxyPort) {  //Connection through proxy
-            let proxy = null;
-
-            if (proxyUser && proxyPwd) {
-                let auth = 'Basic ' + Buffer.from(proxyUser + ':' + proxyPwd).toString('base64');
-                proxy = {
-                    host: proxyHost, 
-                    port: proxyPort,
-                    username: proxyUser,
-                    password: proxyPwd,
-                    headers: {
-                        'Proxy-Authorization': auth
-                    }
-                }
-            } else {
-                proxy = {
-                    host: proxyHost, 
-                    port: proxyPort
-                }
-            }
-            if (settings.isHttpsProxy()) {
-                proxy.protocol = 'https:';
-            }
-            options = new URL(endpoint);
-            options.agent = new HttpsProxyAgent(proxy);
-        } else { // Normal connection without proxy
-            options = new URL(endpoint);
+        let options = new URL(endpoint);
+        let proxySettings = proxyUtil.getProxySettings();
+        
+        if(proxySettings != null) {
+            options.agent = new HttpsProxyAgent(proxySettings);
         }
 
         if (settings.shouldDisableSSL()) {

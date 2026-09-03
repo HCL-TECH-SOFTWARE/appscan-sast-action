@@ -17,7 +17,9 @@ limitations under the License.
 import * as core from '@actions/core';
 import * as fs from 'fs';
 import got from 'got';
+import HttpsProxyAgent from 'https-proxy-agent';
 import * as constants from './constants.js';
+import proxyUtil from './proxyUtil.js';
 import settings from './settings.js';
 import utils from './utils.js';
 import FormData from 'form-data';
@@ -35,7 +37,7 @@ function login() {
     return new Promise((resolve, reject) => {
         if(key && secret) {
             let url = settings.getServiceUrl() + constants.API_LOGIN;
-            got.post(url, { json: { 'keyId': key, 'keySecret': secret, 'clientType': utils.getClientType() }, retry: { limit: 3, methods: ['GET', 'POST'] }, https: { rejectUnauthorized: enableSSL } })
+            got.post(url, { json: { 'keyId': key, 'keySecret': secret, 'clientType': utils.getClientType() }, retry: { limit: 3, methods: ['GET', 'POST'] }, https: { rejectUnauthorized: enableSSL }, ...getProxyOptions() })
             .then((response) => {
                 if(response.statusCode === 200 || response.statusCode === 201) {
                     let responseJson = JSON.parse(response.body);
@@ -77,7 +79,7 @@ function getNonCompliantIssues(scanId) {
     return new Promise((resolve, reject) => {
         let queryString = '?applyPolicies=All&%24top=100&%24apply=filter%28Status%20eq%20%27Open%27%20or%20Status%20eq%20%27InProgress%27%20or%20Status%20eq%20%27Reopened%27%20or%20Status%20eq%20%27New%27%29%2Fgroupby%28%28Severity%29%2Caggregate%28%24count%20as%20Count%29%29';
         let url = settings.getServiceUrl() + constants.API_ISSUES + scanId + queryString;
-        got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] }, https: { rejectUnauthorized: enableSSL } })
+        got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ['GET', 'POST'] }, https: { rejectUnauthorized: enableSSL }, ...getProxyOptions() })
         .then((response) => {
             let responseJson = JSON.parse(response.body);
             resolve(responseJson);
@@ -94,6 +96,11 @@ function getRequestHeaders() {
         Accept: "application/json",
         ClientType: utils.getClientType()
     }
+}
+
+function getProxyOptions() {
+    let proxySettings = proxyUtil.getProxySettings();
+    return proxySettings != null ? { agent: { https: new HttpsProxyAgent(proxySettings) } } : {};
 }
 
 function runAnalysis(file) {
@@ -120,7 +127,7 @@ function uploadFile(file) {
         form.append('uploadedFile', fs.createReadStream(file))
         let url = settings.getServiceUrl() + constants.API_FILE_UPLOAD;
         
-        got.post(url, { body: form, headers: getRequestHeaders(), retry: { limit: 3, methods: ["GET", "POST"] }, https: { rejectUnauthorized: enableSSL } })
+        got.post(url, { body: form, headers: getRequestHeaders(), retry: { limit: 3, methods: ["GET", "POST"] }, https: { rejectUnauthorized: enableSSL }, ...getProxyOptions() })
         .then((response) => {
             let responseJson = JSON.parse(response.body);
             resolve(responseJson.FileId);
@@ -162,7 +169,7 @@ function submitScan(url, fileId) {
             "EnableMailNotification": false
         };
 
-        got.post(url, { json: body, headers: getRequestHeaders(), retry: { limit: 3, methods: ["GET", "POST"] }, https: { rejectUnauthorized: enableSSL } })
+        got.post(url, { json: body, headers: getRequestHeaders(), retry: { limit: 3, methods: ["GET", "POST"] }, https: { rejectUnauthorized: enableSSL }, ...getProxyOptions() })
         .then((response) => {
             let responseJson = JSON.parse(response.body);
             resolve(responseJson.Id);
@@ -179,7 +186,7 @@ function submitRescan(scanId, fileId) {
         url += constants.API_SCAN_EXECUTIONS.replace('{s}', scanId);
         let body = { FileId: fileId };
 
-        got.post(url, { json: body, headers: getRequestHeaders(), retry: { limit: 3, methods: ["GET", "POST"] }, https: { rejectUnauthorized: enableSSL } })
+        got.post(url, { json: body, headers: getRequestHeaders(), retry: { limit: 3, methods: ["GET", "POST"] }, https: { rejectUnauthorized: enableSSL }, ...getProxyOptions() })
         .then((response) => {
             let responseJson = JSON.parse(response.body);
             resolve(responseJson.ScanId);
@@ -257,7 +264,7 @@ async function getSastScanStatus(scanId) {
 }
 
 async function getScanStatus(url, scanId) {
-    let response = await got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ["GET"] }, https: { rejectUnauthorized: enableSSL } })
+    let response = await got.get(url, { headers: getRequestHeaders(), retry: { limit: 3, methods: ["GET"] }, https: { rejectUnauthorized: enableSSL }, ...getProxyOptions() })
     let responseJson = JSON.parse(response.body);
     return responseJson.LatestExecution.Status;
 }
