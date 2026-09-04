@@ -35,6 +35,14 @@ function isHttpsProxy() {
 }
 
 function getProxySettings() {
+    let proxySettings = getProxySettingsFromInputs();
+    if (!proxySettings) {
+        proxySettings = getProxySettingsFromEnvironment();
+    }
+    return proxySettings;
+}
+
+function getProxySettingsFromInputs() {
     let proxyHost = getProxyHost();
     let proxyPort = getProxyPort();
     let proxyUser = getProxyUser();
@@ -66,6 +74,27 @@ function getProxySettings() {
         }
     }
     return proxy;
+}
+
+function getProxySettingsFromEnvironment() {
+    let proxyUrl = process.env.https_proxy 
+        || process.env.HTTPS_PROXY 
+        || process.env.http_proxy  
+        || process.env.HTTP_PROXY;
+
+    if (proxyUrl) {
+        let { hostname: proxyHost, port: proxyPort } = new URL(proxyUrl);
+        let proxy = {
+            host: proxyHost,
+            port: proxyPort
+        };
+        if (isHttpsProxy()) {
+            proxy.protocol = 'https:';
+        }
+        return proxy;
+    }
+
+    return null;
 }
 
 export default { getProxySettings }
