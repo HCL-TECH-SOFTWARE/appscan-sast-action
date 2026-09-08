@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-const CURRENT_VERSION = '1.0.7';
+const CURRENT_VERSION = '1.1.2';
 const _CURRENT_VERSION = CURRENT_VERSION;
 export { _CURRENT_VERSION as CURRENT_VERSION };
 
@@ -39,6 +39,10 @@ const _API_SCAN_EXECUTIONS = '/api/v4/Scans/{s}/Executions';
 export { _API_SCAN_EXECUTIONS as API_SCAN_EXECUTIONS };
 const _CLIENT_TYPE = 'github-sast';
 export { _CLIENT_TYPE as CLIENT_TYPE };
+const _API_SECURITY_REPORT = "/api/v4/Reports/Security/ScanExecution/";
+export { _API_SECURITY_REPORT as API_SECURITY_REPORT };
+const _API_REPORT = "/api/v4/Reports";
+export { _API_REPORT as API_REPORT };
 
 //User messages:
 const _DOWNLOADING_CLIENT = 'Downloading the SAClientUtil...';

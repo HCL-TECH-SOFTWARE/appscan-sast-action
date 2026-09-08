@@ -10,7 +10,7 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
 ## Setup
 1. Generate your API key and API secret on [the API page](https://cloud.appscan.com/main/settings).
 - The API key and API secret map to the `asoc_key` and `asoc_secret` parameters for this action. Store the API key and API secret as [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) in your repository.
-![adingkeys_animation](img/keyAndSecret.gif)
+![addingkeys_animation](img/keyAndSecret.gif)
 2. Create the application in ASoC or AppScan 360. 
 - The application ID in ASoC/AppScan 360 maps to application_id for this action.
 
@@ -44,12 +44,54 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
 | proxy_user | The username for the proxy server, if required. | null |
 | proxy_pwd | The password for the proxy server, if required. | null |
 | proxy_https | True to use an HTTPS proxy. False for an HTTP proxy. | false |
+| github_token | Set the value to ${{ github.token }} to display the PR scan summary in the pull request comment section. | github.token|
+
+# Snapshots
+
+- Both the build and pull request (PR) comment summary captures information about the following:
+    - Type of scan executed
+    - The scan id generated
+    - Associated application name in ASoC or AppScan 360
+    - Repository scanned
+    - Scan time
+    - Downloadable report link for the scan type executed
+
+#### The following snapshot shows the scan summary output on the job summary page.
+<div>
+  <img src="img/build_summary_sast.png" alt="Build Summary SAST" width="48%">
+</div>
+
+- To view the Scan ID and Application name in ASoC or AS 360, click on the respective hyperlinks.
+- Scan security report for SAST or SCA can be downloaded directly from the Report section in the summary table.
+
+#### The following snapshots show the scan summary output in the request comment section.
+
+<div>
+  <img src="img/pull_request_comment_summary_1.png" alt="Pull Request Comment Summary 1" width="48%">
+  <img src="img/pull_request_comment_summary_2.png" alt="Pull Request Comment Summary 2" width="48%">
+</div>
+
+- Under the Pull Request Information table you can directly view the details about the pull request, branch and commit by clicking on their respective hyperlinks.
+- To view the Scan ID and Application name in ASoC or AS 360, click on the respective hyperlinks.
+- Scan security report for SAST or SCA can be downloaded directly from the Report section in the summary table.
 
 # Examples
+The pull_request trigger and permissions block (pull-requests: write, issues: write, contents: read) follow standard GitHub Actions syntax.
 ```yaml
 name: "HCL AppScan SAST"
 on:
-  workflow_dispatch
+  workflow_dispatch:
+
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
 jobs:
   scan:
     runs-on: ubuntu-latest
@@ -57,7 +99,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Run AppScan SAST scan
-        uses: HCL-TECH-SOFTWARE/appscan-sast-action@v1.1.0
+        uses: HCL-TECH-SOFTWARE/appscan-sast-action@v1.1.2
         with:
           asoc_key: ${{secrets.ASOC_KEY}}
           asoc_secret: ${{secrets.ASOC_SECRET}}

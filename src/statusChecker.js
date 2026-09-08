@@ -76,6 +76,21 @@ async function waitForSastAnalysis(scanId) {
     return result;
 }
 
+async function waitForSecurityReport(reportId) {
+	if(!reportId) {
+		return null;
+	}
+	let report = await asoc.getSecurityReport(reportId);
+	while(report && report.Status !== "Ready" && report.Status !== "Failed") {
+		await sleep(30000);
+		if(analysisTimedOut()) {
+            return timed_out;
+        }
+		report = await asoc.getSecurityReport(reportId);
+	}
+	return report;
+}
+
 async function sleep(ms) {
     return new Promise(resolve => {
         setTimeout(resolve, ms);
@@ -88,4 +103,4 @@ function analysisTimedOut() {
     return minutes > timeout_minutes;
 }
 
-export default { waitForAnalysis}
+export default { waitForAnalysis, waitForSecurityReport }

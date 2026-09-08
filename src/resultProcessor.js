@@ -16,41 +16,73 @@ limitations under the License.
 
 import asoc from './asoc.js';
 import * as constants from './constants.js';
-
-const Informational = 0;
-const Low = 1;
-const Medium = 2;
-const High = 3;
-const Critical = 4;
+import statusChecker from './statusChecker.js';
+import summaryWriter from './summaryWriter.js';
+import { postComment } from './prCommentWriter.js';
 
 const failForNonCompliance = process.env.INPUT_FAIL_FOR_NONCOMPLIANCE === 'true';
 const failureThreshold = getSeverityValue(process.env.INPUT_FAILURE_THRESHOLD);
 let shouldFail = false;
 let summary = '';
+let sastDownloadLink = "";
+let scaDownloadLink = "";
 
 function processScanResults(sastScanId, scaScanId) {
     return new Promise((resolve, reject) => {
-        let sastScanResults = [];
-        let scaScanResults = [];
+        let sastSummary = null;
+        let scaSummary = null;
+		let sastMarkdown = null;
+		let scaMarkdown = null;
 
-        asoc.getScanResults(sastScanId)
+        (sastScanId ? asoc.getScanResults(sastScanId, 'SAST') : Promise.resolve(null))
         .then((sastResults) => {
-            sastScanResults = sastResults.Items;
-            return processResults(sastScanResults, 'SAST');
+            sastSummary = sastResults;
+            return processResults(sastSummary, 'SAST');
         })
         .then(() => {
-            return asoc.getScanResults(scaScanId);
+            return scaScanId ? asoc.getScanResults(scaScanId, 'SCA') : Promise.resolve(null);
         })
         .then((scaResults) => {
-            scaScanResults = scaResults.Items;
-            return processResults(scaScanResults, 'SCA');
+            scaSummary = scaResults;
+            return processResults(scaSummary, 'SCA');
         })
         .then(() => {
-            return aggregateResults(sastScanResults, scaScanResults);
+			if(sastScanId && scaScanId) {
+				return aggregateResults(sastSummary, scaSummary);
+			}
+            return null;
         })
         .then((aggregatedResults) => {
-            return processResults(aggregatedResults, 'Combined');
+			if(aggregatedResults) {
+				return processResults(aggregatedResults, 'Combined');
+			}
+            return Promise.resolve();
         })
+		.then(() => {
+			return generateSecurityReport(sastScanId, "Sast", "SAST", sastSummary);
+		})
+		.then((reportData) => {
+			if(reportData) {
+				sastDownloadLink = reportData.downloadLink || "";
+				sastMarkdown = reportData.markdown || "";
+			}
+		})
+		.then(() => {
+			return generateSecurityReport(scaScanId, "Sca", "SCA", scaSummary);
+		})
+		.then((reportData) => {
+			if(reportData) {
+				scaDownloadLink = reportData.downloadLink || "";
+				scaMarkdown = reportData.markdown || "";
+			}
+		})
+		.then(() => {
+			const markdown = summaryWriter.combineMarkdown(sastMarkdown, scaMarkdown);
+			if(markdown) {
+				return postComment(markdown).catch(() => {});
+			}
+			return Promise.resolve();
+		})
         .then(() => {
             if(shouldFail) {
                 return reject('\n' + summary + '\n' + constants.ERROR_NONCOMPLIANT_ISSUES);
@@ -65,27 +97,21 @@ function processScanResults(sastScanId, scaScanId) {
     })
 }
 
-function processResults(json, label) {
-    return new Promise((resolve, reject) => {
-        if(!json || json.length === 0) {
+function processResults(result, label) {
+    return new Promise((resolve) => {
+        if(!result || !result.counts) {
             return resolve();
         }
-
-        let totalFindings = 0;
-        let count = 0;
-        let output = '';
-
-        for(var i = 0; i < json.length; i++) {
-            let element = json[i];
-            totalFindings += element.Count;
-            output = '\t' + element.Severity + constants.ISSUES_COLON + element.Count + '\n' + output;
-            setShouldFail(element.Severity, element.Count);
-            if(++count === json.length) {
-                output = '\t' + constants.TOTAL_ISSUES + totalFindings + '\n' + output;
-                summary += label + ' Security Issues\n' + output + '\n';
-                return resolve();
-            }
-        }
+		const severityOrder =["Critical", "High", "Medium", "Low", "Informational"];
+        let output = "";
+		severityOrder.forEach((severity) => {
+            const count = result.counts[severity] || 0;
+            output += `\t${severity}${constants.ISSUES_COLON}${count}\n`;
+            setShouldFail(severity, count);
+        });
+        output += `\t${constants.TOTAL_ISSUES}${result.total}\n`;
+        summary += `${label} Security Issues\n${output}\n`;
+        resolve();
     });
 }
 
@@ -123,34 +149,58 @@ function getSeverityValue(severity) {
 function aggregateResults(result1, result2) {
     return new Promise((resolve) => {
         if (!result1 || !result2) {
-            return resolve([]);
+            return resolve(null);
         }
-
-        // Create a map to store severity counts
-        const severityMap = {};
-        
-        // Process first object's items
-        if (result1 && Array.isArray(result1)) {
-            result1.forEach(item => {
-            severityMap[item.Severity] = (severityMap[item.Severity] || 0) + item.Count;
-            });
-        }
-
-        // Process second object's items
-        if (result2 && Array.isArray(result2)) {
-            result2.forEach(item => {
-            severityMap[item.Severity] = (severityMap[item.Severity] || 0) + item.Count;
-            });
-        }
-
-        // Convert map back to array
-        const combinedItems = Object.keys(severityMap).map(severity => ({
-            Severity: severity,
-            Count: severityMap[severity]
-        }));
-
-        resolve(combinedItems);
+        const counts = {
+            Critical: (result1.counts?.Critical || 0) + (result2.counts?.Critical || 0),
+            High: (result1.counts?.High || 0) + (result2.counts?.High || 0),
+            Medium: (result1.counts?.Medium || 0) + (result2.counts?.Medium || 0),
+            Low: (result1.counts?.Low || 0) + (result2.counts?.Low || 0),
+            Informational: (result1.counts?.Informational || 0) + (result2.counts?.Informational || 0)
+        };
+        const total = Object.values(counts).reduce((sum, value) => sum + value, 0);
+        resolve({total, counts});
     });
 }
 
-export default { processScanResults }
+function getSastDownloadLink() {
+	return sastDownloadLink;
+}
+
+function getScaDownloadLink() {
+	return scaDownloadLink;
+}
+
+function generateSecurityReport(scanId, apiScanType, reportType, summaryData) {
+    if (!scanId) {
+        return Promise.resolve(null);
+    }
+    return asoc.getScanDetails(scanId, apiScanType)
+        .then((scanDetails) => {
+            if (!scanDetails || !scanDetails.ExecutionId) {
+                return Promise.resolve();
+            }
+            return asoc.createSecurityReport(scanDetails.ExecutionId);
+        })
+        .then((reportId) => {
+            if (!reportId) {
+                return Promise.resolve();
+            }
+            return statusChecker.waitForSecurityReport(reportId);
+        })
+        .then((report) => {
+            if (!report || !report.DownloadLink) {
+                return Promise.resolve();
+            }
+            return asoc.downloadSecurityReport(report, reportType);
+        })
+        .then((reportResult) => {
+            if (!reportResult) {
+                return null;
+            }
+            const markdown = summaryWriter.writeSummaryMarkdown(summaryData, reportResult.downloadLink, reportResult.reportName);
+            return { markdown, downloadLink: reportResult.downloadLink };
+        });
+}
+
+export default { processScanResults, getSastDownloadLink, getScaDownloadLink }
