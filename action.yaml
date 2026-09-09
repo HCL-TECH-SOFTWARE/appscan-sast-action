@@ -93,6 +93,7 @@ inputs:
   github_token:
      description: GitHub token used to create pull request comments.
      required: false 
+     default: ${{github.token}}
 runs:
   using: 'node24'
   main: 'src/main.js'
