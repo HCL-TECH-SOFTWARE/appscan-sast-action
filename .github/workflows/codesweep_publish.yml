@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Publish issues to ASoC
-        uses: HCL-TECH-SOFTWARE/appscan-codesweep-action@ec3e8f3a32868329aa3d4e5662d4a58f2cee4476 # v2
+        uses: HCL-TECH-SOFTWARE/appscan-codesweep-action@ec3e8f3a32868329aa3d4e5662d4a58f2cee4476
         with:
           asoc_key: ${{secrets.ASOC_KEY}}
           asoc_secret: ${{secrets.ASOC_SECRET}}

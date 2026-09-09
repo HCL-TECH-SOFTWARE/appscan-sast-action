@@ -7,11 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@0717577d45739eb3c851188b29f50ed6c0b2194e # v2
+        uses: actions/checkout@0717577d45739eb3c851188b29f50ed6c0b2194e
         with:
           fetch-depth: 0
       - name: Run AppScan CodeSweep
-        uses: HCL-TECH-SOFTWARE/appscan-codesweep-action@ec3e8f3a32868329aa3d4e5662d4a58f2cee4476 # v2
+        uses: HCL-TECH-SOFTWARE/appscan-codesweep-action@ec3e8f3a32868329aa3d4e5662d4a58f2cee4476
         with:
           asoc_key: ${{secrets.ASOC_KEY}}
           asoc_secret: ${{secrets.ASOC_SECRET}}
