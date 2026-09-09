@@ -1,7 +1,7 @@
 name: "HCL AppScan SAST"
 on:
-  workflow_dispatch
-   push:
+  workflow_dispatch:
+  push:
     branches:
       - main
   pull_request:
@@ -16,9 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@a37ce9120846195fa4ece8f58b268e6043cb2f26 # v3
       - name: Run AppScan SAST scan
-        uses: HCL-TECH-SOFTWARE/appscan-sast-action@v1.0.1
+        uses: HCL-TECH-SOFTWARE/appscan-sast-action@d119873d6403b00a578d8542fc55ee36974fa912 # v1.0.1
         with:
           asoc_key: ${{secrets.ASOC_KEY}}
           asoc_secret: ${{secrets.ASOC_SECRET}}

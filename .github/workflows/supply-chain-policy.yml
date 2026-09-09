@@ -1,0 +1,44 @@
+name: Supply Chain Policy
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.npmrc'
+      - '.github/dependabot.yml'
+      - 'scripts/supply-chain-policy.js'
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.npmrc'
+      - '.github/dependabot.yml'
+      - 'scripts/supply-chain-policy.js'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  enforce:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Setup Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+      - name: Ensure npm min-release-age support
+        run: npm install --global npm@11.10.0 --ignore-scripts
+      - name: Install dependencies without lifecycle scripts
+        run: npm ci --ignore-scripts
+      - name: Enforce supply-chain controls
+        run: npm run supply-chain:policy
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

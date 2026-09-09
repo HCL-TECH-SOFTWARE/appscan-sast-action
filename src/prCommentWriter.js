@@ -26,7 +26,7 @@ async function postComment(markdown) {
 	if (!pullRequest) {
 		return;
 	}		
-	const token = process.env.INPUT_GITHUB_TOKEN;
+	const token = core.getInput("github_token");
 	if (!token) {
 		core.warning("GitHub token not available. Skipping PR comment creation.");
 		return;

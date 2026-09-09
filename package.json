@@ -4,18 +4,20 @@
   "description": "Runs HCL AppScan Static Analyzer.",
   "main": "main.js",
   "type": "module",
-  "scripts": {},
+  "scripts": {
+    "supply-chain:policy": "node scripts/supply-chain-policy.js"
+  },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^3.0.0",
-    "@actions/github": "^9.0.0",
-    "eol": "^0.9.1",
-    "yauzl": "^3.4.0",
-    "form-data": "^4.0.6",
-    "got": "^12.5.3",
-    "https": "^1.0.0",
-    "https-proxy-agent": "^5.0.0"
+    "@actions/core": "3.0.0",
+    "@actions/github": "9.0.0",
+    "eol": "0.9.1",
+    "yauzl": "3.4.0",
+    "form-data": "4.0.6",
+    "got": "12.6.1",
+    "https": "1.0.0",
+    "https-proxy-agent": "5.0.0"
   }
 }
