@@ -39,6 +39,11 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
 | analysis_timeout_minutes | If **wait_for_analysis** is true, the number of minutes to wait for analysis to complete. | 30 minutes |
 | fail_for_noncompliance | If **wait_for_analysis** is true, fail the job if any non-compliant issues are found in the scan. | false |
 | failure_threshold | If **fail_for_noncompliance** is enabled, the severity that indicates a failure. Lesser severities will not be considered a failure. For example, if **failure_threshold** is set to Medium, Informational and/or Low severity issues will not cause a failure. Medium, High, and/or Critical issues will cause a failure. | Low |
+| proxy_host | The hostname of the proxy server, if required. | null |
+| proxy_port | The port of the proxy server, if required. | null |
+| proxy_user | The username for the proxy server, if required. | null |
+| proxy_pwd | The password for the proxy server, if required. | null |
+| proxy_https | True to use an HTTPS proxy. False for an HTTP proxy. | false |
 
 # Snapshots
 
@@ -91,9 +96,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        uses: actions/checkout@v6
       - name: Run AppScan SAST scan
-        uses: HCL-TECH-SOFTWARE/appscan-sast-action@7c2cba597e540097b149f42281247844a0af1a04 # v1.1.2
+        uses: HCL-TECH-SOFTWARE/appscan-sast-action@v1.1.2
         with:
           asoc_key: ${{secrets.ASOC_KEY}}
           asoc_secret: ${{secrets.ASOC_SECRET}}
