@@ -1,5 +1,5 @@
 /*
-Copyright 2022, 2026 HCL America, Inc.
+Copyright 2022, 2026 HCL Technologies Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -286,8 +286,7 @@ function submitScan(url, fileId) {
             "AppId": appId,
             "ScanName": scanName,
             "Personal": process.env.INPUT_PERSONAL_SCAN === 'true',
-            "FullyAutomatic": true,
-            "EnableMailNotification": false
+            "FullyAutomatic": true
         };
 
         got.post(url, {
