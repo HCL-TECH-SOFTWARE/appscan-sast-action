@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+v1.1.3 (September 16, 2026)
+------
+* Includes security updates and resolves proxy issues.
+
 v1.1.2 (August 31, 2026)
 ------
 * Added support for viewing build and pull request (PR) scan summaries on the job summary page.
