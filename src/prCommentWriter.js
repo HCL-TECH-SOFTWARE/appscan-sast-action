@@ -1,5 +1,5 @@
 /*
-Copyright 2026 HCL America, Inc.
+Copyright 2026 HCL Technologies Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ async function postComment(markdown) {
 	if (!pullRequest) {
 		return;
 	}		
-	const token = process.env.INPUT_GITHUB_TOKEN;
+	const token = core.getInput("github_token");
 	if (!token) {
 		core.warning("GitHub token not available. Skipping PR comment creation.");
 		return;

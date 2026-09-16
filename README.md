@@ -44,7 +44,6 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
 | proxy_user | The username for the proxy server, if required. | null |
 | proxy_pwd | The password for the proxy server, if required. | null |
 | proxy_https | True to use an HTTPS proxy. False for an HTTP proxy. | false |
-| github_token | Set the value to ${{ github.token }} to display the PR scan summary in the pull request comment section. | github.token|
 
 # Snapshots
 
