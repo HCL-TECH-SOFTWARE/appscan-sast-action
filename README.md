@@ -1,31 +1,31 @@
 # HCL AppScan SAST Github Action
 Your code is better and more secure with HCL AppScan.
 
-The HCL AppScan SAST Github Action enables you to run static analysis security testing (SAST) and software composition analysis (SCA) against the files in your repository. The SAST scan identifies security vulnerabilities in your code and the SCA scan identifies vulnerabilities in your dependencies. Results are stored in AppScan on Cloud or AppScan 360.
+The HCL AppScan SAST Github Action enables you to run static analysis security testing (SAST) and software composition analysis (SCA) against the files in your repository. The SAST scan identifies security vulnerabilities in your code and the SCA scan identifies vulnerabilities in your dependencies. Results are stored in AppScan on Cloud or AppScan 360°.
 
 # Usage
 ## Register
-If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://www.hcltechsw.com/appscan/codesweep-for-github) to generate your API key and API secret. Not required for AppScan 360.
+If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://www.hcltechsw.com/appscan/codesweep-for-github) to generate your API key and API secret. Not required for AppScan 360°.
 
 ## Setup
 1. Generate your API key and API secret on [the API page](https://cloud.appscan.com/main/settings).
 - The API key and API secret map to the `asoc_key` and `asoc_secret` parameters for this action. Store the API key and API secret as [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) in your repository.
 ![addingkeys_animation](img/keyAndSecret.gif)
-2. Create the application in ASoC or AppScan 360. 
-- The application ID in ASoC/AppScan 360 maps to application_id for this action.
+2. Create the application in ASoC or AppScan 360°. 
+- The application ID in ASoC/AppScan 360° maps to application_id for this action.
 
 # Required Inputs
 | Name |   Description    |
 |    :---:    |    :---:    |
 | asoc_key | Your API key from [the API page](https://cloud.appscan.com/main/settings) |
 | asoc_secret | Your API secret from [the API page](https://cloud.appscan.com/main/settings) |
-| application_id | The ID of the application in ASoC or AppScan 360. |
+| application_id | The ID of the application in ASoC or AppScan 360°. |
 
 # Optional Inputs
 | Name | Description | Default Value |
 |    :---:    |    :---:    |    :---:    |
-| service_url | The url for connections to AppScan 360. Not required for connections to AppScan on Cloud (ASoC) | https://cloud.appscan.com |
-| acceptssl | Allow connections to an AppScan 360 service with an untrusted certificate. Recommended for testing purposes only. | false |
+| service_url | The url for connections to AppScan 360°. Not required for connections to AppScan on Cloud (ASoC) | https://cloud.appscan.com |
+| acceptssl | Allow connections to an AppScan 360° service with an untrusted certificate. Recommended for testing purposes only. | false |
 | scan_name | The name of the scan created in ASoC. | The GitHub repository name |
 | incremental_scan | Only scan files that were added or modified in a pull request. | false |
 | personal_scan | Make this a [personal scan](https://help.hcltechsw.com/appscan/ASoC/appseccloud_scans_personal.html). | false |
@@ -50,7 +50,7 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
 - Both the build and pull request (PR) comment summary captures information about the following:
     - Type of scan executed
     - The scan id generated
-    - Associated application name in ASoC or AppScan 360
+    - Associated application name in ASoC or AppScan 360°
     - Repository scanned
     - Scan time
     - Downloadable report link for the scan type executed
@@ -60,7 +60,7 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
   <img src="img/build_summary_sast.png" alt="Build Summary SAST" width="48%">
 </div>
 
-- To view the Scan ID and Application name in ASoC or AS 360, click on the respective hyperlinks.
+- To view the Scan ID and Application name in ASoC or AppScan 360°, click on the respective hyperlinks.
 - Scan security report for SAST or SCA can be downloaded directly from the Report section in the summary table.
 
 #### The following snapshots show the scan summary output in the request comment section.
@@ -71,7 +71,7 @@ If you don't have an account, register on [HCL AppScan on Cloud (ASoC)](https://
 </div>
 
 - Under the Pull Request Information table you can directly view the details about the pull request, branch and commit by clicking on their respective hyperlinks.
-- To view the Scan ID and Application name in ASoC or AS 360, click on the respective hyperlinks.
+- To view the Scan ID and Application name in ASoC or AppScan 360°, click on the respective hyperlinks.
 - Scan security report for SAST or SCA can be downloaded directly from the Report section in the summary table.
 
 # Examples
