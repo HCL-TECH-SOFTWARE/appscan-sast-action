@@ -25,6 +25,9 @@ import resultProcessor from './resultProcessor.js';
 import summaryWriter from './summaryWriter.js';
 import { postComment } from './prCommentWriter.js';
 
+console.log(`[Security Check] Action Node.js version: ${process.version}`);
+console.log(`[Security Check] Node.js executable: ${process.execPath}`);
+
 let sastScanId;
 let scaScanId;
 
