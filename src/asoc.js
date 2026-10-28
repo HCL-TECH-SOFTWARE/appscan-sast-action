@@ -224,13 +224,6 @@ function getRequestBody(body) {
 function getClientType() {
     const clientType = utils.getClientType();
     if (!clientTypeLogged) {
-        core.info(`[Temporary Evidence] ASoC ClientType details: ${JSON.stringify({
-            clientType,
-            baseClientType: constants.CLIENT_TYPE,
-            os: utils.getOS(),
-            version: utils.getVersion(),
-            format: "<baseClientType>-<os>-<version>"
-        })}`);
         clientTypeLogged = true;
     }
     return clientType;
