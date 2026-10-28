@@ -26,6 +26,7 @@ import FormData from 'form-data';
 import summaryWriter from './summaryWriter.js';
 
 let token = null
+let clientTypeLogged = false;
 const key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
 const secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
 const enableSSL = !settings.shouldDisableSSL;
@@ -39,7 +40,7 @@ function login() {
         if (key && secret) {
             let url = settings.getServiceUrl() + constants.API_LOGIN;
             got.post(url, {
-                json: {'keyId': key, 'keySecret': secret, 'clientType': utils.getClientType()},
+                json: getRequestBody({'keyId': key, 'keySecret': secret, 'clientType': getClientType()}),
                 retry: {limit: 3, methods: ['GET', 'POST']},
                 https: {rejectUnauthorized: enableSSL},
                 ...getProxyOptions()
@@ -147,7 +148,7 @@ function createSecurityReport(executionId) {
             SelectPolicyIds: []
         };
         got.post(url, {
-            json: body,
+            json: getRequestBody(body),
             headers: getRequestHeaders(),
             retry: {limit: 3, methods: ["POST"]},
             https: {rejectUnauthorized: enableSSL},
@@ -209,8 +210,30 @@ function getRequestHeaders() {
     return {
         Authorization: "Bearer " + token,
         Accept: "application/json",
-        ClientType: utils.getClientType()
+        ClientType: getClientType()
     }
+}
+
+function getRequestBody(body) {
+    return {
+        ...body,
+        ClientType: getClientType()
+    };
+}
+
+function getClientType() {
+    const clientType = utils.getClientType();
+    if (!clientTypeLogged) {
+        core.info(`[Temporary Evidence] ASoC ClientType details: ${JSON.stringify({
+            clientType,
+            baseClientType: constants.CLIENT_TYPE,
+            os: utils.getOS(),
+            version: utils.getVersion(),
+            format: "<baseClientType>-<os>-<version>"
+        })}`);
+        clientTypeLogged = true;
+    }
+    return clientType;
 }
 
 function getProxyOptions() {
@@ -290,7 +313,7 @@ function submitScan(url, fileId) {
         };
 
         got.post(url, {
-            json: body,
+            json: getRequestBody(body),
             headers: getRequestHeaders(),
             retry: {limit: 3, methods: ["GET", "POST"]},
             https: {rejectUnauthorized: enableSSL},
@@ -313,7 +336,7 @@ function submitRescan(scanId, fileId) {
         let body = {FileId: fileId};
 
         got.post(url, {
-            json: body,
+            json: getRequestBody(body),
             headers: getRequestHeaders(),
             retry: {limit: 3, methods: ["GET", "POST"]},
             https: {rejectUnauthorized: enableSSL},
