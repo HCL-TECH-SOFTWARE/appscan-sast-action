@@ -40,7 +40,7 @@ function login() {
         if (key && secret) {
             let url = settings.getServiceUrl() + constants.API_LOGIN;
             got.post(url, {
-                json: getRequestBody({'keyId': key, 'keySecret': secret, 'clientType': getClientType()}),
+                json: {'keyId': key, 'keySecret': secret, 'clientType': getClientType()},
                 retry: {limit: 3, methods: ['GET', 'POST']},
                 https: {rejectUnauthorized: enableSSL},
                 ...getProxyOptions()
@@ -224,13 +224,6 @@ function getRequestBody(body) {
 function getClientType() {
     const clientType = utils.getClientType();
     if (!clientTypeLogged) {
-        core.info(`ClientType details: ${JSON.stringify({
-            clientType,
-            baseClientType: constants.CLIENT_TYPE,
-            os: utils.getOS(),
-            version: utils.getVersion(),
-            format: "<baseClientType>-<os>-<version>"
-        })}`);
         clientTypeLogged = true;
     }
     return clientType;
