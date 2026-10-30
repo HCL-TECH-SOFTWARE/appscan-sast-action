@@ -39,7 +39,7 @@ function login() {
         if (key && secret) {
             let url = settings.getServiceUrl() + constants.API_LOGIN;
             got.post(url, {
-                json: {'keyId': key, 'keySecret': secret, 'clientType': utils.getClientType()},
+                json: {'keyId': key, 'keySecret': secret, 'clientType': getClientType()},
                 retry: {limit: 3, methods: ['GET', 'POST']},
                 https: {rejectUnauthorized: enableSSL},
                 ...getProxyOptions()
@@ -209,8 +209,19 @@ function getRequestHeaders() {
     return {
         Authorization: "Bearer " + token,
         Accept: "application/json",
-        ClientType: utils.getClientType()
+        ClientType: getClientType()
     }
+}
+
+function getRequestBody(body) {
+    return {
+        ...body,
+        ClientType: getClientType()
+    };
+}
+
+function getClientType() {
+    return utils.getClientType();
 }
 
 function getProxyOptions() {
@@ -290,7 +301,7 @@ function submitScan(url, fileId) {
         };
 
         got.post(url, {
-            json: body,
+            json: getRequestBody(body),
             headers: getRequestHeaders(),
             retry: {limit: 3, methods: ["GET", "POST"]},
             https: {rejectUnauthorized: enableSSL},
@@ -313,7 +324,7 @@ function submitRescan(scanId, fileId) {
         let body = {FileId: fileId};
 
         got.post(url, {
-            json: body,
+            json: getRequestBody(body),
             headers: getRequestHeaders(),
             retry: {limit: 3, methods: ["GET", "POST"]},
             https: {rejectUnauthorized: enableSSL},

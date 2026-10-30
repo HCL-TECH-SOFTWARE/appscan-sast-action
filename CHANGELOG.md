@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+v1.1.4 (November 04, 2026)
+------
+* Includes security fixes.
+
 v1.1.3 (September 16, 2026)
 ------
 * Includes security updates and resolves proxy issues.

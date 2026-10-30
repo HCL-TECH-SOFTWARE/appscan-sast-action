@@ -2,7 +2,7 @@
 Notices and Information
 -----------------------
 -------------------------------------
-HCL AppScan SAST Github Action v1.1.3
+HCL AppScan SAST GitHub Action v1.1.4
 -------------------------------------
 
 ======
@@ -11,7 +11,7 @@ DETAIL
 Note: generic licenses are marked with (*)
 Note: missing copyright references are marked with (*)
 ********************************************************************
-1. Library: agent-base-6.0.2.tgz Product: AppScan_SAST_GitHub_Action
+1. Library: agent-base-6.0.2.tgz Product: AppScan SAST GitHub Action
 ********************************************************************
 ========
 LICENSES
@@ -41,7 +41,7 @@ Copyright terms can be found at: https://github.com/TooTallNate/node-agent-base/
 
 
 ******************************************************************
-2. Library: asynckit-0.4.0.tgz Product: AppScan_SAST_GitHub_Action
+2. Library: asynckit-0.4.0.tgz Product: AppScan SAST GitHub Action
 ******************************************************************
 ========
 LICENSES
@@ -63,7 +63,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ********************************************************************
-3. Library: auth-token-6.0.0.tgz Product: AppScan_SAST_GitHub_Action
+3. Library: auth-token-6.0.0.tgz Product: AppScan SAST GitHub Action
 ********************************************************************
 ========
 LICENSES
@@ -85,7 +85,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ***************************************************************************
-4. Library: before-after-hook-4.0.0.tgz Product: AppScan_SAST_GitHub_Action
+4. Library: before-after-hook-4.0.0.tgz Product: AppScan SAST GitHub Action
 ***************************************************************************
 ========
 LICENSES
@@ -111,11 +111,11 @@ Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/r
 Copyright 2 out of 2
 --------------------
 Copyrighted under Copyright 2018 Gregor Martynus and other contributors
-Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/daf41d45-cdcc-4736-ac45-2521d10a8074
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/de077a3f-e043-43db-a1a0-b7f8463c663a
 
 
 **************************************************************************
-5. Library: cacheable-lookup-7.0.0.tgz Product: AppScan_SAST_GitHub_Action
+5. Library: cacheable-lookup-7.0.0.tgz Product: AppScan SAST GitHub Action
 **************************************************************************
 ========
 LICENSES
@@ -137,7 +137,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *****************************************************************************
-6. Library: cacheable-request-10.2.14.tgz Product: AppScan_SAST_GitHub_Action
+6. Library: cacheable-request-10.2.14.tgz Product: AppScan SAST GitHub Action
 *****************************************************************************
 ========
 LICENSES
@@ -159,7 +159,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *********************************************************************************
-7. Library: call-bind-apply-helpers-1.0.2.tgz Product: AppScan_SAST_GitHub_Action
+7. Library: call-bind-apply-helpers-1.0.2.tgz Product: AppScan SAST GitHub Action
 *********************************************************************************
 ========
 LICENSES
@@ -181,7 +181,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *************************************************************************
-8. Library: combined-stream-1.0.8.tgz Product: AppScan_SAST_GitHub_Action
+8. Library: combined-stream-1.0.8.tgz Product: AppScan SAST GitHub Action
 *************************************************************************
 ========
 LICENSES
@@ -203,7 +203,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 **************************************************************
-9. Library: core-3.0.0.tgz Product: AppScan_SAST_GitHub_Action
+9. Library: core-3.0.0.tgz Product: AppScan SAST GitHub Action
 **************************************************************
 ========
 LICENSES
@@ -225,7 +225,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ***************************************************************
-10. Library: core-7.0.6.tgz Product: AppScan_SAST_GitHub_Action
+10. Library: core-7.0.6.tgz Product: AppScan SAST GitHub Action
 ***************************************************************
 ========
 LICENSES
@@ -247,7 +247,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ****************************************************************
-11. Library: debug-4.3.4.tgz Product: AppScan_SAST_GitHub_Action
+11. Library: debug-4.3.4.tgz Product: AppScan SAST GitHub Action
 ****************************************************************
 ========
 LICENSES
@@ -277,13 +277,13 @@ Copyright terms can be found at: https://github.com/debug-js/debug/tree/4.3.4
 
 
 ******************************************************************************
-12. Library: decompress-response-6.0.0.tgz Product: AppScan_SAST_GitHub_Action
+12. Library: decompress-response-6.0.0.tgz Product: AppScan SAST GitHub Action
 ******************************************************************************
 ========
 LICENSES
 ========
 Licensed under MIT
-License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/8ca37dd2-0f76-4746-ab79-f67b0b263348
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/eef881d2-a4b6-4a89-b253-f72c00b860ef
 
 License Text Under Appendix
 
@@ -303,11 +303,11 @@ Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/r
 Copyright 2 out of 2
 --------------------
 Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
-Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/97caea90-da2b-4033-9172-1cc5e76958e4
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/eef881d2-a4b6-4a89-b253-f72c00b860ef
 
 
 ***************************************************************************
-13. Library: defer-to-connect-2.0.1.tgz Product: AppScan_SAST_GitHub_Action
+13. Library: defer-to-connect-2.0.1.tgz Product: AppScan SAST GitHub Action
 ***************************************************************************
 ========
 LICENSES
@@ -329,7 +329,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *************************************************************************
-14. Library: delayed-stream-1.0.0.tgz Product: AppScan_SAST_GitHub_Action
+14. Library: delayed-stream-1.0.0.tgz Product: AppScan SAST GitHub Action
 *************************************************************************
 ========
 LICENSES
@@ -351,7 +351,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ***********************************************************************
-15. Library: dunder-proto-1.0.1.tgz Product: AppScan_SAST_GitHub_Action
+15. Library: dunder-proto-1.0.1.tgz Product: AppScan SAST GitHub Action
 ***********************************************************************
 ========
 LICENSES
@@ -373,7 +373,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ********************************************************************
-16. Library: endpoint-11.0.3.tgz Product: AppScan_SAST_GitHub_Action
+16. Library: endpoint-11.0.3.tgz Product: AppScan SAST GitHub Action
 ********************************************************************
 ========
 LICENSES
@@ -395,7 +395,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 **************************************************************
-17. Library: eol-0.9.1.tgz Product: AppScan_SAST_GitHub_Action
+17. Library: eol-0.9.1.tgz Product: AppScan SAST GitHub Action
 **************************************************************
 ========
 LICENSES
@@ -413,7 +413,7 @@ COPYRIGHTS
 (*) The copyright for this library is unknown
 
 *****************************************************************************
-18. Library: es-define-property-1.0.1.tgz Product: AppScan_SAST_GitHub_Action
+18. Library: es-define-property-1.0.1.tgz Product: AppScan SAST GitHub Action
 *****************************************************************************
 ========
 LICENSES
@@ -435,7 +435,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ********************************************************************
-19. Library: es-errors-1.3.0.tgz Product: AppScan_SAST_GitHub_Action
+19. Library: es-errors-1.3.0.tgz Product: AppScan SAST GitHub Action
 ********************************************************************
 ========
 LICENSES
@@ -457,7 +457,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *****************************************************************************
-20. Library: es-set-tostringtag-2.1.0.tgz Product: AppScan_SAST_GitHub_Action
+20. Library: es-set-tostringtag-2.1.0.tgz Product: AppScan SAST GitHub Action
 *****************************************************************************
 ========
 LICENSES
@@ -479,7 +479,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ***************************************************************
-21. Library: exec-3.0.0.tgz Product: AppScan_SAST_GitHub_Action
+21. Library: exec-3.0.0.tgz Product: AppScan SAST GitHub Action
 ***************************************************************
 ========
 LICENSES
@@ -501,7 +501,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 **********************************************************************************
-22. Library: fast-content-type-parse-3.0.0.tgz Product: AppScan_SAST_GitHub_Action
+22. Library: fast-content-type-parse-3.0.0.tgz Product: AppScan SAST GitHub Action
 **********************************************************************************
 ========
 LICENSES
@@ -523,7 +523,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ********************************************************************
-23. Library: form-data-4.0.6.tgz Product: AppScan_SAST_GitHub_Action
+23. Library: form-data-4.0.6.tgz Product: AppScan SAST GitHub Action
 ********************************************************************
 ========
 LICENSES
@@ -545,7 +545,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ****************************************************************************
-24. Library: form-data-encoder-2.1.4.tgz Product: AppScan_SAST_GitHub_Action
+24. Library: form-data-encoder-2.1.4.tgz Product: AppScan SAST GitHub Action
 ****************************************************************************
 ========
 LICENSES
@@ -567,7 +567,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ************************************************************************
-25. Library: function-bind-1.1.2.tgz Product: AppScan_SAST_GitHub_Action
+25. Library: function-bind-1.1.2.tgz Product: AppScan SAST GitHub Action
 ************************************************************************
 ========
 LICENSES
@@ -589,7 +589,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ************************************************************************
-26. Library: get-intrinsic-1.3.0.tgz Product: AppScan_SAST_GitHub_Action
+26. Library: get-intrinsic-1.3.0.tgz Product: AppScan SAST GitHub Action
 ************************************************************************
 ========
 LICENSES
@@ -611,7 +611,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *********************************************************************
-27. Library: get-stream-6.0.1.tgz Product: AppScan_SAST_GitHub_Action
+27. Library: get-stream-6.0.1.tgz Product: AppScan SAST GitHub Action
 *********************************************************************
 ========
 LICENSES
@@ -637,11 +637,11 @@ Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/r
 Copyright 2 out of 2
 --------------------
 Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
-Copyright terms can be found at: https://github.com/sindresorhus/get-stream/blob/v6.0.1/license
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/8546a725-c66b-408b-ace9-27634dd44d8c
 
 
 *****************************************************************
-28. Library: github-9.0.0.tgz Product: AppScan_SAST_GitHub_Action
+28. Library: github-9.0.0.tgz Product: AppScan SAST GitHub Action
 *****************************************************************
 ========
 LICENSES
@@ -663,7 +663,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ***************************************************************
-29. Library: gopd-1.2.0.tgz Product: AppScan_SAST_GitHub_Action
+29. Library: gopd-1.2.0.tgz Product: AppScan SAST GitHub Action
 ***************************************************************
 ========
 LICENSES
@@ -685,7 +685,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ***************************************************************
-30. Library: got-12.6.1.tgz Product: AppScan_SAST_GitHub_Action
+30. Library: got-12.6.1.tgz Product: AppScan SAST GitHub Action
 ***************************************************************
 ========
 LICENSES
@@ -707,7 +707,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ******************************************************************
-31. Library: graphql-9.0.3.tgz Product: AppScan_SAST_GitHub_Action
+31. Library: graphql-9.0.3.tgz Product: AppScan SAST GitHub Action
 ******************************************************************
 ========
 LICENSES
@@ -729,7 +729,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 **********************************************************************
-32. Library: has-symbols-1.1.0.tgz Product: AppScan_SAST_GitHub_Action
+32. Library: has-symbols-1.1.0.tgz Product: AppScan SAST GitHub Action
 **********************************************************************
 ========
 LICENSES
@@ -751,7 +751,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 **************************************************************************
-33. Library: has-tostringtag-1.0.2.tgz Product: AppScan_SAST_GitHub_Action
+33. Library: has-tostringtag-1.0.2.tgz Product: AppScan SAST GitHub Action
 **************************************************************************
 ========
 LICENSES
@@ -773,7 +773,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *****************************************************************
-34. Library: hasown-2.0.4.tgz Product: AppScan_SAST_GitHub_Action
+34. Library: hasown-2.0.4.tgz Product: AppScan SAST GitHub Action
 *****************************************************************
 ========
 LICENSES
@@ -795,7 +795,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *******************************************************************************
-35. Library: http-cache-semantics-4.0.3.tgz Product: AppScan_SAST_GitHub_Action
+35. Library: http-cache-semantics-4.0.3.tgz Product: AppScan SAST GitHub Action
 *******************************************************************************
 ========
 LICENSES
@@ -817,13 +817,13 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *******************************************************************************
-36. Library: http-cache-semantics-4.1.1.tgz Product: AppScan_SAST_GitHub_Action
+36. Library: http-cache-semantics-4.3.0.tgz Product: AppScan SAST GitHub Action
 *******************************************************************************
 ========
 LICENSES
 ========
 Licensed under BSD 2
-License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/50729589-5056-4e97-ae16-6ede4bca2162
+License terms can be found at: https://www.npmjs.com/package/http-cache-semantics/v/4.3.0
 
 License Text Under Appendix
 
@@ -833,13 +833,13 @@ License Text Under Appendix
 COPYRIGHTS
 ==========
 Copyrighted under Copyright 2016-2018 Kornel Lesi
-Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/50729589-5056-4e97-ae16-6ede4bca2162
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/75f26cf9-7fa3-49e7-aa85-95ff91e93a58
 
 
 
 
 **********************************************************************
-37. Library: http-client-3.0.2.tgz Product: AppScan_SAST_GitHub_Action
+37. Library: http-client-3.0.2.tgz Product: AppScan SAST GitHub Action
 **********************************************************************
 ========
 LICENSES
@@ -861,7 +861,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 **********************************************************************
-38. Library: http-client-4.0.0.tgz Product: AppScan_SAST_GitHub_Action
+38. Library: http-client-4.0.0.tgz Product: AppScan SAST GitHub Action
 **********************************************************************
 ========
 LICENSES
@@ -883,7 +883,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *********************************************************************
-39. Library: http-timer-5.0.1.tgz Product: AppScan_SAST_GitHub_Action
+39. Library: http-timer-5.0.1.tgz Product: AppScan SAST GitHub Action
 *********************************************************************
 ========
 LICENSES
@@ -905,7 +905,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ************************************************************************
-40. Library: http2-wrapper-2.2.0.tgz Product: AppScan_SAST_GitHub_Action
+40. Library: http2-wrapper-2.2.0.tgz Product: AppScan SAST GitHub Action
 ************************************************************************
 ========
 LICENSES
@@ -927,7 +927,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ****************************************************************
-41. Library: https-1.0.0.tgz Product: AppScan_SAST_GitHub_Action
+41. Library: https-1.0.0.tgz Product: AppScan SAST GitHub Action
 ****************************************************************
 ========
 LICENSES
@@ -950,7 +950,7 @@ Library copyrights could not be established
 
 
 ****************************************************************************
-42. Library: https-proxy-agent-5.0.0.tgz Product: AppScan_SAST_GitHub_Action
+42. Library: https-proxy-agent-5.0.0.tgz Product: AppScan SAST GitHub Action
 ****************************************************************************
 ========
 LICENSES
@@ -966,13 +966,13 @@ License Text Under Appendix
 COPYRIGHTS
 ==========
 Copyrighted under Copyright 2013 Nathan Rajlich <nathan@tootallnate.net>
-Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/503f4705-a37e-41c1-8983-2db5c8edab03
+Copyright terms can be found at: https://github.com/TooTallNate/node-https-proxy-agent/blob/5.0.0/README.md
 
 
 
 
 *************************************************************
-43. Library: io-3.0.2.tgz Product: AppScan_SAST_GitHub_Action
+43. Library: io-3.0.2.tgz Product: AppScan SAST GitHub Action
 *************************************************************
 ========
 LICENSES
@@ -994,7 +994,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *************************************************************
-44. Library: is-5.6.0.tgz Product: AppScan_SAST_GitHub_Action
+44. Library: is-5.6.0.tgz Product: AppScan SAST GitHub Action
 *************************************************************
 ========
 LICENSES
@@ -1016,7 +1016,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 **********************************************************************
-45. Library: json-buffer-3.0.1.tgz Product: AppScan_SAST_GitHub_Action
+45. Library: json-buffer-3.0.1.tgz Product: AppScan SAST GitHub Action
 **********************************************************************
 ========
 LICENSES
@@ -1038,7 +1038,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ***************************************************************************
-46. Library: json-with-bigint-3.5.8.tgz Product: AppScan_SAST_GitHub_Action
+46. Library: json-with-bigint-3.5.8.tgz Product: AppScan SAST GitHub Action
 ***************************************************************************
 ========
 LICENSES
@@ -1060,7 +1060,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ***************************************************************
-47. Library: keyv-4.5.4.tgz Product: AppScan_SAST_GitHub_Action
+47. Library: keyv-4.5.4.tgz Product: AppScan SAST GitHub Action
 ***************************************************************
 ========
 LICENSES
@@ -1082,7 +1082,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *************************************************************************
-48. Library: lowercase-keys-3.0.0.tgz Product: AppScan_SAST_GitHub_Action
+48. Library: lowercase-keys-3.0.0.tgz Product: AppScan SAST GitHub Action
 *************************************************************************
 ========
 LICENSES
@@ -1104,7 +1104,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 **************************************************************************
-49. Library: math-intrinsics-1.1.0.tgz Product: AppScan_SAST_GitHub_Action
+49. Library: math-intrinsics-1.1.0.tgz Product: AppScan SAST GitHub Action
 **************************************************************************
 ========
 LICENSES
@@ -1126,7 +1126,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *******************************************************************
-50. Library: mime-db-1.52.0.tgz Product: AppScan_SAST_GitHub_Action
+50. Library: mime-db-1.52.0.tgz Product: AppScan SAST GitHub Action
 *******************************************************************
 ========
 LICENSES
@@ -1152,11 +1152,11 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 Copyright 2 out of 2
 --------------------
 Copyrighted under Copyright 2014 Jonathan Ong <me@jongleberry.com>
-Copyright terms can be found at: https://github.com/jshttp/mime-db/blob/v1.52.0/LICENSE
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/8c1fde9b-eed8-475b-a05b-c022c78be64e
 
 
 **********************************************************************
-51. Library: mime-types-2.1.35.tgz Product: AppScan_SAST_GitHub_Action
+51. Library: mime-types-2.1.35.tgz Product: AppScan SAST GitHub Action
 **********************************************************************
 ========
 LICENSES
@@ -1186,7 +1186,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *************************************************************************
-52. Library: mimic-response-3.1.0.tgz Product: AppScan_SAST_GitHub_Action
+52. Library: mimic-response-3.1.0.tgz Product: AppScan SAST GitHub Action
 *************************************************************************
 ========
 LICENSES
@@ -1212,11 +1212,11 @@ Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/r
 Copyright 2 out of 2
 --------------------
 Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
-Copyright terms can be found at: https://github.com/sindresorhus/mimic-response/blob/v3.1.0/license
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/679488c0-5629-41e0-8956-b4218723b491
 
 
 *************************************************************************
-53. Library: mimic-response-4.0.0.tgz Product: AppScan_SAST_GitHub_Action
+53. Library: mimic-response-4.0.0.tgz Product: AppScan SAST GitHub Action
 *************************************************************************
 ========
 LICENSES
@@ -1242,11 +1242,11 @@ Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/r
 Copyright 2 out of 2
 --------------------
 Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
-Copyright terms can be found at: https://github.com/sindresorhus/mimic-response/blob/v4.0.0/license
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/85dd6222-bdda-43a2-b79e-421ed11301de
 
 
 *************************************************************
-54. Library: ms-2.1.2.tgz Product: AppScan_SAST_GitHub_Action
+54. Library: ms-2.1.2.tgz Product: AppScan SAST GitHub Action
 *************************************************************
 ========
 LICENSES
@@ -1262,7 +1262,7 @@ License Text Under Appendix
 COPYRIGHTS
 ==========
 Copyrighted under Copyright 2016 Zeit, Inc
-Copyright terms can be found at: https://github.com/zeit/ms/blob/2.1.2/license.md
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/3d0ea1e4-5121-4047-be9a-967a64a4d1df
 
 
 
@@ -1293,7 +1293,7 @@ This product includes images from the Pasodoble Icon Theme
 
 
 ************************************************************************
-55. Library: normalize-url-8.0.0.tgz Product: AppScan_SAST_GitHub_Action
+55. Library: normalize-url-8.0.0.tgz Product: AppScan SAST GitHub Action
 ************************************************************************
 ========
 LICENSES
@@ -1315,7 +1315,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *************************************************************************
-56. Library: openapi-types-27.0.0.tgz Product: AppScan_SAST_GitHub_Action
+56. Library: openapi-types-27.0.0.tgz Product: AppScan SAST GitHub Action
 *************************************************************************
 ========
 LICENSES
@@ -1337,7 +1337,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ***********************************************************************
-57. Library: p-cancelable-3.0.0.tgz Product: AppScan_SAST_GitHub_Action
+57. Library: p-cancelable-3.0.0.tgz Product: AppScan SAST GitHub Action
 ***********************************************************************
 ========
 LICENSES
@@ -1363,11 +1363,11 @@ Copyright terms can be found at: https://index.whitesourcesoftware.com/gri/app/r
 Copyright 2 out of 2
 --------------------
 Copyrighted under Copyright Sindre Sorhus <sindresorhus@gmail.com> (https://sindresorhus.com)
-Copyright terms can be found at: https://github.com/sindresorhus/p-cancelable/blob/v3.0.0/license
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/bd232b80-d6e5-45df-8576-2b790636c4da
 
 
 ***************************************************************
-58. Library: pend-1.2.0.tgz Product: AppScan_SAST_GitHub_Action
+58. Library: pend-1.2.0.tgz Product: AppScan SAST GitHub Action
 ***************************************************************
 ========
 LICENSES
@@ -1389,7 +1389,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ********************************************************************************
-59. Library: plugin-paginate-rest-14.0.0.tgz Product: AppScan_SAST_GitHub_Action
+59. Library: plugin-paginate-rest-14.0.0.tgz Product: AppScan SAST GitHub Action
 ********************************************************************************
 ========
 LICENSES
@@ -1411,7 +1411,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ****************************************************************************************
-60. Library: plugin-rest-endpoint-methods-17.0.0.tgz Product: AppScan_SAST_GitHub_Action
+60. Library: plugin-rest-endpoint-methods-17.0.0.tgz Product: AppScan SAST GitHub Action
 ****************************************************************************************
 ========
 LICENSES
@@ -1433,7 +1433,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ********************************************************************
-61. Library: quick-lru-5.1.1.tgz Product: AppScan_SAST_GitHub_Action
+61. Library: quick-lru-5.1.1.tgz Product: AppScan SAST GitHub Action
 ********************************************************************
 ========
 LICENSES
@@ -1455,7 +1455,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *******************************************************************
-62. Library: request-10.0.8.tgz Product: AppScan_SAST_GitHub_Action
+62. Library: request-10.0.8.tgz Product: AppScan SAST GitHub Action
 *******************************************************************
 ========
 LICENSES
@@ -1477,7 +1477,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ************************************************************************
-63. Library: request-error-7.1.0.tgz Product: AppScan_SAST_GitHub_Action
+63. Library: request-error-7.1.0.tgz Product: AppScan SAST GitHub Action
 ************************************************************************
 ========
 LICENSES
@@ -1499,13 +1499,13 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ***********************************************************************
-64. Library: resolve-alpn-1.2.1.tgz Product: AppScan_SAST_GitHub_Action
+64. Library: resolve-alpn-1.2.1.tgz Product: AppScan SAST GitHub Action
 ***********************************************************************
 ========
 LICENSES
 ========
 Licensed under MIT
-License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/5f41ff92-54f1-4bba-85e1-c74833c05044
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/ece0980e-4e37-44ad-b4f5-5afa786dc871
 
 License Text Under Appendix
 
@@ -1529,7 +1529,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ***********************************************************************
-65. Library: responselike-3.0.0.tgz Product: AppScan_SAST_GitHub_Action
+65. Library: responselike-3.0.0.tgz Product: AppScan SAST GitHub Action
 ***********************************************************************
 ========
 LICENSES
@@ -1559,7 +1559,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 *****************************************************************
-66. Library: tunnel-0.0.6.tgz Product: AppScan_SAST_GitHub_Action
+66. Library: tunnel-0.0.6.tgz Product: AppScan SAST GitHub Action
 *****************************************************************
 ========
 LICENSES
@@ -1575,13 +1575,13 @@ License Text Under Appendix
 COPYRIGHTS
 ==========
 Copyrighted under Copyright 2012 Koichi Kobayashi
-Copyright terms can be found at: https://github.com/koichik/node-tunnel/blob/v0.0.6/LICENSE
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/65feb7a1-e183-449b-897b-1ab5699de881
 
 
 
 
 *****************************************************************
-67. Library: types-16.0.0.tgz Product: AppScan_SAST_GitHub_Action
+67. Library: types-16.0.0.tgz Product: AppScan SAST GitHub Action
 *****************************************************************
 ========
 LICENSES
@@ -1607,17 +1607,17 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 Copyright 2 out of 2
 --------------------
 Copyrighted under Copyright 2019 Octokit contributors
-Copyright terms can be found at: https://github.com/octokit/types.ts/blob/v16.0.0/LICENSE
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/fa71e896-739a-4554-987a-6d11344dcda2
 
 
 ******************************************************************
-68. Library: undici-6.28.1.tgz Product: AppScan_SAST_GitHub_Action
+68. Library: undici-6.29.1.tgz Product: AppScan SAST GitHub Action
 ******************************************************************
 ========
 LICENSES
 ========
 Licensed under MIT
-License terms can be found at: https://github.com/nodejs/undici.git
+License terms can be found at: https://github.com/nodejs/undici/blob/v6.29.1/README.md
 
 License Text Under Appendix
 
@@ -1627,19 +1627,19 @@ License Text Under Appendix
 COPYRIGHTS
 ==========
 Copyrighted under Copyright Matteo Collina and Undici contributors
-Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/1c72862b-03aa-477a-8fad-46bf4d2be6ed
+Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/abd5254b-c5b8-4832-9e8f-5fd2b6c73cab
 
 
 
 
 *******************************************************************************
-69. Library: universal-user-agent-7.0.3.tgz Product: AppScan_SAST_GitHub_Action
+69. Library: universal-user-agent-7.0.3.tgz Product: AppScan SAST GitHub Action
 *******************************************************************************
 ========
 LICENSES
 ========
 Licensed under ISC
-License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/3eae6a6a-54dc-439d-8568-c1150d03f694
+License terms can be found at: https://index.mend.io/gri/app/reader/resource/content/asString/74444088-5a4c-4fd4-a9f9-c4ba89808a46
 
 License Text Under Appendix
 
@@ -1663,7 +1663,7 @@ Copyright terms can be found at: https://index.mend.io/gri/app/reader/resource/c
 
 
 ****************************************************************
-70. Library: yauzl-3.4.0.tgz Product: AppScan_SAST_GitHub_Action
+70. Library: yauzl-3.4.0.tgz Product: AppScan SAST GitHub Action
 ****************************************************************
 ========
 LICENSES
@@ -1692,13 +1692,14 @@ APPENDIX: License Details
 ISC
 ***
 License Text:
-# [ISC License](https://spdx.org/licenses/ISC)
+ISC License:
 
-Copyright (c) 2018-2021, Gregor Martynus (https://github.com/gr2m)
+Copyright (c) 2004-2010 by Internet Systems Consortium, Inc. ("ISC")
+Copyright (c) 1995-2003 by Internet Software Consortium
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS" AND ISC DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL ISC BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 
 
@@ -1814,3 +1815,7 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+
