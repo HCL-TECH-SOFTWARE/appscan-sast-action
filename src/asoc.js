@@ -26,7 +26,6 @@ import FormData from 'form-data';
 import summaryWriter from './summaryWriter.js';
 
 let token = null
-let clientTypeLogged = false;
 const key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
 const secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
 const enableSSL = !settings.shouldDisableSSL;
@@ -148,7 +147,7 @@ function createSecurityReport(executionId) {
             SelectPolicyIds: []
         };
         got.post(url, {
-            json: getRequestBody(body),
+            json: body,
             headers: getRequestHeaders(),
             retry: {limit: 3, methods: ["POST"]},
             https: {rejectUnauthorized: enableSSL},
@@ -222,11 +221,7 @@ function getRequestBody(body) {
 }
 
 function getClientType() {
-    const clientType = utils.getClientType();
-    if (!clientTypeLogged) {
-        clientTypeLogged = true;
-    }
-    return clientType;
+    return utils.getClientType();
 }
 
 function getProxyOptions() {
