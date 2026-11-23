@@ -18,22 +18,14 @@ import asoc from './asoc.js';
 
 let start = null;
 const timed_out = 'timed_out';
-const timeout_minutes = process.env.INPUT_ANALYSIS_TIMEOUT ? parseInt(process.env.INPUT_ANALYSIS_TIMEOUT) : 30;
+const timeout_minutes = process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES ? parseInt(process.env.INPUT_ANALYSIS_TIMEOUT_MINUTES) : 30;
 const running_statuses = ['Running', 'InQueue', 'Pending'];
 
 function waitForAnalysis(sastScanId, scaScanId) {
-    return new Promise((resolve, reject) => {
-        waitForSastAnalysis(sastScanId)
-        .then(() => {
-            return waitForScaAnalysis(scaScanId);
-        })
-        .then((status) => {
-            resolve(status === timed_out);
-        })
-        .catch((error) => {
-            reject(error);
-        })
-    });
+    return Promise.all([waitForSastAnalysis(sastScanId), waitForScaAnalysis(scaScanId)])
+        .then(([sastStatus, scaStatus]) => {
+            return sastStatus === timed_out || scaStatus === timed_out;
+        });
 }
 
 async function waitForScaAnalysis(scanId) {
