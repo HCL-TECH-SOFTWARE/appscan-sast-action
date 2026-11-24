@@ -26,6 +26,7 @@ import FormData from 'form-data';
 import summaryWriter from './summaryWriter.js';
 
 let token = null
+let didForceStatus401 = false;
 const key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
 const secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
 const enableSSL = !settings.shouldDisableSSL();
@@ -437,6 +438,12 @@ async function getSastScanStatus(scanId) {
 
 async function getScanStatus(url, scanId) {
     try {
+        if (process.env.FORCE_STATUS_401_ONCE === 'true' && !didForceStatus401) {
+            didForceStatus401 = true;
+            const error = new Error('Forced 401 for status polling test');
+            error.response = {statusCode: 401};
+            throw error;
+        }
         let response = await got.get(url, {
             headers: getRequestHeaders(),
             retry: {limit: 3, methods: ["GET"]},
