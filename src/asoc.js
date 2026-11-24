@@ -440,6 +440,7 @@ async function getScanStatus(url, scanId) {
     try {
         if (process.env.FORCE_STATUS_401_ONCE === 'true' && !didForceStatus401) {
             didForceStatus401 = true;
+            core.info('FORCE_STATUS_401_ONCE triggered');
             const error = new Error('Forced 401 for status polling test');
             error.response = {statusCode: 401};
             throw error;
@@ -454,6 +455,7 @@ async function getScanStatus(url, scanId) {
         return responseJson.LatestExecution.Status;
     } catch (error) {
         if (error.response && error.response.statusCode === 401) {
+            core.info('Received 401 during status polling, re-authenticating...');
             await login();
             let response = await got.get(url, {
                 headers: getRequestHeaders(),
@@ -462,6 +464,7 @@ async function getScanStatus(url, scanId) {
                 ...getProxyOptions()
             })
             let responseJson = JSON.parse(response.body);
+            core.info('Status polling retry after re-auth succeeded');
             return responseJson.LatestExecution.Status;
         }
         throw error;
