@@ -43,6 +43,8 @@ const _API_SECURITY_REPORT = "/api/v4/Reports/Security/ScanExecution/";
 export { _API_SECURITY_REPORT as API_SECURITY_REPORT };
 const _API_REPORT = "/api/v4/Reports";
 export { _API_REPORT as API_REPORT };
+const _API_SCAN_SERVICE_ENDPOINT = "/api/v4/Scans/";
+export { _API_SCAN_SERVICE_ENDPOINT as API_SCAN_SERVICE_ENDPOINT };
 
 //User messages:
 const _DOWNLOADING_CLIENT = 'Downloading the SAClientUtil...';

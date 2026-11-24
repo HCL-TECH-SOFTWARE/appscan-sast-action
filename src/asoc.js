@@ -86,7 +86,7 @@ function getScanResults(scanId, scanType = 'SAST') {
 }
 
 async function getScanDetails(scanId, scanType) {
-    const url = settings.getServiceUrl() + "/api/v4/Scans/" + scanType + "/" + scanId;
+    const url = settings.getServiceUrl() + constants.API_SCAN_SERVICE_ENDPOINT + scanType + "/" + scanId;
     try {
         const res = await got.get(url, {
             headers: getRequestHeaders(),
@@ -343,7 +343,7 @@ function submitRescan(scanId, fileId) {
 // Updates the submitted scan name for rescans when INPUT_SCAN_NAME is provided.
 function updateScanName(scanId) {
     return new Promise((resolve, reject) => {
-        let url = settings.getServiceUrl() + '/api/v4/Scans/' + scanId;
+        let url = settings.getServiceUrl() + constants.API_SCAN_SERVICE_ENDPOINT + scanId;
         let scanName = utils.sanitizeString(process.env.INPUT_SCAN_NAME);
         let body = {Name: scanName};
 
