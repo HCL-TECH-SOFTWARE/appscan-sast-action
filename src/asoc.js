@@ -28,7 +28,7 @@ import summaryWriter from './summaryWriter.js';
 let token = null
 const key = utils.sanitizeString(process.env.INPUT_ASOC_KEY);
 const secret = utils.sanitizeString(process.env.INPUT_ASOC_SECRET);
-const enableSSL = !settings.shouldDisableSSL;
+const enableSSL = !settings.shouldDisableSSL();
 
 //These should already be masked, but just in case the user hardcoded values.
 core.setSecret(key);
@@ -86,7 +86,7 @@ function getScanResults(scanId, scanType = 'SAST') {
 }
 
 async function getScanDetails(scanId, scanType) {
-    const url = settings.getServiceUrl() + "/api/v4/Scans/" + scanType + "/" + scanId;
+    const url = settings.getServiceUrl() + constants.API_SCAN_SERVICE_ENDPOINT + scanType + "/" + scanId;
     try {
         const res = await got.get(url, {
             headers: getRequestHeaders(),
@@ -340,6 +340,38 @@ function submitRescan(scanId, fileId) {
     })
 }
 
+// Updates the submitted scan name for rescans when INPUT_SCAN_NAME is provided.
+function updateScanName(scanId) {
+    return new Promise((resolve, reject) => {
+        let url = settings.getServiceUrl() + constants.API_SCAN_SERVICE_ENDPOINT + scanId;
+        let scanName = utils.sanitizeString(process.env.INPUT_SCAN_NAME);
+        let body = {Name: scanName};
+
+        got.put(url, {
+            json: body,
+            headers: getRequestHeaders(),
+            retry: {limit: 3, methods: ["GET", "PUT"]},
+            https: {rejectUnauthorized: enableSSL},
+            ...getProxyOptions()
+        })
+            .then(() => {
+                resolve();
+            })
+            .catch((error) => {
+                reject(error);
+            })
+    })
+}
+
+// Runs a rescan and only resolves after the scan-name update succeeds.
+function submitRescanAndUpdateName(rescanId, fileId) {
+    return submitRescan(rescanId, fileId)
+        .then((scanId) => {
+            return updateScanName(scanId)
+                .then(() => scanId);
+        });
+}
+
 function submitScaScan(fileId) {
     return new Promise((resolve, reject) => {
         if (process.env.INPUT_STATIC_ANALYSIS_ONLY === 'true'
@@ -351,7 +383,7 @@ function submitScaScan(fileId) {
             .then(() => {
                 if (process.env.INPUT_SCA_SCAN_ID) {
                     let rescanId = utils.sanitizeString(process.env.INPUT_SCA_SCAN_ID);
-                    return submitRescan(rescanId, fileId)
+                    return submitRescanAndUpdateName(rescanId, fileId);
                 } else {
                     let url = settings.getServiceUrl() + constants.API_SCA_SCAN;
                     return submitScan(url, fileId)
@@ -376,7 +408,7 @@ function submitSastScan(fileId) {
             .then(() => {
                 if (process.env.INPUT_SAST_SCAN_ID) {
                     let rescanId = utils.sanitizeString(process.env.INPUT_SAST_SCAN_ID);
-                    return submitRescan(rescanId, fileId);
+                    return submitRescanAndUpdateName(rescanId, fileId);
                 } else {
                     let url = settings.getServiceUrl() + constants.API_SAST_SCAN;
                     return submitScan(url, fileId)
@@ -404,14 +436,29 @@ async function getSastScanStatus(scanId) {
 }
 
 async function getScanStatus(url, scanId) {
-    let response = await got.get(url, {
-        headers: getRequestHeaders(),
-        retry: {limit: 3, methods: ["GET"]},
-        https: {rejectUnauthorized: enableSSL},
-        ...getProxyOptions()
-    })
-    let responseJson = JSON.parse(response.body);
-    return responseJson.LatestExecution.Status;
+    try {
+        let response = await got.get(url, {
+            headers: getRequestHeaders(),
+            retry: {limit: 3, methods: ["GET"]},
+            https: {rejectUnauthorized: enableSSL},
+            ...getProxyOptions()
+        })
+        let responseJson = JSON.parse(response.body);
+        return responseJson.LatestExecution.Status;
+    } catch (error) {
+        if (error.response && error.response.statusCode === 401) {
+            await login();
+            let response = await got.get(url, {
+                headers: getRequestHeaders(),
+                retry: {limit: 3, methods: ["GET"]},
+                https: {rejectUnauthorized: enableSSL},
+                ...getProxyOptions()
+            })
+            let responseJson = JSON.parse(response.body);
+            return responseJson.LatestExecution.Status;
+        }
+        throw error;
+    }
 }
 
 export default {
